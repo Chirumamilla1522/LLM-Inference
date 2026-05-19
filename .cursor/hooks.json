@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "stop": [
+      {
+        "command": ".cursor/hooks/push-to-github.sh",
+        "timeout": 120
+      }
+    ]
+  }
+}

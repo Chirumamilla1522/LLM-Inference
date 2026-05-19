@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-05-18T22:58:40.999119+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "kv_cache+prefill",
+  "optimizations": {
+    "quantization": false,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3-8B-Instruct-bf16",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 0.0,
+  "ttft_ms": 0.0,
+  "throughput_tps": 0.0,
+  "prompt_tps": 0.0,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "error",
+  "error": "Invalid username or password."
+}
