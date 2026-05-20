@@ -14,7 +14,7 @@
 | 7 | [Context, generation length & prompt cache](articles/07-context-and-cache.md) | \(T\) math, `-p` / `-g`, prefix cache | yes |
 | 8 | [Production serving at scale](articles/08-serving.md) | Continuous batching, PagedAttention, scheduling | concept |
 | 9 | [Parallelism for huge models](articles/09-parallelism.md) | Tensor, pipeline, expert parallel | concept |
-| 10 | [Local runtimes compared](articles/10-runtimes.md) | MLX vs llama.cpp vs Ollama | concept |
+| 10 | [Local runtimes compared](articles/10-runtimes.md) | MLX vs **llama.cpp** (benchmarked); Ollama | yes (`compare_runtimes.py`) |
 | 11 | [Quality, cost & when to optimize what](articles/11-tradeoffs.md) | Quant quality, local vs API, decision tree | concept |
 
 **Total: 12 articles** (8 with MLX benchmarks via `run_article.py`, 4 concept manifests).
@@ -52,7 +52,7 @@ These stay **sections** inside the articles above—not their own posts:
 
 **Equations, diagrams, and code:** [optimizations/math-and-implementation.md](optimizations/math-and-implementation.md)
 
-**Papers & MLX references (cite as [1]–[24]):** [REFERENCES.md](REFERENCES.md)
+**Papers & runtime references (cite as [1]–[27]):** [REFERENCES.md](REFERENCES.md)
 
 Full technique list (reference only): [INFERENCE_OPTIMIZATIONS_CATALOG.md](INFERENCE_OPTIMIZATIONS_CATALOG.md).
 

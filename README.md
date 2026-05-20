@@ -150,7 +150,7 @@ Step-by-step: [docs/BENCHMARK_WORKFLOW.md](docs/BENCHMARK_WORKFLOW.md)
 
 ## Article series (12 posts)
 
-One article per optimization (or one small set). Concept posts (8–11) write a `manifest.json` instead of running MLX.
+One article per optimization (or one small set). Concept posts (8–9, 11) write a `manifest.json`; **Article 10** benchmarks **MLX vs llama.cpp**.
 
 | # | Title | What it measures | Run |
 |---|-------|------------------|-----|
@@ -164,7 +164,7 @@ One article per optimization (or one small set). Concept posts (8–11) write a 
 | 7 | Context & cache | `-p` / `-g` sweeps, prefix KV | `./scripts/run_article.sh 7 "Mac M3"` |
 | 8 | Production serving | Batching, PagedAttention (concept) | manifest only |
 | 9 | Parallelism | TP / PP / MoE (concept) | manifest only |
-| 10 | Runtimes | MLX vs llama.cpp vs Ollama (concept) | manifest only |
+| 10 | Runtimes | MLX vs **llama.cpp** (`llama-bench`); Ollama notes | `./scripts/run_article.sh 10 "Mac M3"` |
 | 11 | Tradeoffs | Quality, cost, checklist (concept) | manifest only |
 
 **Suggested publish order:** `0 → 1 → 2 → 3 → 4 → 5`, then `6 → 7`, then `8–11`. Capstone prose draft: [notes.md](notes.md).
@@ -209,7 +209,7 @@ Defaults are fixed across articles so comparisons stay fair: `-p 512`, `-g 128`,
 
 ## Diagrams and references in docs
 
-Every optimization guide includes **mermaid figures** (flowcharts, sequence diagrams, memory charts) and **numbered citations** [1]–[24].
+Every optimization guide includes **mermaid figures** (flowcharts, sequence diagrams, memory charts) and **numbered citations** [1]–[27].
 
 | Resource | Content |
 |----------|---------|
@@ -263,7 +263,7 @@ flowchart TB
 
 Guides: [math & implementation](docs/optimizations/math-and-implementation.md) · [weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [prefill](docs/optimizations/prefill-and-flash-attention.md) · [speculative](docs/optimizations/speculative-decoding.md) · [full stack](docs/optimizations/all-optimizations.md)
 
-Each guide includes **mermaid diagrams**, **equations** (memory, complexity, quantization), **programming** notes (bit packing, MLX flags), and **numbered references** [1]–[24] to papers and MLX docs ([bibliography](docs/REFERENCES.md)).
+Each guide includes **mermaid diagrams**, **equations** (memory, complexity, quantization), **programming** notes (bit packing, MLX flags), and **numbered references** [1]–[27] to papers and MLX/llama.cpp docs ([bibliography](docs/REFERENCES.md)).
 
 ---
 
@@ -455,6 +455,10 @@ flowchart LR
 | `run_article.py` | Dispatches article plans to `run_benchmark.py` |
 | `list_models.py` | Print preset table |
 | `generate_article_tables.py` | Markdown tables from JSON |
+| `llamacpp_models.py` | GGUF paths for llama.cpp (Article 10) |
+| `compare_runtimes.py` | MLX vs llama.cpp side-by-side JSON |
+
+**Article 10 guide:** [docs/optimizations/llama-cpp-vs-mlx.md](docs/optimizations/llama-cpp-vs-mlx.md)
 
 ---
 
@@ -477,6 +481,12 @@ python scripts/run_benchmark.py --preset llama3-8b --config w4 --prefix-cache --
 # --- Output to article folder ---
 python scripts/run_benchmark.py --preset llama3-8b --config w4 \
   --output-root results/Mac_M3/article_01_weight-quant --hardware "Mac M3"
+
+# --- Article 10: MLX vs llama.cpp ---
+brew install llama.cpp   # provides llama-bench on PATH
+python scripts/compare_runtimes.py --dry-run --hardware "Mac M3"
+./scripts/run_article.sh 10 "Mac M3"
+# Results: results/Mac_M3/article_10_runtimes/<preset>/<config>_compare.json
 
 # --- Recovery ---
 ./scripts/retry_failed.sh "Mac M3"
@@ -573,7 +583,7 @@ MLX loads pre-quantized weights. There is no single checkpoint that switches bet
 MLX uses efficient attention kernels internally. We only toggle `prefill_step_size` (512 vs 2048) as a measurable proxy for prefill behavior in `mlx-lm`.
 
 **Can I run on Intel Mac or Linux?**  
-This project targets Apple Silicon + MLX. Other platforms need a different stack (e.g. llama.cpp); see article 10 (concept).
+This project targets Apple Silicon + MLX. For cross-platform GGUF serving, use **llama.cpp**; compare both on the same Mac with Article 10 — [llama-cpp-vs-mlx.md](docs/optimizations/llama-cpp-vs-mlx.md).
 
 **Why random prompt tokens?**  
 Reproducible, tokenizer-safe inputs without fixture files. Same seed policy per trial; use fixed `-p`/`-g` across configs for fair comparison.
@@ -595,6 +605,8 @@ The runner estimated peak RAM above the budget (`--memory-fraction` × system RA
 | Speculative: vocab mismatch | Draft and target must share tokenizer; edit `DRAFT_PRESET_BY_TARGET` |
 | Qwen 32B OOM on 24 GB | Expected; use M5 Max + `--include-large` |
 | Downloads every run | Normal first time; HF cache persists under `~/.cache/huggingface` |
+| `llama-bench not found` | `brew install llama.cpp` or build from [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp); use `--mlx-only` to skip |
+| Article 10 GGUF download | First run downloads large `.gguf` to `~/.cache/llama-cpp-models/` |
 
 ---
 

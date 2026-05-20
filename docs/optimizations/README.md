@@ -22,6 +22,7 @@ Each **benchmarked** technique has its own guide. The combined guide explains ho
 | [KV cache quantization](kv-cache-quantization.md) | \(M_{\text{KV}}\) formula + `kv_bits` |
 | [Prefill & Flash Attention](prefill-and-flash-attention.md) | Attention \(O(n^2)\) + `prefill_step_size` |
 | [Speculative decoding](speculative-decoding.md) | Acceptance rate + `draft_model` |
+| [**llama.cpp vs MLX**](llama-cpp-vs-mlx.md) | Article 10 — GGUF vs mlx-community, `llama-bench` |
 
 ## Combined view
 
@@ -33,7 +34,7 @@ Each **benchmarked** technique has its own guide. The combined guide explains ho
 
 Each guide includes **mermaid figures** (pipelines, memory charts, sequence diagrams) and a **References** section with numbered citations.
 
-**Master bibliography:** [REFERENCES.md](../REFERENCES.md) — papers [1]–[24], MLX docs, citation examples for articles.
+**Master bibliography:** [REFERENCES.md](../REFERENCES.md) — papers [1]–[27], MLX + llama.cpp docs, citation examples for articles.
 
 ## Related
 

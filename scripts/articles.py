@@ -285,8 +285,8 @@ ARTICLES: dict[int, Article] = {
         id=10,
         slug="runtimes",
         title="Local runtimes compared",
-        description="MLX vs llama.cpp vs Ollama.",
-        benchmarked=False,
+        description="MLX vs llama.cpp (benchmarked); Ollama notes.",
+        benchmarked=True,
         concept_topics=("mlx", "llama_cpp", "ollama"),
     ),
     11: Article(

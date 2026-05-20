@@ -73,6 +73,16 @@ Curated bibliography for the article series and optimization guides. Links are s
 
 ---
 
+## llama.cpp & GGUF
+
+| ID | Reference | Why we cite it |
+|----|-----------|----------------|
+| [25] | Gerganov, G., et al. *llama.cpp* — inference in C/C++, GGUF format, Metal/CUDA/CPU. [github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | Article 10 runtime compare, `llama-server` |
+| [26] | Gerganov, G. *GGUF* — GPT-Generated Unified Format for model files. [github.com/ggerganov/ggml/blob/master/docs/gguf.md](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md) | Weight container for llama.cpp |
+| [27] | Bartowski et al. *GGUF quantizations on Hugging Face* (community). [huggingface.co/bartowski](https://huggingface.co/bartowski) | Matched Q4_K_M / Q8_0 files in `llamacpp_models.py` |
+
+---
+
 ## MLX & this repository stack
 
 | ID | Reference | Why we cite it |
@@ -80,7 +90,7 @@ Curated bibliography for the article series and optimization guides. Links are s
 | [21] | Apple. *MLX* — array framework for Apple Silicon. [github.com/ml-explore/mlx](https://github.com/ml-explore/mlx) | Runtime for all benchmarks |
 | [22] | Apple. *mlx-lm* — LLM utilities for MLX. [github.com/ml-explore/mlx-lm](https://github.com/ml-explore/mlx-lm) | `load`, `stream_generate`, cache APIs |
 | [23] | Hugging Face. *mlx-community* model hub. [huggingface.co/mlx-community](https://huggingface.co/mlx-community) | Weight checkpoints per bit width |
-| [24] | This repository. *LLM-Inference* benchmark scripts. [scripts/run_benchmark.py](../scripts/run_benchmark.py) | Reproducible measurement harness |
+| [24] | This repository. *LLM-Inference* benchmark scripts. [scripts/run_benchmark.py](../scripts/run_benchmark.py), [compare_runtimes.py](../scripts/compare_runtimes.py) | MLX + llama.cpp harness |
 
 ---
 

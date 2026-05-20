@@ -12,7 +12,8 @@
 | [07-context-and-cache.md](07-context-and-cache.md) | 7 — Context / length / cache (set) |
 | [08-serving.md](08-serving.md) | 8 — Serving (set) |
 | [09-parallelism.md](09-parallelism.md) | 9 — Parallelism (set) |
-| [10-runtimes.md](10-runtimes.md) | 10 — Runtimes (set) |
+| [10-runtimes.md](10-runtimes.md) | 10 — MLX vs llama.cpp (+ Ollama notes) |
+| — | [llama-cpp-vs-mlx.md](../optimizations/llama-cpp-vs-mlx.md) — full comparison guide |
 | [11-tradeoffs.md](11-tradeoffs.md) | 11 — Tradeoffs (set) |
 
 Sweep commands: [ARTICLE_SERIES.md](../ARTICLE_SERIES.md).

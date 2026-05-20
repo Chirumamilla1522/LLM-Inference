@@ -170,6 +170,32 @@ def run_article(article_id: int, args: argparse.Namespace) -> int:
         print(f"Planned MLX runs: ~{planned}")
     print(f"{'=' * 60}\n")
 
+    if article.id == 10:
+        if args.dry_run:
+            print("Article 10 — MLX vs llama.cpp comparison (see compare_runtimes.py).")
+            from compare_runtimes import RUNTIME_COMPARE_PAIRS, find_llama_bench, resolve_gguf
+            from optimizations import OptimizationConfig
+
+            for preset, cfg in RUNTIME_COMPARE_PAIRS:
+                c = OptimizationConfig.from_label(cfg)
+                g = resolve_gguf(preset, c.weight_bits)
+                print(f"  {preset} {cfg}: {g.hf_file_id if g else 'no GGUF'}")
+            print(f"llama-bench: {find_llama_bench() or 'NOT FOUND'}")
+            return 0
+        cmd = [
+            sys.executable,
+            str(ROOT / "scripts" / "compare_runtimes.py"),
+            "--hardware",
+            hardware,
+            "-n",
+            str(args.num_trials),
+            "-p",
+            str(args.prompt_tokens),
+            "-g",
+            str(args.generation_tokens),
+        ]
+        return _run_subprocess(cmd)
+
     if not article.benchmarked:
         if args.dry_run:
             print("Concept article — would write manifest.json (no MLX runs).")
