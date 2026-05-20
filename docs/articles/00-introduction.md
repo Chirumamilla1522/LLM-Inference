@@ -47,6 +47,29 @@ mindmap
 
 ---
 
+## Methodology (schema v1)
+
+Each benchmark JSON includes:
+
+| Field | Meaning |
+|-------|---------|
+| `schema_version` | `1` — current result format |
+| `warmup_policy` | 1 discarded warmup trial before measured trials |
+| `trials` | Per-trial arrays (`ttft_ms`, `throughput_tps`, …) |
+| `stats` | `median`, `p50`, `p95`, `std` per metric |
+| `ttft_ms` / `throughput_tps` | **Median** of measured trials (not mean) |
+
+Validate after a sweep:
+
+```bash
+python scripts/validate_results.py --hardware "Mac M3"
+python scripts/report.py --hardware "Mac M3"
+```
+
+Legacy files (`baseline`, `quantization`) → migrate with `scripts/migrate_results.py --apply`.
+
+---
+
 ## Run
 
 ```bash

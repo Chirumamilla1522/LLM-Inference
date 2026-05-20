@@ -79,12 +79,17 @@ git clone <your-repo-url> LLM-Inference && cd LLM-Inference
 ./scripts/setup_env.sh
 source .venv/bin/activate
 
-# Optional: Hugging Face (rate limits + gated models)
+# Hugging Face (required for fp16 / gated models — fixes most "Invalid username" errors)
 ./scripts/hf_login.sh
-# or: cp .env.example .env   # HF_TOKEN=hf_...
+# Accept model licenses at huggingface.co for Meta-Llama-3.1, Mistral, etc.
 
-# Verify all configured repos resolve
+# Verify token + repo access
 python scripts/run_benchmark.py --hf-check
+
+# Validate / migrate existing results (schema v1)
+python scripts/validate_results.py --hardware "Mac M3"
+python scripts/migrate_results.py --dry-run --hardware "Mac M3"   # preview
+# python scripts/migrate_results.py --apply --hardware "Mac M3" --delete-legacy-files
 
 # Single smoke test (~1–5 min first time; includes model download)
 python scripts/run_benchmark.py --preset llama3-8b --config fp16 --hardware "Mac M3" -n 1
@@ -394,6 +399,18 @@ Sweep rollups: `results/sweep_<hardware>_<timestamp>.json` (gitignored). Per-con
 
 ---
 
+## Results policy (Git)
+
+| Commit | Skip |
+|--------|------|
+| Per-config JSON under `results/<hardware>/<preset>/` | `results/sweep_*.json` (gitignored) |
+| Article summaries, `*_compare.json` | Multi-GB GGUF in `~/.cache/llama-cpp-models/` |
+| Generated tables in `docs/articles/_generated/` | `.venv/` |
+
+Run `python scripts/validate_results.py` before committing new numbers.
+
+---
+
 ## Comparing machines in Git
 
 Typical workflow for the M3 vs M5 Max article:
@@ -458,6 +475,10 @@ flowchart LR
 | `llamacpp_models.py` | GGUF paths for llama.cpp (Article 10) |
 | `compare_runtimes.py` | MLX vs llama.cpp side-by-side JSON |
 | `workloads.py` | Task / data / pressure profiles (`--workload`, `--workload-sweep`) |
+| `benchmark_schema.py` | Schema v1, trial stats, validation helpers |
+| `validate_results.py` | Lint JSON under `results/` |
+| `migrate_results.py` | Legacy labels → fp16/w4, Llama 3→3.1 repos |
+| `report.py` | validate → tables → freshness report |
 
 **Article 10 guide:** [docs/optimizations/llama-cpp-vs-mlx.md](docs/optimizations/llama-cpp-vs-mlx.md)
 
@@ -562,6 +583,21 @@ LLM-Inference/
 ├── models.json                   # HF overrides
 ├── notes.md                      # Capstone article draft
 └── requirements.txt              # mlx, mlx-lm, psutil
+```
+
+---
+
+## Makefile shortcuts
+
+```bash
+make setup
+make validate HW="Mac M3"
+make migrate-dry HW="Mac M3"
+make test
+make tables ARTICLE=1 HW="Mac M3"
+make report HW="Mac M3"
+make article ARTICLE=5 HW="Mac M3"
+make m5   # on M5 Max machine only
 ```
 
 ---

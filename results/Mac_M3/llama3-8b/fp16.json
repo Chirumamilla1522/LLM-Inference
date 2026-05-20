@@ -1,9 +1,8 @@
 {
-  "timestamp": "2026-05-19T19:56:32.629648+00:00",
+  "timestamp": "2026-05-18T22:56:08.791262+00:00",
   "hardware": "Mac M3",
   "model_preset": "llama3-8b",
   "configuration": "fp16",
-  "weight_bits": 16,
   "optimizations": {
     "weight_bits": 16,
     "kv_cache": false,
@@ -15,13 +14,21 @@
   "prompt_tokens": 512,
   "generation_tokens": 128,
   "num_trials": 3,
-  "memory_gb": 16.32990214,
-  "ttft_ms": 2638.0334443723164,
-  "throughput_tps": 5.724725486746885,
-  "prompt_tps": 194.08575488268352,
+  "memory_gb": 0.0,
+  "ttft_ms": 0.0,
+  "throughput_tps": 0.0,
+  "prompt_tps": 0.0,
   "mlx_version": "0.31.2",
   "mlx_lm_version": "0.31.3",
   "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
-  "status": "ok",
-  "error": null
+  "status": "error",
+  "error": "Invalid username or password.",
+  "weight_bits": 16,
+  "schema_version": 1,
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
 }

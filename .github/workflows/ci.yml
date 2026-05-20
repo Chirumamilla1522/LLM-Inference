@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Compile scripts
+        run: python -m py_compile scripts/*.py
+
+      - name: Pytest (unit + smoke, no GPU)
+        run: pytest tests/ -q
+
+      - name: Validate checked-in results (if any)
+        run: python scripts/validate_results.py --json || true

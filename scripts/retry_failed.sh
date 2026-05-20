@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Re-run configs that failed (401 fp16 / memory) with current repo map.
+# Re-run configs that failed (401 / stale repos / memory) with current repo map.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -13,6 +13,10 @@ if ! .venv/bin/huggingface-cli whoami &>/dev/null; then
   echo "Run: ./scripts/hf_login.sh  (needed for Mistral fp16)"
   exit 1
 fi
+
+echo "=== Failures in existing JSON ==="
+python scripts/validate_results.py --hardware "$HARDWARE" --failures-only || true
+echo ""
 
 CONFIGS=(
   fp16 fp16+kv_cache fp16+prefill fp16+kv_cache+prefill

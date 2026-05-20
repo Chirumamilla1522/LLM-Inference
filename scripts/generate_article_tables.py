@@ -67,7 +67,14 @@ def print_table(rows: list[dict], title: str) -> None:
         mem = r.get("memory_gb", 0)
         ttft = r.get("ttft_ms", 0)
         tps = r.get("throughput_tps", 0)
+        st = r.get("stats") or {}
+        ttft_st = st.get("ttft_ms") or {}
+        tps_st = st.get("throughput_tps") or {}
+        p95_ttft = ttft_st.get("p95")
+        p95_tps = tps_st.get("p95")
         extra = ""
+        if p95_ttft is not None and p95_tps is not None:
+            extra += f" p95_ttft={p95_ttft:.0f}ms p95_tps={p95_tps:.1f}"
         if r.get("prefix_cache_warm_ttft_ms") is not None:
             extra = (
                 f" cold={r.get('prefix_cache_cold_ttft_ms', 0):.0f}ms "

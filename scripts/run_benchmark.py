@@ -17,6 +17,12 @@ from pathlib import Path
 import mlx.core as mx
 from mlx_lm import load, stream_generate
 
+from benchmark_schema import (
+    SCHEMA_VERSION,
+    WARMUP_POLICY,
+    build_stats_block,
+    primary_metric,
+)
 from workloads import WorkloadProfile, get_workload, iter_workloads, build_prompt_ids
 from optimizations import (
     DEFAULT_NUM_DRAFT_TOKENS,
@@ -79,6 +85,10 @@ class BenchmarkResult:
     prefix_cache_warm_ttft_ms: float | None = None
     prefix_system_tokens: int | None = None
     workload: dict | None = None
+    schema_version: int = SCHEMA_VERSION
+    trials: dict | None = None
+    stats: dict | None = None
+    warmup_policy: dict | None = None
 
     @property
     def runtime_combo_size(self) -> int:
@@ -481,6 +491,25 @@ def benchmark_once(
     if benchmark_mode == "speculative":
         config_label = f"{config.label}+speculative"
 
+    trials_block = {
+        "ttft_ms": ttft_samples,
+        "throughput_tps": throughput_samples,
+        "memory_gb": memory_samples,
+        "prompt_tps": prompt_tps_samples,
+    }
+    if accept_samples:
+        trials_block["draft_accept_rate"] = accept_samples
+
+    stats_block = build_stats_block(
+        ttft_ms=ttft_samples,
+        throughput_tps=throughput_samples,
+        memory_gb=memory_samples,
+        prompt_tps=prompt_tps_samples,
+        draft_accept_rate=accept_samples or None,
+    )
+    mem_stats = stats_block.get("memory_gb", {})
+    memory_primary = float(mem_stats.get("max", mem_stats.get("median", 0.0)))
+
     return BenchmarkResult(
         timestamp=datetime.now(timezone.utc).isoformat(),
         hardware=hardware,
@@ -494,10 +523,10 @@ def benchmark_once(
         prompt_tokens=effective_prompt_tokens,
         generation_tokens=effective_generation_tokens,
         num_trials=num_trials,
-        memory_gb=_avg(memory_samples),
-        ttft_ms=_avg(ttft_samples),
-        throughput_tps=_avg(throughput_samples),
-        prompt_tps=_avg(prompt_tps_samples),
+        memory_gb=memory_primary,
+        ttft_ms=primary_metric(stats_block.get("ttft_ms")),
+        throughput_tps=primary_metric(stats_block.get("throughput_tps")),
+        prompt_tps=primary_metric(stats_block.get("prompt_tps")),
         mlx_version=_package_version("mlx"),
         mlx_lm_version=_package_version("mlx_lm"),
         platform=platform.platform(),
@@ -507,8 +536,14 @@ def benchmark_once(
         draft_model_repo=draft_repo,
         draft_preset=effective_draft_preset,
         num_draft_tokens=num_draft_tokens if draft_repo else None,
-        draft_accept_rate=_avg(accept_samples) if accept_samples else None,
+        draft_accept_rate=primary_metric(stats_block.get("draft_accept_rate"))
+        if accept_samples
+        else None,
         workload=workload.to_metadata() if workload else None,
+        schema_version=SCHEMA_VERSION,
+        trials=trials_block,
+        stats=stats_block,
+        warmup_policy=WARMUP_POLICY,
     )
 
 
@@ -547,6 +582,8 @@ def _failed_result(
         status="error",
         error=error,
         workload=workload.to_metadata() if workload else None,
+        schema_version=SCHEMA_VERSION,
+        warmup_policy=WARMUP_POLICY,
     )
 
 
@@ -587,6 +624,18 @@ def run_single(args: argparse.Namespace) -> list[BenchmarkResult]:
     hardware = _detect_hardware(args.hardware)
     output_root = Path(args.output_root) if args.output_root else None
     workload = get_workload(args.workload) if args.workload else None
+
+    if args.dry_run:
+        p_tok = workload.prompt_tokens if workload else args.prompt_tokens
+        g_tok = workload.generation_tokens if workload else args.generation_tokens
+        print("DRY-RUN — would benchmark:")
+        print(f"  preset={args.preset} config={config.label} hardware={hardware}")
+        print(f"  prompt_tokens={p_tok} generation_tokens={g_tok} trials={args.num_trials}")
+        if workload:
+            print(f"  workload={workload.id} pressure={workload.pressure}")
+        print(f"  schema_version={SCHEMA_VERSION} warmup={WARMUP_POLICY['warmup_trials']} trial")
+        return []
+
     try:
         if args.prefix_cache:
             result = benchmark_prefix_cache(
@@ -1047,6 +1096,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--list-workloads",
         action="store_true",
         help="Print workload matrix and exit.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print planned single run and exit (no MLX).",
     )
     return parser
 

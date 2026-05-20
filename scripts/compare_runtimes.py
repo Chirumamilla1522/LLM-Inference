@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import shutil
 import subprocess
 import sys
@@ -20,6 +19,7 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from benchmark_schema import SCHEMA_VERSION, parse_llama_bench_output
 from articles import get_article
 from llamacpp_models import (
     GGUFSpec,
@@ -146,7 +146,7 @@ def run_llama_bench(
             error="llama-bench timed out",
         )
 
-    pp_tps, tg_tps = _parse_llama_bench_output(out)
+    pp_tps, tg_tps = parse_llama_bench_output(out)
     exit_code = proc.returncode if proc else -1
     status = "ok" if exit_code == 0 and tg_tps else "error"
     return LlamaCppResult(
@@ -163,33 +163,6 @@ def run_llama_bench(
         error=None if status == "ok" else f"exit {exit_code}",
         raw_output=out[-4000:] if out else None,
     )
-
-
-def _parse_llama_bench_output(text: str) -> tuple[float | None, float | None]:
-    """Parse llama-bench table lines for pp/tg t/s."""
-    pp_vals: list[float] = []
-    tg_vals: list[float] = []
-    for line in text.splitlines():
-        lower = line.lower()
-        # | llama 8B Q4_K | ... | pp512 | 1234.56 |
-        if "pp" in lower and "t/s" in lower:
-            nums = re.findall(r"[\d.]+", line)
-            if nums:
-                pp_vals.append(float(nums[-1]))
-        if "tg" in lower and "t/s" in lower:
-            nums = re.findall(r"[\d.]+", line)
-            if nums:
-                tg_vals.append(float(nums[-1]))
-    # Fallback: last numeric t/s columns in benchmark table
-    if not tg_vals:
-        for line in text.splitlines():
-            if "t/s" in line.lower() or "tokens per second" in line.lower():
-                nums = re.findall(r"[\d.]+", line)
-                if len(nums) >= 2:
-                    tg_vals.append(float(nums[-1]))
-    pp = sum(pp_vals) / len(pp_vals) if pp_vals else None
-    tg = sum(tg_vals) / len(tg_vals) if tg_vals else None
-    return pp, tg
 
 
 def run_mlx(
@@ -279,6 +252,7 @@ def compare_one(
             )
 
     record = {
+        "schema_version": SCHEMA_VERSION,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "article_id": 10,
         "hardware": hardware,

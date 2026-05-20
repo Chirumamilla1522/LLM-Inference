@@ -1,9 +1,8 @@
 {
-  "timestamp": "2026-05-19T20:16:31.940082+00:00",
+  "timestamp": "2026-05-18T22:59:26.431840+00:00",
   "hardware": "Mac M3",
   "model_preset": "llama3-8b",
   "configuration": "w4+kv_cache+prefill",
-  "weight_bits": 4,
   "optimizations": {
     "weight_bits": 4,
     "kv_cache": true,
@@ -15,13 +14,21 @@
   "prompt_tokens": 512,
   "generation_tokens": 128,
   "num_trials": 3,
-  "memory_gb": 5.057169516,
-  "ttft_ms": 4532.078583336745,
-  "throughput_tps": 11.897146482413843,
-  "prompt_tps": 113.02592972153906,
+  "memory_gb": 5.812332651999999,
+  "ttft_ms": 2632.2743329995624,
+  "throughput_tps": 19.763356679750192,
+  "prompt_tps": 194.63257571031758,
   "mlx_version": "0.31.2",
   "mlx_lm_version": "0.31.3",
   "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
   "status": "ok",
-  "error": null
+  "error": null,
+  "weight_bits": 4,
+  "schema_version": 1,
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
 }
