@@ -42,11 +42,19 @@ See generated tables under `docs/articles/_generated/` after `./scripts/run_arti
 
 ---
 
+## Mac M3 — run everything (this machine)
+
+```bash
+./scripts/hf_login.sh
+./scripts/run_m3_all.sh
+```
+
+Details: [docs/M3_RUNBOOK.md](docs/M3_RUNBOOK.md)
+
 ## Repo hygiene
 
 ```bash
 python scripts/validate_results.py --hardware "Mac M3"
-python scripts/migrate_results.py --apply --hardware "Mac M3" --delete-legacy-files
 ./scripts/retry_failed.sh "Mac M3"
 make test
 ```

@@ -97,6 +97,16 @@ python scripts/run_benchmark.py --preset llama3-8b --config fp16 --hardware "Mac
 
 Expected console output ends with `Saved: results/Mac_M3/llama3-8b/fp16.json` and `status: ok` in that file.
 
+### Complete Mac M3 pass (all articles)
+
+```bash
+./scripts/hf_login.sh
+./scripts/run_m3_all.sh              # standard: articles 0–7, 10 + hero capstone (~2–8 h)
+./scripts/run_m3_all.sh --from-checkpoint   # resume after interrupt
+```
+
+See **[docs/M3_RUNBOOK.md](docs/M3_RUNBOOK.md)** for per-article run counts and `full` vs `quick` modes. M5 Max is a separate step: `./scripts/run_m5_ladder.sh`.
+
 ---
 
 ## Two ways to run benchmarks
