@@ -247,7 +247,9 @@ flowchart TB
 | Prefix KV cache | `--prefix-cache` | TTFT with full prompt vs reused system-prefix cache |
 | Length sweeps | `-p` / `-g` in article 7 | How context and output length move TTFT and memory |
 
-Guides: [weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [prefill](docs/optimizations/prefill-and-flash-attention.md) · [full stack](docs/optimizations/all-optimizations.md)
+Guides: [math & implementation](docs/optimizations/math-and-implementation.md) · [weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [prefill](docs/optimizations/prefill-and-flash-attention.md) · [speculative](docs/optimizations/speculative-decoding.md) · [full stack](docs/optimizations/all-optimizations.md)
+
+Each guide includes **equations** (memory, complexity, quantization) and **programming** notes (bit packing, MLX flags, pseudocode).
 
 ---
 
@@ -537,6 +539,7 @@ LLM-Inference/
 
 | Topic | Link |
 |-------|------|
+| **Math + programming (equations)** | [docs/optimizations/math-and-implementation.md](docs/optimizations/math-and-implementation.md) |
 | Article index (12 posts) | [docs/ARTICLES_INDEX.md](docs/ARTICLES_INDEX.md) |
 | Run articles | [docs/ARTICLE_SERIES.md](docs/ARTICLE_SERIES.md) |
 | Benchmark workflow | [docs/BENCHMARK_WORKFLOW.md](docs/BENCHMARK_WORKFLOW.md) |

@@ -4,9 +4,11 @@ Content is split into focused guides:
 
 ## Per technique
 
+- [Math vs programming (equations & examples)](optimizations/math-and-implementation.md)
 - [Weight quantization](optimizations/weight-quantization.md)
 - [KV cache quantization](optimizations/kv-cache-quantization.md)
 - [Prefill & Flash Attention](optimizations/prefill-and-flash-attention.md)
+- [Speculative decoding](optimizations/speculative-decoding.md)
 
 ## Combined
 

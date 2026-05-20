@@ -12,15 +12,113 @@
 
 After the prompt is processed (**prefill**), the model generates tokens one at a time. For each new token it must attend to **all previous tokens**. Recomputing keys and values for the full history every step would be wasteful.
 
-Instead, transformers **cache** per-layer **K** and **V** tensors. Cache size grows with:
-
-```text
-layers × heads × sequence_length × head_dim × precision_bytes
-```
-
-For long prompts and long replies, the **KV cache** can exceed weight memory. On unified-memory Macs, that means pressure, swapping, or OOM.
+Instead, transformers **cache** per-layer **K** and **V** tensors.
 
 **KV cache quantization** stores those tensors at lower precision (we use **4-bit** in this repo) while weights may stay at fp16, 8-bit, or 4-bit independently.
+
+---
+
+## Math: cache size and attention
+
+### Scaled dot-product attention (per layer)
+
+For hidden states projected to queries, keys, values:
+
+$$
+\mathrm{Attention}(Q, K, V) = \mathrm{softmax}\left(\frac{Q K^\top}{\sqrt{d_h}}\right) V
+$$
+
+- \(Q \in \mathbb{R}^{T_q \times d_h}\), \(K, V \in \mathbb{R}^{T_k \times d_h}\)  
+- \(T_q\) = query length (often 1 in decode), \(T_k\) = key length (grows with history)
+
+During **decode**, each new token appends one row to \(K\) and \(V\) per layer → sequence length \(T\) increases by 1 per step.
+
+### KV memory formula
+
+$$
+M_{\text{KV}} = 2 \cdot L \cdot H_{\text{kv}} \cdot T \cdot D \cdot \frac{b_{\text{kv}}}{8}
+$$
+
+| Symbol | Typical Llama 8B |
+|--------|------------------|
+| \(L\) | 32 layers |
+| \(H_{\text{kv}}\) | 8 (GQA may use fewer KV heads than Q heads) |
+| \(T\) | prompt + generated tokens |
+| \(D\) | 128 head dim |
+| \(b_{\text{kv}}\) | 16 (off) or 4 (on in repo) |
+
+**Linear in \(T\):** Doubling generation length doubles KV RAM (weights unchanged).
+
+### Worked example (Article 7 style)
+
+Benchmark defaults: \(T = 512 + 128 = 640\), FP16 KV (\(b_{\text{kv}}=16\)):
+
+$$
+M_{\text{KV}} \approx 2 \times 32 \times 8 \times 640 \times 128 \times 2 \approx 84 \text{ MB}
+$$
+
+Enable **4-bit KV** (\(b_{\text{kv}}=4\), factor \(\frac{4}{16}=0.25\)):
+
+$$
+M_{\text{KV}} \approx 84 \times 0.25 \approx 21 \text{ MB}
+$$
+
+Long reply \(T = 512 + 1024 = 1536\), FP16 KV:
+
+$$
+M_{\text{KV}} \approx 2 \times 32 \times 8 \times 1536 \times 128 \times 2 \approx 201 \text{ MB}
+$$
+
+Same with 4-bit KV ≈ **50 MB** — why Article 2 + Article 7 matter for long `-g`.
+
+### KV quant math (group-wise, same idea as weights)
+
+Each cache entry group stores integer codes with scale \(s_{\text{kv}}\):
+
+$$
+\hat{v} = s_{\text{kv}} \cdot (q - z_{\text{kv}}), \quad q \in [0, 2^{b_{\text{kv}}} - 1]
+$$
+
+Attention uses \(\hat{K}, \hat{V}\) instead of full FP16—small error, large RAM savings when \(T\) is large.
+
+---
+
+## Programming: cache objects and `kv_bits`
+
+### MLX control path
+
+```python
+# scripts/optimizations.py
+KV_BITS = 4  # when OptimizationConfig.kv_cache is True
+
+# scripts/run_benchmark.py
+gen_kwargs = {"kv_bits": 4, "prefill_step_size": 512, "max_tokens": 128}
+stream_generate(model, tokenizer, prompt, **gen_kwargs)
+```
+
+Inside `mlx_lm.generate`, `maybe_quantize_kv_cache` calls `cache.to_quantized(group_size=64, bits=kv_bits)` once cache entries are warm enough (`quantized_kv_start`, default 5000 tokens in mlx-lm CLI; benchmark runs are shorter so behavior depends on MLX version and path).
+
+### Bit-level view
+
+| `kv_cache` | Storage per K/V element | Implementation |
+|------------|-------------------------|----------------|
+| OFF | 2 bytes (FP16/BF16) | `KVCache` full precision |
+| ON | ~0.5 bytes (4-bit groups) | `QuantizedKVCache` after `to_quantized` |
+
+This is **runtime** quantization of the **growing** cache—unlike weights, which are pre-quantized at download time in our sweeps.
+
+### Pseudocode: decode with cache append
+
+```python
+for token in range(max_tokens):
+    k_new, v_new = project_kv(hidden)       # one token
+    K_cache.append(k_new)                 # grows T
+    V_cache.append(v_new)
+    if kv_bits == 4 and cache.ready():
+        K_cache, V_cache = quantize_groups(K_cache, V_cache, bits=4)
+    logits = attention(q_new, K_cache, V_cache)
+    hidden = sample(logits)
+```
 
 ---
 
@@ -175,6 +273,8 @@ Underlying MLX behavior: `maybe_quantize_kv_cache` in `mlx_lm.generate` when `kv
 
 ## See also
 
-- [Weight quantization](weight-quantization.md)
-- [Prefill & Flash Attention](prefill-and-flash-attention.md)
+- [Math vs programming overview](math-and-implementation.md)  
+- [Weight quantization](weight-quantization.md)  
+- [Prefill & Flash Attention](prefill-and-flash-attention.md)  
+- [Article 7: context & cache](../articles/07-context-and-cache.md) — `-g` sweeps using this formula  
 - [All optimizations together](all-optimizations.md)

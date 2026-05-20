@@ -40,6 +40,44 @@ flowchart TB
 
 None of these replace the others—they address different bottlenecks.
 
+**Math vs code for each layer:** [math-and-implementation.md](math-and-implementation.md)
+
+---
+
+## Combined memory model (equations)
+
+Peak unified memory can be estimated as:
+
+$$
+M_{\text{peak}} \approx \underbrace{\frac{N \cdot b_w}{8}}_{\text{weights}} + \underbrace{2 L H_{\text{kv}} T \cdot D \cdot \frac{b_{\text{kv}}}{8}}_{\text{KV cache}} + M_{\text{overhead}}
+$$
+
+where \(T = T_{\text{prompt}} + T_{\text{gen}}\) (flags `-p` and `-g`).
+
+### Capstone config: `w4+kv_cache+prefill`
+
+| Term | Article | Typical 8B value |
+|------|---------|------------------|
+| \(b_w = 4\) | [Weight quant](weight-quantization.md) | ~4 GB weights |
+| \(b_{\text{kv}} = 4\) | [KV quant](kv-cache-quantization.md) | ~21 MB KV at \(T{=}640\) |
+| Large \(C = 2048\) | [Prefill](prefill-and-flash-attention.md) | Lower TTFT at long \(T_{\text{prompt}}\) |
+
+Compare to `fp16` baseline (\(b_w=16\), \(b_{\text{kv}}=16\), \(C=512\)):
+
+$$
+\frac{M_{\text{weights,fp16}}}{M_{\text{weights,w4}}} \approx \frac{16}{4} = 4\times \text{ smaller}
+$$
+
+Article [notes.md](../../notes.md) table (M3, Llama 8B): ~16.2 GB → ~5.8 GB, TTFT 145 ms → 85 ms, 22 → 48 t/s — consistent with weight bandwidth + capacity effects.
+
+### Programming stack in one run
+
+```python
+config = OptimizationConfig(weight_bits=4, kv_cache=True, prefill=True)
+# → repo w4, kv_bits=4, prefill_step_size=2048
+stream_generate(model, tokenizer, prompt, kv_bits=4, prefill_step_size=2048, max_tokens=128)
+```
+
 ---
 
 ## The problem on Apple Silicon

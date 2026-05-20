@@ -25,6 +25,121 @@ On Apple Silicon, **MLX** uses Metal kernels that implement these ideas internal
 
 ---
 
+## Math: attention cost and Flash Attention
+
+### Naive attention complexity
+
+For sequence length \(n\), head dimension \(d_h\), and \(H\) heads:
+
+**Compute (rough):** \(O(n^2 \cdot d_h \cdot H)\) for the \(QK^\top\) and softmax-weighted \(V\) products.
+
+**Memory (naive materialization):** storing full score matrix \(S \in \mathbb{R}^{n \times n}\):
+
+$$
+M_{\text{scores}} = n^2 \cdot \text{bytes per element}
+$$
+
+Example \(n = 2048\), FP16:
+
+$$
+M_{\text{scores}} \approx 2048^2 \times 2 \approx 8 \text{ MB per head per layer}
+$$
+
+Multiply by 32 layers × 32 heads → **gigabytes** of intermediate state—unacceptable at long context.
+
+### Flash Attention idea (online softmax)
+
+Flash Attention never materializes full \(n \times n\) in HBM. It processes **blocks** (tiles) of \(Q\), \(K\), \(V\) in fast SRAM and maintains running softmax statistics \((m, \ell)\) per row:
+
+For block contributions, with local max \(m_{ij}\) and sum \(\ell_{ij}\):
+
+$$
+m_i^{\text{new}} = \max(m_i^{\text{old}}, m_{ij})
+$$
+
+$$
+\ell_i^{\text{new}} = e^{m_i^{\text{old}} - m_i^{\text{new}}} \ell_i^{\text{old}} + e^{m_{ij} - m_i^{\text{new}}} \ell_{ij}
+$$
+
+Output accumulators are updated consistently so the result matches standard attention up to floating-point order.
+
+**Complexity:** Still \(O(n^2)\) in FLOPs, but **\(O(n)\)** extra memory for the algorithm (no full \(S\) matrix).
+
+### TTFT and prompt length
+
+Prefill processes \(n = T_{\text{prompt}}\) tokens in parallel. A simple model:
+
+$$
+\mathrm{TTFT} \approx \frac{\text{FLOPs}_{\text{prefill}}}{\text{GPU throughput}} + \frac{M_{\text{read}}}{B_{\text{mem}}}
+$$
+
+When bandwidth-bound, doubling \(n\) can push TTFT up **superlinearly** if attention dominates (\(n^2\) term). Flash-style kernels reduce the **constant** on memory traffic.
+
+**Article 3 / 7:** compare `ttft_ms` at `-p 256` vs `1024` vs `2048` with `w4+prefill` ON vs OFF.
+
+### `prefill_step_size` (math vs code)
+
+Let prompt length be \(T\), chunk size \(C\) (`prefill_step_size`):
+
+$$
+\text{number of prefill chunks} = \left\lceil \frac{T}{C} \right\rceil
+$$
+
+| Flag | \(C\) | Chunks for \(T=512\) |
+|------|-------|----------------------|
+| OFF | 512 | \(\lceil 512/512 \rceil = 1\) |
+| ON | 2048 | \(\lceil 512/2048 \rceil = 1\) |
+
+For \(T = 2048\):
+
+| Flag | Chunks |
+|------|--------|
+| OFF (512) | 4 |
+| ON (2048) | 1 |
+
+Fewer chunks → less loop overhead; larger tiles → better kernel efficiency. That is why **long prompts** show larger TTFT gains than our default 512-token benchmark.
+
+---
+
+## Programming: MLX kernels and chunk loop
+
+### What you control in this repo
+
+```python
+# scripts/optimizations.py
+PREFILL_BASELINE = 512    # prefill OFF
+PREFILL_OPTIMIZED = 2048  # prefill ON
+```
+
+```python
+stream_generate(
+    model, tokenizer, prompt,
+    prefill_step_size=params.prefill_step_size,  # 512 or 2048
+    max_tokens=generation_tokens,
+)
+```
+
+### Control flow (simplified from `generate_step`)
+
+```python
+prompt = remaining_prompt_tokens
+while len(prompt) > 1:
+    n = min(prefill_step_size, len(prompt) - 1)
+    model.forward(prompt[:n], cache=prompt_cache)  # tiled attention inside
+    prompt = prompt[n:]
+# last token + first decode step
+logits = model.forward(prompt[-1:], cache=prompt_cache)
+```
+
+Flash Attention runs **inside** `model.forward` on Metal; `prefill_step_size` only changes how many tokens enter each forward slice.
+
+### Bitwise / low-level (what you do *not* write)
+
+- Tile sizes, warp/wavefront layout, softmax numerics → MLX Metal shaders  
+- You benchmark **latency outcome** (`ttft_ms`), not kernel source
+
+---
+
 ## Prefill vs decode
 
 ```mermaid
@@ -177,6 +292,7 @@ Article example (M5 Max, Mistral, “optimized” stack): TTFT **75 ms → 40 ms
 
 ## See also
 
-- [Weight quantization](weight-quantization.md)
-- [KV cache quantization](kv-cache-quantization.md)
+- [Math vs programming overview](math-and-implementation.md)  
+- [Weight quantization](weight-quantization.md)  
+- [KV cache quantization](kv-cache-quantization.md)  
 - [All optimizations together](all-optimizations.md)

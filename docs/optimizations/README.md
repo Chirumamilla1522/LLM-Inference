@@ -8,13 +8,20 @@ Each **benchmarked** technique has its own guide. The combined guide explains ho
 
 **Sweep commands:** [ARTICLE_SERIES.md](../ARTICLE_SERIES.md)
 
+## Math and programming (read first for articles)
+
+| Document | Topic |
+|----------|--------|
+| [**Math vs programming**](math-and-implementation.md) | Equations, examples, bitwise vs algorithmic map |
+
 ## Benchmarked in this repo
 
 | Document | Topic |
 |----------|--------|
-| [Weight quantization](weight-quantization.md) | fp16, 8-bit, 4-bit, 2-bit model weights |
-| [KV cache quantization](kv-cache-quantization.md) | Compressing the growing key/value cache during decode |
-| [Prefill & Flash Attention](prefill-and-flash-attention.md) | Prompt processing, tiling, and TTFT |
+| [Weight quantization](weight-quantization.md) | Affine quant math + packed weights |
+| [KV cache quantization](kv-cache-quantization.md) | \(M_{\text{KV}}\) formula + `kv_bits` |
+| [Prefill & Flash Attention](prefill-and-flash-attention.md) | Attention \(O(n^2)\) + `prefill_step_size` |
+| [Speculative decoding](speculative-decoding.md) | Acceptance rate + `draft_model` |
 
 ## Combined view
 

@@ -10,8 +10,8 @@
 | 3 | [Prefill & Flash Attention](optimizations/prefill-and-flash-attention.md) | `prefill_step_size`, TTFT | yes |
 | 4 | [Model size & memory ladder](articles/04-model-size.md) | 0.5B→72B presets, what fits 24 GB | yes (presets) |
 | 5 | [The full optimization stack](optimizations/all-optimizations.md) | Combining weights + KV + prefill | yes |
-| 6 | [Speculative decoding](articles/06-speculative-decoding.md) | Draft + target models | yes (`--speculative`) |
-| 7 | [Context, generation length & prompt cache](articles/07-context-and-cache.md) | `-p` / `-g` sweeps, prefix KV reuse | yes |
+| 6 | [Speculative decoding](articles/06-speculative-decoding.md) | Draft + target; [math](optimizations/speculative-decoding.md) | yes (`--speculative`) |
+| 7 | [Context, generation length & prompt cache](articles/07-context-and-cache.md) | \(T\) math, `-p` / `-g`, prefix cache | yes |
 | 8 | [Production serving at scale](articles/08-serving.md) | Continuous batching, PagedAttention, scheduling | concept |
 | 9 | [Parallelism for huge models](articles/09-parallelism.md) | Tensor, pipeline, expert parallel | concept |
 | 10 | [Local runtimes compared](articles/10-runtimes.md) | MLX vs llama.cpp vs Ollama | concept |
@@ -49,6 +49,8 @@ These stay **sections** inside the articles above—not their own posts:
 - M3 vs M5 numbers → **Article 0** + tables in **5**
 - Reproducibility / trials → § in **Article 0**
 - LoRA, MoE, compile, offload → § in **6**, **9**, or **11** until benchmarked
+
+**Equations and code for every optimization:** [optimizations/math-and-implementation.md](optimizations/math-and-implementation.md)
 
 Full technique list (reference only): [INFERENCE_OPTIMIZATIONS_CATALOG.md](INFERENCE_OPTIMIZATIONS_CATALOG.md).
 
