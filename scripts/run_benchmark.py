@@ -17,6 +17,7 @@ from pathlib import Path
 import mlx.core as mx
 from mlx_lm import load, stream_generate
 
+from workloads import WorkloadProfile, get_workload, iter_workloads, build_prompt_ids
 from optimizations import (
     DEFAULT_NUM_DRAFT_TOKENS,
     LARGE_MODEL_PRESETS,
@@ -77,6 +78,7 @@ class BenchmarkResult:
     prefix_cache_cold_ttft_ms: float | None = None
     prefix_cache_warm_ttft_ms: float | None = None
     prefix_system_tokens: int | None = None
+    workload: dict | None = None
 
     @property
     def runtime_combo_size(self) -> int:
@@ -328,6 +330,7 @@ def benchmark_once(
     article_id: int | None = None,
     run_label: str | None = None,
     benchmark_mode: str = "standard",
+    workload: WorkloadProfile | None = None,
 ) -> BenchmarkResult:
     params = resolve_run_params(model_preset, config)
     if model_override:
@@ -394,16 +397,38 @@ def benchmark_once(
                 "Pick a draft preset with a matching tokenizer."
             )
 
-    vocab_size = getattr(tokenizer, "vocab_size", None) or len(tokenizer.get_vocab())
-    mx.random.seed(seed)
-    prompt = mx.random.randint(0, vocab_size, (prompt_tokens,)).tolist()
+    if workload is not None and not workload.runnable:
+        raise ValueError(
+            f"Workload '{workload.id}' ({workload.modality.value}) is not runnable "
+            "in the text mlx-lm harness yet."
+        )
+
+    effective_prompt_tokens = (
+        workload.prompt_tokens if workload is not None else prompt_tokens
+    )
+    effective_generation_tokens = (
+        workload.generation_tokens if workload is not None else generation_tokens
+    )
+
+    if workload is not None:
+        print(
+            f"Workload: {workload.id} (pressure={workload.pressure}, "
+            f"task={workload.task.value}, data={workload.data_type.value}, "
+            f"stress={workload.primary_stress.value})"
+        )
 
     print("Warmup ...")
+    warmup_prompt = build_prompt_ids(
+        tokenizer,
+        workload or get_workload("random_baseline"),
+        seed=seed,
+        prompt_tokens=effective_prompt_tokens,
+    )
     _run_trial(
         model,
         tokenizer,
-        prompt,
-        generation_tokens,
+        warmup_prompt,
+        effective_generation_tokens,
         params,
         draft_model=draft_model,
         num_draft_tokens=num_draft_tokens,
@@ -418,13 +443,17 @@ def benchmark_once(
     for trial in range(1, num_trials + 1):
         if delay > 0:
             time.sleep(delay)
-        mx.random.seed(seed + trial)
-        prompt = mx.random.randint(0, vocab_size, (prompt_tokens,)).tolist()
+        trial_prompt = build_prompt_ids(
+            tokenizer,
+            workload or get_workload("random_baseline"),
+            seed=seed + trial,
+            prompt_tokens=effective_prompt_tokens,
+        )
         ttft_ms, prompt_tps, generation_tps, peak_memory_gb, accept = _run_trial(
             model,
             tokenizer,
-            prompt,
-            generation_tokens,
+            trial_prompt,
+            effective_generation_tokens,
             params,
             draft_model=draft_model,
             num_draft_tokens=num_draft_tokens,
@@ -462,8 +491,8 @@ def benchmark_once(
         model_repo=params.model_repo,
         kv_bits=params.kv_bits,
         prefill_step_size=params.prefill_step_size,
-        prompt_tokens=prompt_tokens,
-        generation_tokens=generation_tokens,
+        prompt_tokens=effective_prompt_tokens,
+        generation_tokens=effective_generation_tokens,
         num_trials=num_trials,
         memory_gb=_avg(memory_samples),
         ttft_ms=_avg(ttft_samples),
@@ -479,6 +508,7 @@ def benchmark_once(
         draft_preset=effective_draft_preset,
         num_draft_tokens=num_draft_tokens if draft_repo else None,
         draft_accept_rate=_avg(accept_samples) if accept_samples else None,
+        workload=workload.to_metadata() if workload else None,
     )
 
 
@@ -491,6 +521,7 @@ def _failed_result(
     prompt_tokens: int,
     generation_tokens: int,
     num_trials: int,
+    workload: WorkloadProfile | None = None,
 ) -> BenchmarkResult:
     params = resolve_run_params(model_preset, config)
     return BenchmarkResult(
@@ -515,6 +546,7 @@ def _failed_result(
         platform=platform.platform(),
         status="error",
         error=error,
+        workload=workload.to_metadata() if workload else None,
     )
 
 
@@ -554,6 +586,7 @@ def run_single(args: argparse.Namespace) -> list[BenchmarkResult]:
 
     hardware = _detect_hardware(args.hardware)
     output_root = Path(args.output_root) if args.output_root else None
+    workload = get_workload(args.workload) if args.workload else None
     try:
         if args.prefix_cache:
             result = benchmark_prefix_cache(
@@ -585,21 +618,25 @@ def run_single(args: argparse.Namespace) -> list[BenchmarkResult]:
                 article_id=args.article_id,
                 run_label=args.run_label,
                 benchmark_mode=mode,
+                workload=workload,
             )
     except Exception as exc:
+        p_tok = workload.prompt_tokens if workload else args.prompt_tokens
+        g_tok = workload.generation_tokens if workload else args.generation_tokens
         result = _failed_result(
             model_preset=args.preset,
             config=config,
             hardware=hardware,
             error=str(exc),
-            prompt_tokens=args.prompt_tokens,
-            generation_tokens=args.generation_tokens,
+            prompt_tokens=p_tok,
+            generation_tokens=g_tok,
             num_trials=args.num_trials,
+            workload=workload,
         )
         print(f"FAILED: {exc}")
         traceback.print_exc()
 
-    label = args.run_label or config.label
+    label = args.run_label or (args.workload if args.workload else config.label)
     if args.speculative and not args.prefix_cache:
         label = f"{config.label}+speculative"
     out = args.output or _result_path(
@@ -662,6 +699,8 @@ def _run_single_subprocess(
         cmd.append("--speculative")
     if prefix_cache:
         cmd.append("--prefix-cache")
+    if getattr(args, "workload", None):
+        cmd.extend(["--workload", args.workload])
     return subprocess.run(cmd, cwd=ROOT).returncode
 
 
@@ -994,6 +1033,21 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Benchmark cold vs warm TTFT with saved prefix KV cache.",
     )
+    parser.add_argument(
+        "--workload",
+        metavar="ID",
+        help="Stress profile id (task × data × pressure). See: python scripts/workloads.py",
+    )
+    parser.add_argument(
+        "--workload-sweep",
+        action="store_true",
+        help="Run all runnable workload profiles for --preset and --config (or w4 default).",
+    )
+    parser.add_argument(
+        "--list-workloads",
+        action="store_true",
+        help="Print workload matrix and exit.",
+    )
     return parser
 
 
@@ -1027,10 +1081,92 @@ def run_hf_check() -> None:
     raise SystemExit(0 if ok else 1)
 
 
+def run_workload_sweep(args: argparse.Namespace) -> list[BenchmarkResult]:
+    """Run low→high pressure workloads for one model + config."""
+    if args.weight_bits is not None:
+        config = OptimizationConfig(
+            weight_bits=args.weight_bits,
+            kv_cache=args.kv_cache,
+            prefill=args.prefill,
+        )
+    elif args.config:
+        config = OptimizationConfig.from_label(args.config)
+    else:
+        config = OptimizationConfig.from_label("w4+kv_cache+prefill")
+
+    hardware = _detect_hardware(args.hardware)
+    safe_hw = hardware.replace(" ", "_").replace("/", "-")
+    sweep_root = (
+        Path(args.output_root)
+        if args.output_root
+        else RESULTS_DIR / safe_hw / args.preset / "workloads"
+    )
+
+    profiles = list(iter_workloads(sweep=True))
+    print(
+        f"Workload sweep: {args.preset} @ {config.label} — "
+        f"{len(profiles)} profiles (pressure 1→5)"
+    )
+    results: list[BenchmarkResult] = []
+    for i, profile in enumerate(profiles, 1):
+        print(f"\n>>> Workload {i}/{len(profiles)}: {profile.id}")
+        out = sweep_root / f"{profile.id}.json"
+        args.workload = profile.id
+        exit_code = _run_single_subprocess(
+            args,
+            model_preset=args.preset,
+            config=config,
+            hardware=hardware,
+            output=out,
+            run_label=profile.id,
+        )
+        result = _load_result_from_file(out)
+        if result is None:
+            result = _failed_result(
+                model_preset=args.preset,
+                config=config,
+                hardware=hardware,
+                error="subprocess failed" if exit_code else "no output",
+                prompt_tokens=profile.prompt_tokens,
+                generation_tokens=profile.generation_tokens,
+                num_trials=args.num_trials,
+                workload=profile,
+            )
+        results.append(result)
+        if args.delay_between_configs > 0 and i < len(profiles):
+            time.sleep(args.delay_between_configs)
+
+    summary_path = sweep_root / "workload_sweep_summary.json"
+    sweep_root.mkdir(parents=True, exist_ok=True)
+    summary_path.write_text(
+        json.dumps(
+            {
+                "hardware": hardware,
+                "model_preset": args.preset,
+                "configuration": config.label,
+                "workloads": [p.id for p in profiles],
+                "results": [asdict(r) for r in results],
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            },
+            indent=2,
+        )
+        + "\n"
+    )
+    print(f"\nSaved summary: {summary_path}")
+    return results
+
+
 def main() -> None:
     args = build_parser().parse_args()
+    if args.list_workloads:
+        from workloads import print_workload_table
+
+        print_workload_table()
+        return
     if args.hf_check:
         run_hf_check()
+    elif args.workload_sweep:
+        run_workload_sweep(args)
     elif args.sweep:
         run_sweep(args)
     else:

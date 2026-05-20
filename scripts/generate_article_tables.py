@@ -42,13 +42,27 @@ def print_table(rows: list[dict], title: str) -> None:
         return
 
     print(f"\n### {title}\n")
-    print("| Model | Run | Memory (GB) | TTFT (ms) | tok/s | Status |")
-    print("|-------|-----|-------------|-----------|-------|--------|")
+    has_workload = any(r.get("workload") for r in rows)
+    if has_workload:
+        print("| Model | Run | Workload | P | Memory (GB) | TTFT (ms) | tok/s | Status |")
+        print("|-------|-----|----------|---|-------------|-----------|-------|--------|")
+    else:
+        print("| Model | Run | Memory (GB) | TTFT (ms) | tok/s | Status |")
+        print("|-------|-----|-------------|-----------|-------|--------|")
     for r in sorted(rows, key=lambda x: (x.get("model_preset", ""), x.get("run_label", x.get("configuration", "")))):
         preset = r.get("model_preset", "—")
         label = r.get("run_label") or r.get("configuration", "—")
+        wl = r.get("workload") or {}
+        wl_id = wl.get("workload_id", "—") if isinstance(wl, dict) else "—"
+        pressure = wl.get("workload_pressure", "—") if isinstance(wl, dict) else "—"
         if r.get("status") != "ok":
-            print(f"| {preset} | {label} | — | — | — | {r.get('status', 'fail')} |")
+            if has_workload:
+                print(
+                    f"| {preset} | {label} | {wl_id} | {pressure} | — | — | — | "
+                    f"{r.get('status', 'fail')} |"
+                )
+            else:
+                print(f"| {preset} | {label} | — | — | — | {r.get('status', 'fail')} |")
             continue
         mem = r.get("memory_gb", 0)
         ttft = r.get("ttft_ms", 0)
@@ -61,7 +75,13 @@ def print_table(rows: list[dict], title: str) -> None:
             )
         if r.get("draft_accept_rate") is not None:
             extra += f" accept={r['draft_accept_rate']:.1%}"
-        print(f"| {preset} | {label} | {mem:.2f} | {ttft:.0f}{extra} | {tps:.1f} | ok |")
+        if has_workload:
+            print(
+                f"| {preset} | {label} | {wl_id} | {pressure} | {mem:.2f} | "
+                f"{ttft:.0f}{extra} | {tps:.1f} | ok |"
+            )
+        else:
+            print(f"| {preset} | {label} | {mem:.2f} | {ttft:.0f}{extra} | {tps:.1f} | ok |")
 
 
 def main() -> None:

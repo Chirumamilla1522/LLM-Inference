@@ -457,6 +457,7 @@ flowchart LR
 | `generate_article_tables.py` | Markdown tables from JSON |
 | `llamacpp_models.py` | GGUF paths for llama.cpp (Article 10) |
 | `compare_runtimes.py` | MLX vs llama.cpp side-by-side JSON |
+| `workloads.py` | Task / data / pressure profiles (`--workload`, `--workload-sweep`) |
 
 **Article 10 guide:** [docs/optimizations/llama-cpp-vs-mlx.md](docs/optimizations/llama-cpp-vs-mlx.md)
 
@@ -473,6 +474,12 @@ python scripts/run_benchmark.py \
 # --- Partial sweeps ---
 python scripts/run_benchmark.py --sweep --weights-only --all-models --hardware "Mac M3"
 python scripts/run_benchmark.py --sweep --preset llama3-8b --max-combo-size 1 --hardware "Mac M3"
+
+# --- Workload stress (task × data × pressure) ---
+python scripts/workloads.py
+python scripts/run_benchmark.py --preset llama3-8b --config w4+kv_cache+prefill \
+  --workload summarize_long --hardware "Mac M3"
+python scripts/run_benchmark.py --preset llama3-8b --workload-sweep --hardware "Mac M3"
 
 # --- Advanced ---
 python scripts/run_benchmark.py --preset llama3-8b --config w4 --speculative --hardware "Mac M3"
@@ -586,7 +593,7 @@ MLX uses efficient attention kernels internally. We only toggle `prefill_step_si
 This project targets Apple Silicon + MLX. For cross-platform GGUF serving, use **llama.cpp**; compare both on the same Mac with Article 10 — [llama-cpp-vs-mlx.md](docs/optimizations/llama-cpp-vs-mlx.md).
 
 **Why random prompt tokens?**  
-Reproducible, tokenizer-safe inputs without fixture files. Same seed policy per trial; use fixed `-p`/`-g` across configs for fair comparison.
+The `random_baseline` workload still uses uniform random IDs for pure config A/B tests. For realistic stress, use **`--workload`** profiles (prose, JSON, code, long RAG) — see [workload-stress-matrix.md](docs/optimizations/workload-stress-matrix.md).
 
 **What is a “skipped” result?**  
 The runner estimated peak RAM above the budget (`--memory-fraction` × system RAM) or the preset needs more RAM than the machine has. Not a crash—check `error` in the JSON.

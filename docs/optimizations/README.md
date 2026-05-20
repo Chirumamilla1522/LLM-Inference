@@ -23,6 +23,7 @@ Each **benchmarked** technique has its own guide. The combined guide explains ho
 | [Prefill & Flash Attention](prefill-and-flash-attention.md) | Attention \(O(n^2)\) + `prefill_step_size` |
 | [Speculative decoding](speculative-decoding.md) | Acceptance rate + `draft_model` |
 | [**llama.cpp vs MLX**](llama-cpp-vs-mlx.md) | Article 10 — GGUF vs mlx-community, `llama-bench` |
+| [**Workload stress matrix**](workload-stress-matrix.md) | Task × data × pressure × modality |
 
 ## Combined view
 

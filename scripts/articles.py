@@ -13,6 +13,7 @@ from optimizations import (
     large_presets,
     sort_presets,
 )
+from workloads import ARTICLE_07_WORKLOADS
 
 # Default presets for multi-model article sections (24 GB friendly).
 DEFAULT_ARTICLE_PRESETS: tuple[str, ...] = (
@@ -40,6 +41,7 @@ class ArticleRun:
     generation_tokens: int | None = None
     draft_preset: str | None = None
     num_draft_tokens: int | None = None
+    workload: str | None = None  # scripts/workloads.py profile id
     kind: RunKind = RunKind.STANDARD
 
 
@@ -254,6 +256,15 @@ ARTICLES: dict[int, Article] = {
                 config="w4",
                 kind=RunKind.PREFIX_CACHE,
             ),
+        )
+        + tuple(
+            ArticleRun(
+                label=f"wl_{wid}",
+                preset="llama3-8b",
+                config="w4+kv_cache+prefill",
+                workload=wid,
+            )
+            for wid in ARTICLE_07_WORKLOADS
         ),
     ),
     8: Article(

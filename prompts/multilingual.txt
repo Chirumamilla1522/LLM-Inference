@@ -1,0 +1,1 @@
+English: benchmark local LLMs. 日本語: ローカル推論のベンチマーク。中文：在 Apple Silicon 上测量首 token 延迟与解码吞吐。Emoji stress: 🔥📊🧠 repeated patterns 你好 world café naïve résumé.

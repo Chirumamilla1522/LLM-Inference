@@ -1,0 +1,1 @@
+{"task": "answer", "context": [{"id": "doc-1", "text": "MLX uses Metal for on-device matmul."}, {"id": "doc-2", "text": "KV cache stores keys and values per layer."}], "question": "Which optimization reduces memory during decode?", "format": "concise"}

@@ -137,6 +137,8 @@ def run_article_runs(
             "-o",
             str(output),
         ]
+        if run.workload:
+            cmd.extend(["--workload", run.workload])
         if run.kind == RunKind.SPECULATIVE:
             cmd.append("--speculative")
             if run.num_draft_tokens is not None:

@@ -136,8 +136,30 @@ Use [KV formula](../optimizations/kv-cache-quantization.md) with \(b_{\text{kv}}
 
 ---
 
+## 4. Workload stress matrix (task × data × pressure)
+
+Beyond raw `-p` / `-g` sweeps, Article 7 runs **`wl_*` workloads** — realistic task shapes from light chat to heavy RAG.
+
+| Pressure | Example ID | Stress |
+|----------|------------|--------|
+| 1 | `chat_light` | decode |
+| 2 | `qa_json` | balanced |
+| 3 | `summarize_long` | prefill |
+| 4 | `rag_agent` | memory |
+| 5 | `stress_prefill` / `stress_decode` | max prefill or decode |
+
+Full matrix: [workload-stress-matrix.md](../optimizations/workload-stress-matrix.md)
+
+```bash
+./scripts/run_article.sh 7 "Mac M3"
+python scripts/run_benchmark.py --preset llama3-8b --workload-sweep --hardware "Mac M3"
+```
+
+---
+
 ## See also
 
+- [Workload stress matrix](../optimizations/workload-stress-matrix.md)  
 - [Math vs programming overview](../optimizations/math-and-implementation.md)  
 - [KV cache quantization](../optimizations/kv-cache-quantization.md)  
 - [Prefill & Flash Attention](../optimizations/prefill-and-flash-attention.md)  
