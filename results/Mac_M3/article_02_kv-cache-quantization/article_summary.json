@@ -1,0 +1,9 @@
+{
+  "article_id": 2,
+  "slug": "kv-cache-quantization",
+  "title": "KV cache quantization",
+  "hardware": "Mac M3",
+  "output_dir": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_02_kv-cache-quantization",
+  "timestamp": "2026-05-20T17:43:18.547211+00:00",
+  "failures": 0
+}

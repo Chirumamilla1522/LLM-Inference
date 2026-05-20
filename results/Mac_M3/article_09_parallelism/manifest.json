@@ -1,0 +1,15 @@
+{
+  "article_id": 9,
+  "slug": "parallelism",
+  "title": "Parallelism for huge models",
+  "hardware": "Mac M3",
+  "benchmark_mode": "concept",
+  "status": "concept_only",
+  "topics": [
+    "tensor_parallelism",
+    "pipeline_parallelism",
+    "expert_parallelism"
+  ],
+  "timestamp": "2026-05-20T19:05:59.864959+00:00",
+  "note": "No MLX benchmark for this article. See docs/articles/ and write concept content."
+}

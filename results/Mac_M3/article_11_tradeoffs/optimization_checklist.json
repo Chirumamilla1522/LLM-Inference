@@ -1,0 +1,10 @@
+{
+  "decision_tree": [
+    "1. Enough RAM for fp16 weights? \u2192 if no, use w8/w4/w2 (Article 1)",
+    "2. Long generations eating RAM? \u2192 enable kv_cache (Article 2)",
+    "3. High TTFT on long prompts? \u2192 enable prefill (Article 3)",
+    "4. Need faster decode? \u2192 speculative decoding (Article 6)",
+    "5. Repeated system prompt? \u2192 prefix KV cache (Article 7)",
+    "6. Multi-user production? \u2192 serving stack (Article 8), not single-stream MLX"
+  ]
+}

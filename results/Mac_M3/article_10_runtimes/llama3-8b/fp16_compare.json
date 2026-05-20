@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "timestamp": "2026-05-20T19:00:01.900547+00:00",
+  "article_id": 10,
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "fp16",
+  "weight_bits": 16,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "runtime": "mlx_vs_llamacpp",
+  "mlx": {
+    "timestamp": "2026-05-20T18:59:57.118860+00:00",
+    "hardware": "Mac M3",
+    "model_preset": "llama3-8b",
+    "configuration": "fp16",
+    "weight_bits": 16,
+    "optimizations": {
+      "weight_bits": 16,
+      "kv_cache": false,
+      "prefill": false
+    },
+    "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
+    "kv_bits": null,
+    "prefill_step_size": 512,
+    "prompt_tokens": 512,
+    "generation_tokens": 128,
+    "num_trials": 3,
+    "memory_gb": 16.3299,
+    "ttft_ms": 2793.9632,
+    "throughput_tps": 5.5486,
+    "prompt_tps": 183.2522,
+    "mlx_version": "0.31.2",
+    "mlx_lm_version": "0.31.3",
+    "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+    "status": "ok",
+    "error": null,
+    "article_id": null,
+    "run_label": null,
+    "benchmark_mode": "standard",
+    "draft_model_repo": null,
+    "draft_preset": "qwen-0.5b",
+    "num_draft_tokens": null,
+    "draft_accept_rate": null,
+    "prefix_cache_cold_ttft_ms": null,
+    "prefix_cache_warm_ttft_ms": null,
+    "prefix_system_tokens": null,
+    "workload": null,
+    "schema_version": 1,
+    "trials": {
+      "ttft_ms": [
+        2660.156291909516,
+        2793.9632078632712,
+        2933.5769170429558
+      ],
+      "throughput_tps": [
+        5.704216551770889,
+        5.5486404860244205,
+        4.175955721294806
+      ],
+      "memory_gb": [
+        16.32990214,
+        16.32990214,
+        16.32990214
+      ],
+      "prompt_tps": [
+        192.46989417771226,
+        183.25223415936114,
+        174.53096151168785
+      ]
+    },
+    "stats": {
+      "ttft_ms": {
+        "n": 3,
+        "mean": 2795.8988,
+        "median": 2793.9632,
+        "p50": 2793.9632,
+        "p95": 2919.6155,
+        "std": 111.6319,
+        "min": 2660.1563,
+        "max": 2933.5769
+      },
+      "throughput_tps": {
+        "n": 3,
+        "mean": 5.1429,
+        "median": 5.5486,
+        "p50": 5.5486,
+        "p95": 5.6887,
+        "std": 0.6867,
+        "min": 4.176,
+        "max": 5.7042
+      },
+      "memory_gb": {
+        "n": 3,
+        "mean": 16.3299,
+        "median": 16.3299,
+        "p50": 16.3299,
+        "p95": 16.3299,
+        "std": 0.0,
+        "min": 16.3299,
+        "max": 16.3299
+      },
+      "prompt_tps": {
+        "n": 3,
+        "mean": 183.4177,
+        "median": 183.2522,
+        "p50": 183.2522,
+        "p95": 191.5481,
+        "std": 7.3245,
+        "min": 174.531,
+        "max": 192.4699
+      }
+    },
+    "warmup_policy": {
+      "warmup_trials": 1,
+      "warmup_discarded": true,
+      "measured_trials_field": "num_trials",
+      "description": "One full generate before timed trials; trials use seed+trial."
+    }
+  },
+  "llamacpp": {
+    "status": "error",
+    "error": "Could not download bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-f16.gguf. Install huggingface_hub and run: hf download bartowski/Meta-Llama-3.1-8B-Instruct-GGUF Meta-Llama-3.1-8B-Instruct-f16.gguf --local-dir /Users/bhargavchirumamilla/.cache/llama-cpp-models/bartowski--Meta-Llama-3.1-8B-Instruct-GGUF\n404 Client Error. (Request ID: Root=1-6a0e04b1-2814866f7596bed7730e4181;09871872-0262-432f-a518-3de29c32f4a5)\n\nEntry Not Found for url: https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-f16.gguf.",
+    "hf_file": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-f16.gguf"
+  },
+  "comparison": {}
+}

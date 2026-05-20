@@ -1,0 +1,9 @@
+{
+  "article_id": 7,
+  "slug": "context-and-cache",
+  "title": "Context, generation length & prompt cache",
+  "hardware": "Mac M3",
+  "output_dir": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_07_context-and-cache",
+  "timestamp": "2026-05-20T18:49:29.794490+00:00",
+  "failures": 0
+}

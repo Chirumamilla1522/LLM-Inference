@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-05-20T18:44:27.161724+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "w4+kv_cache+prefill",
+  "weight_bits": 4,
+  "optimizations": {
+    "weight_bits": 4,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 256,
+  "generation_tokens": 512,
+  "num_trials": 3,
+  "memory_gb": 4.9171,
+  "ttft_ms": 2071.1376,
+  "throughput_tps": 17.2574,
+  "prompt_tps": 123.6036,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 7,
+  "run_label": "wl_complete_code",
+  "benchmark_mode": "standard",
+  "draft_model_repo": null,
+  "draft_preset": "qwen-0.5b",
+  "num_draft_tokens": null,
+  "draft_accept_rate": null,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": {
+    "workload_id": "complete_code",
+    "workload_task": "complete",
+    "workload_data_type": "code",
+    "workload_modality": "text",
+    "workload_pressure": 3,
+    "workload_primary_stress": "decode",
+    "workload_description": "Code prefix, long completion \u2014 sustained decode throughput."
+  },
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      2215.888625010848,
+      2071.1376250255853,
+      2012.3554999008775
+    ],
+    "throughput_tps": [
+      16.57311799249429,
+      17.328975929303837,
+      17.257392176997556
+    ],
+    "memory_gb": [
+      4.917085332,
+      4.917085332,
+      4.917085332
+    ],
+    "prompt_tps": [
+      115.52927214414792,
+      123.60356786857058,
+      127.21410308099627
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 2099.7939,
+      "median": 2071.1376,
+      "p50": 2071.1376,
+      "p95": 2201.4135,
+      "std": 85.5271,
+      "min": 2012.3555,
+      "max": 2215.8886
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 17.0532,
+      "median": 17.2574,
+      "p50": 17.2574,
+      "p95": 17.3218,
+      "std": 0.3407,
+      "min": 16.5731,
+      "max": 17.329
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 4.9171,
+      "median": 4.9171,
+      "p50": 4.9171,
+      "p95": 4.9171,
+      "std": 0.0,
+      "min": 4.9171,
+      "max": 4.9171
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 122.1156,
+      "median": 123.6036,
+      "p50": 123.6036,
+      "p95": 126.853,
+      "std": 4.885,
+      "min": 115.5293,
+      "max": 127.2141
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}

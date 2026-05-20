@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-05-20T18:40:12.178238+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "w4+kv_cache+prefill",
+  "weight_bits": 4,
+  "optimizations": {
+    "weight_bits": 4,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 5.0572,
+  "ttft_ms": 4031.2576,
+  "throughput_tps": 13.4357,
+  "prompt_tps": 127.0075,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 7,
+  "run_label": "wl_chat_standard",
+  "benchmark_mode": "standard",
+  "draft_model_repo": null,
+  "draft_preset": "qwen-0.5b",
+  "num_draft_tokens": null,
+  "draft_accept_rate": null,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": {
+    "workload_id": "chat_standard",
+    "workload_task": "chat",
+    "workload_data_type": "prose",
+    "workload_modality": "text",
+    "workload_pressure": 2,
+    "workload_primary_stress": "balanced",
+    "workload_description": "Typical instruct chat \u2014 default-shaped prompt."
+  },
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      3976.20925004594,
+      4031.2575839925557,
+      4122.085916809738
+    ],
+    "throughput_tps": [
+      13.858627152192884,
+      13.394715721795679,
+      13.435698956419648
+    ],
+    "memory_gb": [
+      5.057169508,
+      5.057169508,
+      5.057169508
+    ],
+    "prompt_tps": [
+      128.76585908905184,
+      127.00751299868946,
+      124.20895884583094
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 4043.1843,
+      "median": 4031.2576,
+      "p50": 4031.2576,
+      "p95": 4113.0031,
+      "std": 60.1481,
+      "min": 3976.2093,
+      "max": 4122.0859
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 13.563,
+      "median": 13.4357,
+      "p50": 13.4357,
+      "p95": 13.8163,
+      "std": 0.2097,
+      "min": 13.3947,
+      "max": 13.8586
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 5.0572,
+      "median": 5.0572,
+      "p50": 5.0572,
+      "p95": 5.0572,
+      "std": 0.0,
+      "min": 5.0572,
+      "max": 5.0572
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 126.6608,
+      "median": 127.0075,
+      "p50": 127.0075,
+      "p95": 128.59,
+      "std": 1.8764,
+      "min": 124.209,
+      "max": 128.7659
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}

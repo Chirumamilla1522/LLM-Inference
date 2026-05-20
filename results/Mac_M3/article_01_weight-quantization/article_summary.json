@@ -1,0 +1,9 @@
+{
+  "article_id": 1,
+  "slug": "weight-quantization",
+  "title": "Weight quantization",
+  "hardware": "Mac M3",
+  "output_dir": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_01_weight-quantization",
+  "timestamp": "2026-05-20T17:36:53.334397+00:00",
+  "failures": 0
+}

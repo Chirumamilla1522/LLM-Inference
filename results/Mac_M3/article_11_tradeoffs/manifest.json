@@ -1,0 +1,15 @@
+{
+  "article_id": 11,
+  "slug": "tradeoffs",
+  "title": "Quality, cost & when to optimize what",
+  "hardware": "Mac M3",
+  "benchmark_mode": "concept",
+  "status": "concept_only",
+  "topics": [
+    "quantization_quality",
+    "local_vs_cloud_cost",
+    "optimization_decision_tree"
+  ],
+  "timestamp": "2026-05-20T19:05:59.911704+00:00",
+  "note": "No MLX benchmark for this article. See docs/articles/ and write concept content."
+}

@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "hardware": "Mac M3",
+  "models": [
+    "qwen-0.5b",
+    "llama-3.2-1b",
+    "qwen-1.5b",
+    "gemma-2-2b",
+    "llama-3.2-3b",
+    "qwen-3b",
+    "phi-3-mini",
+    "phi-3.5-mini",
+    "qwen-7b",
+    "mistral-7b",
+    "deepseek-r1-qwen-7b",
+    "llama3-8b",
+    "deepseek-r1-llama-8b",
+    "gemma-9b"
+  ],
+  "config_order": [
+    "fp16",
+    "w8",
+    "w4",
+    "w2"
+  ],
+  "sweep_output_root": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder",
+  "completed": {
+    "qwen-0.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-0.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:46:20.867518+00:00"
+    },
+    "qwen-0.5b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-0.5b/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:46:32.445032+00:00"
+    },
+    "qwen-0.5b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-0.5b/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:46:42.406210+00:00"
+    },
+    "qwen-0.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-0.5b/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:46:48.160279+00:00"
+    },
+    "llama-3.2-1b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-1b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:47:07.056810+00:00"
+    },
+    "llama-3.2-1b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-1b/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:47:24.545456+00:00"
+    },
+    "llama-3.2-1b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-1b/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:47:38.403339+00:00"
+    },
+    "llama-3.2-1b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-1b/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:47:44.144361+00:00"
+    },
+    "qwen-1.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-1.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:48:07.442088+00:00"
+    },
+    "qwen-1.5b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-1.5b/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:48:27.474970+00:00"
+    },
+    "qwen-1.5b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-1.5b/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:48:42.699545+00:00"
+    },
+    "qwen-1.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-1.5b/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:48:48.431946+00:00"
+    },
+    "gemma-2-2b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-2-2b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:49:12.524614+00:00"
+    },
+    "gemma-2-2b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-2-2b/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:49:40.910382+00:00"
+    },
+    "gemma-2-2b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-2-2b/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:50:02.207294+00:00"
+    },
+    "gemma-2-2b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-2-2b/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:50:07.954036+00:00"
+    },
+    "llama-3.2-3b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-3b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:50:55.587874+00:00"
+    },
+    "llama-3.2-3b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-3b/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:51:28.559901+00:00"
+    },
+    "llama-3.2-3b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-3b/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:51:52.151572+00:00"
+    },
+    "llama-3.2-3b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama-3.2-3b/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:51:57.889133+00:00"
+    },
+    "qwen-3b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-3b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:52:42.853960+00:00"
+    },
+    "qwen-3b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-3b/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:53:15.437994+00:00"
+    },
+    "qwen-3b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-3b/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:53:38.196747+00:00"
+    },
+    "qwen-3b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-3b/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:53:43.960980+00:00"
+    },
+    "phi-3-mini:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3-mini/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:54:17.133745+00:00"
+    },
+    "phi-3-mini:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3-mini/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:54:54.539990+00:00"
+    },
+    "phi-3-mini:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3-mini/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:55:22.337703+00:00"
+    },
+    "phi-3-mini:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3-mini/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:55:28.105070+00:00"
+    },
+    "phi-3.5-mini:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3.5-mini/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:56:23.740645+00:00"
+    },
+    "phi-3.5-mini:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3.5-mini/w8.json",
+      "error": null,
+      "at": "2026-05-20T17:57:02.231204+00:00"
+    },
+    "phi-3.5-mini:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3.5-mini/w4.json",
+      "error": null,
+      "at": "2026-05-20T17:57:29.629472+00:00"
+    },
+    "phi-3.5-mini:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/phi-3.5-mini/w2.json",
+      "error": null,
+      "at": "2026-05-20T17:57:35.386982+00:00"
+    },
+    "qwen-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T17:59:35.528563+00:00"
+    },
+    "qwen-7b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-7b/w8.json",
+      "error": null,
+      "at": "2026-05-20T18:00:40.113323+00:00"
+    },
+    "qwen-7b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-7b/w4.json",
+      "error": null,
+      "at": "2026-05-20T18:01:23.106695+00:00"
+    },
+    "qwen-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/qwen-7b/w2.json",
+      "error": null,
+      "at": "2026-05-20T18:01:28.870789+00:00"
+    },
+    "mistral-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/mistral-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T18:03:12.340316+00:00"
+    },
+    "mistral-7b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/mistral-7b/w8.json",
+      "error": null,
+      "at": "2026-05-20T18:04:21.336564+00:00"
+    },
+    "mistral-7b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/mistral-7b/w4.json",
+      "error": null,
+      "at": "2026-05-20T18:05:09.400228+00:00"
+    },
+    "mistral-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/mistral-7b/w2.json",
+      "error": null,
+      "at": "2026-05-20T18:05:15.143707+00:00"
+    },
+    "deepseek-r1-qwen-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-qwen-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T18:07:00.033558+00:00"
+    },
+    "deepseek-r1-qwen-7b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-qwen-7b/w8.json",
+      "error": null,
+      "at": "2026-05-20T18:09:09.595162+00:00"
+    },
+    "deepseek-r1-qwen-7b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-qwen-7b/w4.json",
+      "error": null,
+      "at": "2026-05-20T18:10:43.494261+00:00"
+    },
+    "deepseek-r1-qwen-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-qwen-7b/w2.json",
+      "error": null,
+      "at": "2026-05-20T18:10:49.234498+00:00"
+    },
+    "llama3-8b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama3-8b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T18:14:25.522114+00:00"
+    },
+    "llama3-8b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama3-8b/w8.json",
+      "error": null,
+      "at": "2026-05-20T18:15:33.973317+00:00"
+    },
+    "llama3-8b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama3-8b/w4.json",
+      "error": null,
+      "at": "2026-05-20T18:16:18.776810+00:00"
+    },
+    "llama3-8b:w2": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/llama3-8b/w2.json",
+      "error": null,
+      "at": "2026-05-20T18:16:52.884558+00:00"
+    },
+    "deepseek-r1-llama-8b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-llama-8b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T18:19:23.283906+00:00"
+    },
+    "deepseek-r1-llama-8b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-llama-8b/w8.json",
+      "error": null,
+      "at": "2026-05-20T18:20:38.043000+00:00"
+    },
+    "deepseek-r1-llama-8b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-llama-8b/w4.json",
+      "error": null,
+      "at": "2026-05-20T18:21:25.437150+00:00"
+    },
+    "deepseek-r1-llama-8b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/deepseek-r1-llama-8b/w2.json",
+      "error": null,
+      "at": "2026-05-20T18:21:31.197043+00:00"
+    },
+    "gemma-9b:fp16": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-9b/fp16.json",
+      "error": null,
+      "at": "2026-05-20T18:23:15.815471+00:00"
+    },
+    "gemma-9b:w8": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-9b/w8.json",
+      "error": null,
+      "at": "2026-05-20T18:24:47.811723+00:00"
+    },
+    "gemma-9b:w4": {
+      "status": "ok",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-9b/w4.json",
+      "error": null,
+      "at": "2026-05-20T18:25:46.340878+00:00"
+    },
+    "gemma-9b:w2": {
+      "status": "skipped",
+      "output": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_04_model-size-ladder/gemma-9b/w2.json",
+      "error": null,
+      "at": "2026-05-20T18:25:52.090506+00:00"
+    }
+  },
+  "updated_at": "2026-05-20T18:25:52.090534+00:00"
+}

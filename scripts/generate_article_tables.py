@@ -17,6 +17,14 @@ def _safe_hw(hardware: str) -> str:
     return hardware.replace(" ", "_").replace("/", "-")
 
 
+def _row_label(row: dict) -> str:
+    return row.get("run_label") or row.get("configuration") or ""
+
+
+def _row_sort_key(row: dict) -> tuple[str, str]:
+    return (row.get("model_preset") or "", _row_label(row))
+
+
 def load_json_results(article_dir: Path) -> list[dict]:
     rows: list[dict] = []
     if not article_dir.exists():
@@ -49,9 +57,9 @@ def print_table(rows: list[dict], title: str) -> None:
     else:
         print("| Model | Run | Memory (GB) | TTFT (ms) | tok/s | Status |")
         print("|-------|-----|-------------|-----------|-------|--------|")
-    for r in sorted(rows, key=lambda x: (x.get("model_preset", ""), x.get("run_label", x.get("configuration", "")))):
+    for r in sorted(rows, key=_row_sort_key):
         preset = r.get("model_preset", "—")
-        label = r.get("run_label") or r.get("configuration", "—")
+        label = _row_label(r) or "—"
         wl = r.get("workload") or {}
         wl_id = wl.get("workload_id", "—") if isinstance(wl, dict) else "—"
         pressure = wl.get("workload_pressure", "—") if isinstance(wl, dict) else "—"
@@ -112,9 +120,9 @@ def main() -> None:
             section.append(f"\n## Article {article.id}: {article.title}\n")
             section.append("| Model | Run | Memory | TTFT | tok/s | Status |\n")
             section.append("|-------|-----|--------|------|-------|--------|\n")
-            for r in rows:
+            for r in sorted(rows, key=_row_sort_key):
                 preset = r.get("model_preset", "—")
-                label = r.get("run_label") or r.get("configuration", "—")
+                label = _row_label(r) or "—"
                 if r.get("status") != "ok":
                     section.append(
                         f"| {preset} | {label} | — | — | — | {r.get('status')} |\n"

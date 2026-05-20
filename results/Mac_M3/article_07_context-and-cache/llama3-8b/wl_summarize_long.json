@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-05-20T18:42:06.694271+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "w4+kv_cache+prefill",
+  "weight_bits": 4,
+  "optimizations": {
+    "weight_bits": 4,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 2048,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 5.3478,
+  "ttft_ms": 15896.7878,
+  "throughput_tps": 10.2125,
+  "prompt_tps": 128.8311,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 7,
+  "run_label": "wl_summarize_long",
+  "benchmark_mode": "standard",
+  "draft_model_repo": null,
+  "draft_preset": "qwen-0.5b",
+  "num_draft_tokens": null,
+  "draft_accept_rate": null,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": {
+    "workload_id": "summarize_long",
+    "workload_task": "summarize",
+    "workload_data_type": "prose",
+    "workload_modality": "text",
+    "workload_pressure": 3,
+    "workload_primary_stress": "prefill",
+    "workload_description": "Long document in, short summary out \u2014 TTFT / prefill heavy."
+  },
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      15154.433957999572,
+      16763.213041005656,
+      15896.787750069052
+    ],
+    "throughput_tps": [
+      10.212480292900041,
+      9.05417628227216,
+      11.851888112170446
+    ],
+    "memory_gb": [
+      5.347811368,
+      5.347811368,
+      5.347811368
+    ],
+    "prompt_tps": [
+      135.14196608570273,
+      122.17228254453639,
+      128.83105896605457
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 15938.1449,
+      "median": 15896.7878,
+      "p50": 15896.7878,
+      "p95": 16676.5705,
+      "std": 657.432,
+      "min": 15154.434,
+      "max": 16763.213
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 10.3728,
+      "median": 10.2125,
+      "p50": 10.2125,
+      "p95": 11.6879,
+      "std": 1.1478,
+      "min": 9.0542,
+      "max": 11.8519
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 5.3478,
+      "median": 5.3478,
+      "p50": 5.3478,
+      "p95": 5.3478,
+      "std": 0.0,
+      "min": 5.3478,
+      "max": 5.3478
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 128.7151,
+      "median": 128.8311,
+      "p50": 128.8311,
+      "p95": 134.5109,
+      "std": 5.2955,
+      "min": 122.1723,
+      "max": 135.142
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}

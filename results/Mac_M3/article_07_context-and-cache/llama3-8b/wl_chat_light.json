@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-05-20T18:39:12.344807+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "w4+kv_cache+prefill",
+  "weight_bits": 4,
+  "optimizations": {
+    "weight_bits": 4,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 128,
+  "generation_tokens": 64,
+  "num_trials": 3,
+  "memory_gb": 4.7449,
+  "ttft_ms": 1517.761,
+  "throughput_tps": 13.4921,
+  "prompt_tps": 84.3348,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 7,
+  "run_label": "wl_chat_light",
+  "benchmark_mode": "standard",
+  "draft_model_repo": null,
+  "draft_preset": "qwen-0.5b",
+  "num_draft_tokens": null,
+  "draft_accept_rate": null,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": {
+    "workload_id": "chat_light",
+    "workload_task": "chat",
+    "workload_data_type": "prose",
+    "workload_modality": "text",
+    "workload_pressure": 1,
+    "workload_primary_stress": "decode",
+    "workload_description": "Short chat turn \u2014 low prefill, light decode."
+  },
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      713.3976670447737,
+      1517.7609999664128,
+      2002.7279588393867
+    ],
+    "throughput_tps": [
+      13.492080187307582,
+      13.224558357116436,
+      13.987384780326567
+    ],
+    "memory_gb": [
+      4.744856212,
+      4.744856212,
+      4.744856212
+    ],
+    "prompt_tps": [
+      179.42307062796516,
+      84.33475362908428,
+      63.912824223105204
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 1411.2955,
+      "median": 1517.761,
+      "p50": 1517.761,
+      "p95": 1954.2313,
+      "std": 531.7232,
+      "min": 713.3977,
+      "max": 2002.728
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 13.568,
+      "median": 13.4921,
+      "p50": 13.4921,
+      "p95": 13.9379,
+      "std": 0.316,
+      "min": 13.2246,
+      "max": 13.9874
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 4.7449,
+      "median": 4.7449,
+      "p50": 4.7449,
+      "p95": 4.7449,
+      "std": 0.0,
+      "min": 4.7449,
+      "max": 4.7449
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 109.2235,
+      "median": 84.3348,
+      "p50": 84.3348,
+      "p95": 169.9142,
+      "std": 50.3338,
+      "min": 63.9128,
+      "max": 179.4231
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}

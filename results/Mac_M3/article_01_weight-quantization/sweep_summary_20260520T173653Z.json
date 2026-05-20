@@ -1,0 +1,5328 @@
+{
+  "hardware": "Mac M3",
+  "timestamp": "2026-05-20T17:36:53.126554+00:00",
+  "checkpoint": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_01_weight-quantization/sweep_state.json",
+  "skipped_from_checkpoint": 0,
+  "models": [
+    "qwen-0.5b",
+    "llama-3.2-1b",
+    "qwen-1.5b",
+    "gemma-2-2b",
+    "llama-3.2-3b",
+    "qwen-3b",
+    "phi-3-mini",
+    "phi-3.5-mini",
+    "qwen-7b",
+    "mistral-7b",
+    "deepseek-r1-qwen-7b",
+    "llama3-8b",
+    "deepseek-r1-llama-8b",
+    "gemma-9b"
+  ],
+  "config_order": [
+    "fp16",
+    "w8",
+    "w4",
+    "w2"
+  ],
+  "results": [
+    {
+      "timestamp": "2026-05-20T16:03:33.597344+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-0.5b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-0.5B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 1.3446,
+      "ttft_ms": 158.429,
+      "throughput_tps": 70.1236,
+      "prompt_tps": 3231.7307,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          173.4683751128614,
+          158.42904103919864,
+          152.70920796319842
+        ],
+        "throughput_tps": [
+          69.41777848354235,
+          70.17623534555014,
+          70.1236003733929
+        ],
+        "memory_gb": [
+          1.344583676,
+          1.344583676,
+          1.344583676
+        ],
+        "prompt_tps": [
+          2951.5466416681675,
+          3231.730727154503,
+          3352.7775229073777
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 161.5355,
+          "median": 158.429,
+          "p50": 158.429,
+          "p95": 171.9644,
+          "std": 8.7549,
+          "min": 152.7092,
+          "max": 173.4684
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 69.9059,
+          "median": 70.1236,
+          "p50": 70.1236,
+          "p95": 70.171,
+          "std": 0.3458,
+          "min": 69.4178,
+          "max": 70.1762
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 1.3446,
+          "median": 1.3446,
+          "p50": 1.3446,
+          "p95": 1.3446,
+          "std": 0.0,
+          "min": 1.3446,
+          "max": 1.3446
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 3178.685,
+          "median": 3231.7307,
+          "p50": 3231.7307,
+          "p95": 3340.6728,
+          "std": 168.0416,
+          "min": 2951.5466,
+          "max": 3352.7775
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:03:59.224072+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-0.5b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-0.5B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.8885,
+      "ttft_ms": 157.0181,
+      "throughput_tps": 133.1209,
+      "prompt_tps": 3260.7709,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          157.01808291487396,
+          154.64241686277092,
+          159.7033750731498
+        ],
+        "throughput_tps": [
+          133.12088306650395,
+          133.56586189797352,
+          132.9902485582554
+        ],
+        "memory_gb": [
+          0.888453132,
+          0.888453132,
+          0.888453132
+        ],
+        "prompt_tps": [
+          3260.770928387761,
+          3310.8639297479863,
+          3205.9435172580784
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 157.1213,
+          "median": 157.0181,
+          "p50": 157.0181,
+          "p95": 159.4348,
+          "std": 2.0674,
+          "min": 154.6424,
+          "max": 159.7034
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 133.2257,
+          "median": 133.1209,
+          "p50": 133.1209,
+          "p95": 133.5214,
+          "std": 0.2464,
+          "min": 132.9902,
+          "max": 133.5659
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 0.8885,
+          "median": 0.8885,
+          "p50": 0.8885,
+          "p95": 0.8885,
+          "std": 0.0,
+          "min": 0.8885,
+          "max": 0.8885
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 3259.1928,
+          "median": 3260.7709,
+          "p50": 3260.7709,
+          "p95": 3305.8546,
+          "std": 42.8481,
+          "min": 3205.9435,
+          "max": 3310.8639
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:04:18.002591+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-0.5b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.6419,
+      "ttft_ms": 146.526,
+      "throughput_tps": 215.1804,
+      "prompt_tps": 3494.2614,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          146.95591712370515,
+          146.52595901861787,
+          145.12875000946224
+        ],
+        "throughput_tps": [
+          215.64556305079262,
+          215.1296208755159,
+          215.18035760779514
+        ],
+        "memory_gb": [
+          0.641873944,
+          0.641873944,
+          0.641873944
+        ],
+        "prompt_tps": [
+          3484.0380028318737,
+          3494.261381595491,
+          3527.9019489013594
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 146.2035,
+          "median": 146.526,
+          "p50": 146.526,
+          "p95": 146.9129,
+          "std": 0.78,
+          "min": 145.1288,
+          "max": 146.9559
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 215.3185,
+          "median": 215.1804,
+          "p50": 215.1804,
+          "p95": 215.599,
+          "std": 0.2322,
+          "min": 215.1296,
+          "max": 215.6456
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 0.6419,
+          "median": 0.6419,
+          "p50": 0.6419,
+          "p95": 0.6419,
+          "std": 0.0,
+          "min": 0.6419,
+          "max": 0.6419
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 3502.0671,
+          "median": 3494.2614,
+          "p50": 3494.2614,
+          "p95": 3524.5379,
+          "std": 18.7387,
+          "min": 3484.038,
+          "max": 3527.9019
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:04:23.875573+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-0.5b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:05:34.983763+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-1b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3.2-1B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.7105,
+      "ttft_ms": 371.8765,
+      "throughput_tps": 32.7577,
+      "prompt_tps": 1376.8013,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          367.11654090322554,
+          371.87645793892443,
+          372.6062919013202
+        ],
+        "throughput_tps": [
+          32.757662557142574,
+          32.74400798165001,
+          32.78706370940266
+        ],
+        "memory_gb": [
+          2.710511712,
+          2.710511712,
+          2.710511712
+        ],
+        "prompt_tps": [
+          1394.652495745123,
+          1376.8013249284227,
+          1374.1045471545508
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 370.5331,
+          "median": 371.8765,
+          "p50": 371.8765,
+          "p95": 372.5333,
+          "std": 2.4342,
+          "min": 367.1165,
+          "max": 372.6063
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 32.7629,
+          "median": 32.7577,
+          "p50": 32.7577,
+          "p95": 32.7841,
+          "std": 0.018,
+          "min": 32.744,
+          "max": 32.7871
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.7105,
+          "median": 2.7105,
+          "p50": 2.7105,
+          "p95": 2.7105,
+          "std": 0.0,
+          "min": 2.7105,
+          "max": 2.7105
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 1381.8528,
+          "median": 1376.8013,
+          "p50": 1376.8013,
+          "p95": 1392.8674,
+          "std": 9.1175,
+          "min": 1374.1045,
+          "max": 1394.6525
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:06:22.542204+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-1b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3.2-1B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 1.748,
+      "ttft_ms": 359.4503,
+      "throughput_tps": 57.2662,
+      "prompt_tps": 1424.3971,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          356.3045000191778,
+          366.69529112987215,
+          359.4503339845687
+        ],
+        "throughput_tps": [
+          56.014220610129954,
+          57.29480131654455,
+          57.26620850022553
+        ],
+        "memory_gb": [
+          1.74795182,
+          1.74795182,
+          1.74795182
+        ],
+        "prompt_tps": [
+          1436.9731506967833,
+          1396.2546353469954,
+          1424.3970629388266
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 360.8167,
+          "median": 359.4503,
+          "p50": 359.4503,
+          "p95": 365.9708,
+          "std": 4.3507,
+          "min": 356.3045,
+          "max": 366.6953
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 56.8584,
+          "median": 57.2662,
+          "p50": 57.2662,
+          "p95": 57.2919,
+          "std": 0.597,
+          "min": 56.0142,
+          "max": 57.2948
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 1.748,
+          "median": 1.748,
+          "p50": 1.748,
+          "p95": 1.748,
+          "std": 0.0,
+          "min": 1.748,
+          "max": 1.748
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 1419.2083,
+          "median": 1424.3971,
+          "p50": 1424.3971,
+          "p95": 1435.7155,
+          "std": 17.0234,
+          "min": 1396.2546,
+          "max": 1436.9732
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:06:53.618585+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-1b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3.2-1B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 1.2442,
+      "ttft_ms": 350.5548,
+      "throughput_tps": 102.9447,
+      "prompt_tps": 1460.5422,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          350.5547500681132,
+          347.55316702649,
+          350.7523750886321
+        ],
+        "throughput_tps": [
+          103.34932907194576,
+          102.53865958492963,
+          102.94465620821066
+        ],
+        "memory_gb": [
+          1.244209356,
+          1.244209356,
+          1.244209356
+        ],
+        "prompt_tps": [
+          1460.5421832125162,
+          1473.1559041180485,
+          1459.7192673909108
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 349.6201,
+          "median": 350.5548,
+          "p50": 350.5548,
+          "p95": 350.7326,
+          "std": 1.4638,
+          "min": 347.5532,
+          "max": 350.7524
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 102.9442,
+          "median": 102.9447,
+          "p50": 102.9447,
+          "p95": 103.3089,
+          "std": 0.331,
+          "min": 102.5387,
+          "max": 103.3493
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 1.2442,
+          "median": 1.2442,
+          "p50": 1.2442,
+          "p95": 1.2442,
+          "std": 0.0,
+          "min": 1.2442,
+          "max": 1.2442
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 1464.4725,
+          "median": 1460.5422,
+          "p50": 1460.5422,
+          "p95": 1471.8945,
+          "std": 6.1493,
+          "min": 1459.7193,
+          "max": 1473.1559
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:06:59.544614+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-1b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:08:28.291378+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-1.5b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-1.5B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 3.3538,
+      "ttft_ms": 515.5252,
+      "throughput_tps": 24.9069,
+      "prompt_tps": 993.1618,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          515.3920829761773,
+          619.3497499916703,
+          515.5252499971539
+        ],
+        "throughput_tps": [
+          24.90688296193965,
+          24.716029752305793,
+          24.940358687411884
+        ],
+        "memory_gb": [
+          3.35376908,
+          3.35376908,
+          3.35376908
+        ],
+        "prompt_tps": [
+          993.418441826678,
+          826.6734587474783,
+          993.1618286453023
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 550.089,
+          "median": 515.5252,
+          "p50": 515.5252,
+          "p95": 608.9673,
+          "std": 48.9748,
+          "min": 515.3921,
+          "max": 619.3497
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 24.8544,
+          "median": 24.9069,
+          "p50": 24.9069,
+          "p95": 24.937,
+          "std": 0.0988,
+          "min": 24.716,
+          "max": 24.9404
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 3.3538,
+          "median": 3.3538,
+          "p50": 3.3538,
+          "p95": 3.3538,
+          "std": 0.0,
+          "min": 3.3538,
+          "max": 3.3538
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 937.7512,
+          "median": 993.1618,
+          "p50": 993.1618,
+          "p95": 993.3928,
+          "std": 78.5439,
+          "min": 826.6735,
+          "max": 993.4184
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:09:27.080301+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-1.5b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-1.5B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.1422,
+      "ttft_ms": 506.646,
+      "throughput_tps": 47.135,
+      "prompt_tps": 1010.5675,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          506.6459998488426,
+          507.6702500227839,
+          506.48362492211163
+        ],
+        "throughput_tps": [
+          47.24973620723317,
+          47.135011418209515,
+          47.008984500588745
+        ],
+        "memory_gb": [
+          2.1422379,
+          2.1422379,
+          2.1422379
+        ],
+        "prompt_tps": [
+          1010.5675366089039,
+          1008.5286659539767,
+          1010.8915171319442
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 506.9333,
+          "median": 506.646,
+          "p50": 506.646,
+          "p95": 507.5678,
+          "std": 0.5253,
+          "min": 506.4836,
+          "max": 507.6703
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 47.1312,
+          "median": 47.135,
+          "p50": 47.135,
+          "p95": 47.2383,
+          "std": 0.0983,
+          "min": 47.009,
+          "max": 47.2497
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.1422,
+          "median": 2.1422,
+          "p50": 2.1422,
+          "p95": 2.1422,
+          "std": 0.0,
+          "min": 2.1422,
+          "max": 2.1422
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 1009.9959,
+          "median": 1010.5675,
+          "p50": 1010.5675,
+          "p95": 1010.8591,
+          "std": 1.0459,
+          "min": 1008.5287,
+          "max": 1010.8915
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:10:03.052110+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-1.5b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 1.4317,
+      "ttft_ms": 489.4236,
+      "throughput_tps": 89.3394,
+      "prompt_tps": 1046.1285,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          488.95708308555186,
+          490.07091601379216,
+          489.4236249383539
+        ],
+        "throughput_tps": [
+          89.33937286414864,
+          89.46548304558692,
+          87.27837807301337
+        ],
+        "memory_gb": [
+          1.431729416,
+          1.431729416,
+          1.431729416
+        ],
+        "prompt_tps": [
+          1047.126665532763,
+          1044.7467565808183,
+          1046.1284946440617
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 489.4839,
+          "median": 489.4236,
+          "p50": 489.4236,
+          "p95": 490.0062,
+          "std": 0.4567,
+          "min": 488.9571,
+          "max": 490.0709
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 88.6944,
+          "median": 89.3394,
+          "p50": 89.3394,
+          "p95": 89.4529,
+          "std": 1.0026,
+          "min": 87.2784,
+          "max": 89.4655
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 1.4317,
+          "median": 1.4317,
+          "p50": 1.4317,
+          "p95": 1.4317,
+          "std": 0.0,
+          "min": 1.4317,
+          "max": 1.4317
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 1046.0006,
+          "median": 1046.1285,
+          "p50": 1046.1285,
+          "p95": 1047.0268,
+          "std": 0.9758,
+          "min": 1044.7468,
+          "max": 1047.1267
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:10:08.914061+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-1.5b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:11:39.340275+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-2-2b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/gemma-2-2b-it-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 3.3193,
+      "ttft_ms": 822.9462,
+      "throughput_tps": 29.9542,
+      "prompt_tps": 622.1549,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          822.9462089948356,
+          807.7225000597537,
+          825.5097500514239
+        ],
+        "throughput_tps": [
+          29.179131751808338,
+          29.954204879694657,
+          30.24030142278123
+        ],
+        "memory_gb": [
+          3.319296886,
+          3.319296886,
+          3.319296886
+        ],
+        "prompt_tps": [
+          622.1548801170953,
+          633.8810667798945,
+          620.2228380320229
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 818.7262,
+          "median": 822.9462,
+          "p50": 822.9462,
+          "p95": 825.2534,
+          "std": 7.8508,
+          "min": 807.7225,
+          "max": 825.5098
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 29.7912,
+          "median": 29.9542,
+          "p50": 29.9542,
+          "p95": 30.2117,
+          "std": 0.4483,
+          "min": 29.1791,
+          "max": 30.2403
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 3.3193,
+          "median": 3.3193,
+          "p50": 3.3193,
+          "p95": 3.3193,
+          "std": 0.0,
+          "min": 3.3193,
+          "max": 3.3193
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 625.4196,
+          "median": 622.1549,
+          "p50": 622.1549,
+          "p95": 632.7084,
+          "std": 6.0349,
+          "min": 620.2228,
+          "max": 633.8811
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:12:08.244967+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-2-2b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/gemma-2-2b-it-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 3.3193,
+      "ttft_ms": 824.5278,
+      "throughput_tps": 30.3305,
+      "prompt_tps": 620.9615,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          825.4419579170644,
+          824.5278329122812,
+          817.2558748628944
+        ],
+        "throughput_tps": [
+          30.343416650805207,
+          29.733946514386737,
+          30.33054548450811
+        ],
+        "memory_gb": [
+          3.319296886,
+          3.319296886,
+          3.319296886
+        ],
+        "prompt_tps": [
+          620.2737758715226,
+          620.9614515880994,
+          626.4867781903615
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 822.4086,
+          "median": 824.5278,
+          "p50": 824.5278,
+          "p95": 825.3505,
+          "std": 3.6626,
+          "min": 817.2559,
+          "max": 825.442
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 30.136,
+          "median": 30.3305,
+          "p50": 30.3305,
+          "p95": 30.3421,
+          "std": 0.2843,
+          "min": 29.7339,
+          "max": 30.3434
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 3.3193,
+          "median": 3.3193,
+          "p50": 3.3193,
+          "p95": 3.3193,
+          "std": 0.0,
+          "min": 3.3193,
+          "max": 3.3193
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 622.574,
+          "median": 620.9615,
+          "p50": 620.9615,
+          "p95": 625.9342,
+          "std": 2.781,
+          "min": 620.2738,
+          "max": 626.4868
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:13:04.301973+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-2-2b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/gemma-2-2b-it-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.1192,
+      "ttft_ms": 799.5025,
+      "throughput_tps": 54.424,
+      "prompt_tps": 640.3982,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          802.9293750878422,
+          775.4403331782668,
+          799.5024998672307
+        ],
+        "throughput_tps": [
+          54.42397273715579,
+          54.4414782793015,
+          54.339146223681254
+        ],
+        "memory_gb": [
+          2.119156566,
+          2.119156566,
+          2.119156566
+        ],
+        "prompt_tps": [
+          637.665049860688,
+          660.2700144593791,
+          640.3982477666115
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 792.6241,
+          "median": 799.5025,
+          "p50": 799.5025,
+          "p95": 802.5867,
+          "std": 12.231,
+          "min": 775.4403,
+          "max": 802.9294
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 54.4015,
+          "median": 54.424,
+          "p50": 54.424,
+          "p95": 54.4397,
+          "std": 0.0447,
+          "min": 54.3391,
+          "max": 54.4415
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.1192,
+          "median": 2.1192,
+          "p50": 2.1192,
+          "p95": 2.1192,
+          "std": 0.0,
+          "min": 2.1192,
+          "max": 2.1192
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 646.1111,
+          "median": 640.3982,
+          "p50": 640.3982,
+          "p95": 658.2828,
+          "std": 10.0738,
+          "min": 637.665,
+          "max": 660.27
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:13:10.185529+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-2-2b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:16:16.333005+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-3b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3.2-3B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 6.7284,
+      "ttft_ms": 1069.9498,
+      "throughput_tps": 13.6072,
+      "prompt_tps": 478.5271,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1068.0538329761475,
+          1070.860540959984,
+          1069.949750090018
+        ],
+        "throughput_tps": [
+          13.62500452779082,
+          13.60716543162826,
+          13.43129592426479
+        ],
+        "memory_gb": [
+          6.7283672,
+          6.7283672,
+          6.7283672
+        ],
+        "prompt_tps": [
+          479.3765858910918,
+          478.1201476907649,
+          478.52714574392303
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1069.6214,
+          "median": 1069.9498,
+          "p50": 1069.9498,
+          "p95": 1070.7695,
+          "std": 1.1691,
+          "min": 1068.0538,
+          "max": 1070.8605
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 13.5545,
+          "median": 13.6072,
+          "p50": 13.6072,
+          "p95": 13.6232,
+          "std": 0.0874,
+          "min": 13.4313,
+          "max": 13.625
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 6.7284,
+          "median": 6.7284,
+          "p50": 6.7284,
+          "p95": 6.7284,
+          "std": 0.0,
+          "min": 6.7284,
+          "max": 6.7284
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 478.6746,
+          "median": 478.5271,
+          "p50": 478.5271,
+          "p95": 479.2916,
+          "std": 0.5234,
+          "min": 478.1201,
+          "max": 479.3766
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:18:08.854415+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-3b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3.2-3B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 3.857,
+      "ttft_ms": 1055.5256,
+      "throughput_tps": 25.4265,
+      "prompt_tps": 485.0664,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1055.5255829822272,
+          1055.1925420295447,
+          1058.461874956265
+        ],
+        "throughput_tps": [
+          25.641713513289925,
+          25.342032679388442,
+          25.42648500855974
+        ],
+        "memory_gb": [
+          3.856972944,
+          3.856972944,
+          3.856972944
+        ],
+        "prompt_tps": [
+          485.06640507321646,
+          485.219502229636,
+          483.72077645324305
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1056.3933,
+          "median": 1055.5256,
+          "p50": 1055.5256,
+          "p95": 1058.1682,
+          "std": 1.469,
+          "min": 1055.1925,
+          "max": 1058.4619
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 25.4701,
+          "median": 25.4265,
+          "p50": 25.4265,
+          "p95": 25.6202,
+          "std": 0.1262,
+          "min": 25.342,
+          "max": 25.6417
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 3.857,
+          "median": 3.857,
+          "p50": 3.857,
+          "p95": 3.857,
+          "std": 0.0,
+          "min": 3.857,
+          "max": 3.857
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 484.6689,
+          "median": 485.0664,
+          "p50": 485.0664,
+          "p95": 485.2042,
+          "std": 0.6733,
+          "min": 483.7208,
+          "max": 485.2195
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:18:32.839337+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-3b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3.2-3B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.3397,
+      "ttft_ms": 1019.3732,
+      "throughput_tps": 45.8374,
+      "prompt_tps": 502.2694,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1019.9065001215786,
+          1019.3732080515474,
+          1018.2960841339082
+        ],
+        "throughput_tps": [
+          45.83739321577625,
+          46.01918334728339,
+          44.579969623728616
+        ],
+        "memory_gb": [
+          2.33974902,
+          2.33974902,
+          2.33974902
+        ],
+        "prompt_tps": [
+          502.0068015440305,
+          502.2694298378198,
+          502.8007158011136
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1019.1919,
+          "median": 1019.3732,
+          "p50": 1019.3732,
+          "p95": 1019.8532,
+          "std": 0.6698,
+          "min": 1018.2961,
+          "max": 1019.9065
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 45.4788,
+          "median": 45.8374,
+          "p50": 45.8374,
+          "p95": 46.001,
+          "std": 0.6399,
+          "min": 44.58,
+          "max": 46.0192
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.3397,
+          "median": 2.3397,
+          "p50": 2.3397,
+          "p95": 2.3397,
+          "std": 0.0,
+          "min": 2.3397,
+          "max": 2.3397
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 502.359,
+          "median": 502.2694,
+          "p50": 502.2694,
+          "p95": 502.7476,
+          "std": 0.3302,
+          "min": 502.0068,
+          "max": 502.8007
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:18:38.696460+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama-3.2-3b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:21:29.622252+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-3b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-3B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 6.4215,
+      "ttft_ms": 1059.4821,
+      "throughput_tps": 14.2914,
+      "prompt_tps": 483.255,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1059.2480830382556,
+          1062.1182918548584,
+          1059.4820829574019
+        ],
+        "throughput_tps": [
+          14.433458289930137,
+          14.135074123750503,
+          14.291449806457209
+        ],
+        "memory_gb": [
+          6.421522528,
+          6.421522528,
+          6.421522528
+        ],
+        "prompt_tps": [
+          483.36174329570036,
+          482.055533669282,
+          483.2549867863936
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1060.2828,
+          "median": 1059.4821,
+          "p50": 1059.4821,
+          "p95": 1061.8547,
+          "std": 1.3014,
+          "min": 1059.2481,
+          "max": 1062.1183
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 14.2867,
+          "median": 14.2914,
+          "p50": 14.2914,
+          "p95": 14.4193,
+          "std": 0.1219,
+          "min": 14.1351,
+          "max": 14.4335
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 6.4215,
+          "median": 6.4215,
+          "p50": 6.4215,
+          "p95": 6.4215,
+          "std": 0.0,
+          "min": 6.4215,
+          "max": 6.4215
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 482.8908,
+          "median": 483.255,
+          "p50": 483.255,
+          "p95": 483.3511,
+          "std": 0.5922,
+          "min": 482.0555,
+          "max": 483.3617
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:23:21.267851+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-3b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-3B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 3.7424,
+      "ttft_ms": 1045.5334,
+      "throughput_tps": 26.3609,
+      "prompt_tps": 489.7022,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1045.5333751160651,
+          1045.2142909634858,
+          1045.627666870132
+        ],
+        "throughput_tps": [
+          26.615762408013637,
+          26.360892897376015,
+          26.207854493513928
+        ],
+        "memory_gb": [
+          3.742427292,
+          3.742427292,
+          3.742427292
+        ],
+        "prompt_tps": [
+          489.7022057695314,
+          489.8517025901309,
+          489.6580458056977
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1045.4584,
+          "median": 1045.5334,
+          "p50": 1045.5334,
+          "p95": 1045.6182,
+          "std": 0.1769,
+          "min": 1045.2143,
+          "max": 1045.6277
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 26.3948,
+          "median": 26.3609,
+          "p50": 26.3609,
+          "p95": 26.5903,
+          "std": 0.1682,
+          "min": 26.2079,
+          "max": 26.6158
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 3.7424,
+          "median": 3.7424,
+          "p50": 3.7424,
+          "p95": 3.7424,
+          "std": 0.0,
+          "min": 3.7424,
+          "max": 3.7424
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 489.7373,
+          "median": 489.7022,
+          "p50": 489.7022,
+          "p95": 489.8368,
+          "std": 0.0829,
+          "min": 489.658,
+          "max": 489.8517
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:24:29.684115+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-3b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-3B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.224,
+      "ttft_ms": 1012.5427,
+      "throughput_tps": 48.3578,
+      "prompt_tps": 505.6577,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1012.5427080783993,
+          1013.6126249562949,
+          1011.8572090286762
+        ],
+        "throughput_tps": [
+          47.406546328889576,
+          48.394056928747666,
+          48.35777347223149
+        ],
+        "memory_gb": [
+          2.223991228,
+          2.223991228,
+          2.223991228
+        ],
+        "prompt_tps": [
+          505.65768329088274,
+          505.1239372852883,
+          506.0002492757749
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1012.6708,
+          "median": 1012.5427,
+          "p50": 1012.5427,
+          "p95": 1013.5056,
+          "std": 0.7224,
+          "min": 1011.8572,
+          "max": 1013.6126
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 48.0528,
+          "median": 48.3578,
+          "p50": 48.3578,
+          "p95": 48.3904,
+          "std": 0.4572,
+          "min": 47.4065,
+          "max": 48.3941
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.224,
+          "median": 2.224,
+          "p50": 2.224,
+          "p95": 2.224,
+          "std": 0.0,
+          "min": 2.224,
+          "max": 2.224
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 505.594,
+          "median": 505.6577,
+          "p50": 505.6577,
+          "p95": 505.966,
+          "std": 0.3606,
+          "min": 505.1239,
+          "max": 506.0002
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:24:35.550522+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-3b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:26:41.610186+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3-mini",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Phi-3-mini-4k-instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 4.7059,
+      "ttft_ms": 1428.6713,
+      "throughput_tps": 21.4072,
+      "prompt_tps": 358.3749,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1429.3472089339048,
+          1427.8508750721812,
+          1428.6713330075145
+        ],
+        "throughput_tps": [
+          21.40720319857698,
+          21.368793956849725,
+          21.421636443355755
+        ],
+        "memory_gb": [
+          4.705879116,
+          4.705879116,
+          4.705879116
+        ],
+        "prompt_tps": [
+          358.20547785718287,
+          358.5808636872651,
+          358.3749377277573
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1428.6231,
+          "median": 1428.6713,
+          "p50": 1428.6713,
+          "p95": 1429.2796,
+          "std": 0.6118,
+          "min": 1427.8509,
+          "max": 1429.3472
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 21.3992,
+          "median": 21.4072,
+          "p50": 21.4072,
+          "p95": 21.4202,
+          "std": 0.0223,
+          "min": 21.3688,
+          "max": 21.4216
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 4.7059,
+          "median": 4.7059,
+          "p50": 4.7059,
+          "p95": 4.7059,
+          "std": 0.0,
+          "min": 4.7059,
+          "max": 4.7059
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 358.3871,
+          "median": 358.3749,
+          "p50": 358.3749,
+          "p95": 358.5603,
+          "std": 0.1535,
+          "min": 358.2055,
+          "max": 358.5809
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:27:19.194434+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3-mini",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Phi-3-mini-4k-instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 4.7059,
+      "ttft_ms": 1431.8327,
+      "throughput_tps": 21.1342,
+      "prompt_tps": 357.5837,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1430.952874943614,
+          1437.43308307603,
+          1431.8326658103615
+        ],
+        "throughput_tps": [
+          20.96993527735935,
+          21.134169035397406,
+          21.394751274293384
+        ],
+        "memory_gb": [
+          4.705879116,
+          4.705879116,
+          4.705879116
+        ],
+        "prompt_tps": [
+          357.8035370453238,
+          356.1904940328404,
+          357.583684340815
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1433.4062,
+          "median": 1431.8327,
+          "p50": 1431.8327,
+          "p95": 1436.873,
+          "std": 2.87,
+          "min": 1430.9529,
+          "max": 1437.4331
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 21.1663,
+          "median": 21.1342,
+          "p50": 21.1342,
+          "p95": 21.3687,
+          "std": 0.1749,
+          "min": 20.9699,
+          "max": 21.3948
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 4.7059,
+          "median": 4.7059,
+          "p50": 4.7059,
+          "p95": 4.7059,
+          "std": 0.0,
+          "min": 4.7059,
+          "max": 4.7059
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 357.1926,
+          "median": 357.5837,
+          "p50": 357.5837,
+          "p95": 357.7816,
+          "std": 0.7142,
+          "min": 356.1905,
+          "max": 357.8035
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:28:37.879901+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3-mini",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Phi-3-mini-4k-instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.9269,
+      "ttft_ms": 1378.7951,
+      "throughput_tps": 37.0868,
+      "prompt_tps": 371.3387,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1379.0795840322971,
+          1378.7951250560582,
+          1378.2281659077853
+        ],
+        "throughput_tps": [
+          37.04720286213736,
+          37.22207758122971,
+          37.086792831155705
+        ],
+        "memory_gb": [
+          2.926862418,
+          2.926862418,
+          2.926862418
+        ],
+        "prompt_tps": [
+          371.262112736787,
+          371.3387077570233,
+          371.49146466816364
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1378.701,
+          "median": 1378.7951,
+          "p50": 1378.7951,
+          "p95": 1379.0511,
+          "std": 0.3539,
+          "min": 1378.2282,
+          "max": 1379.0796
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 37.1187,
+          "median": 37.0868,
+          "p50": 37.0868,
+          "p95": 37.2085,
+          "std": 0.0749,
+          "min": 37.0472,
+          "max": 37.2221
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.9269,
+          "median": 2.9269,
+          "p50": 2.9269,
+          "p95": 2.9269,
+          "std": 0.0,
+          "min": 2.9269,
+          "max": 2.9269
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 371.3641,
+          "median": 371.3387,
+          "p50": 371.3387,
+          "p95": 371.4762,
+          "std": 0.0953,
+          "min": 371.2621,
+          "max": 371.4915
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:28:43.747419+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3-mini",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:32:13.966915+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3.5-mini",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Phi-3.5-mini-instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 8.2859,
+      "ttft_ms": 1455.3944,
+      "throughput_tps": 11.5483,
+      "prompt_tps": 351.7947,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1455.394374905154,
+          1457.4015422258526,
+          1441.6762909386307
+        ],
+        "throughput_tps": [
+          11.548284564502179,
+          11.416603574262526,
+          11.637372384882799
+        ],
+        "memory_gb": [
+          8.285870178,
+          8.285870178,
+          8.285870178
+        ],
+        "prompt_tps": [
+          351.79468110378417,
+          351.31018128197894,
+          355.1421378142056
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1451.4907,
+          "median": 1455.3944,
+          "p50": 1455.3944,
+          "p95": 1457.2008,
+          "std": 6.9881,
+          "min": 1441.6763,
+          "max": 1457.4015
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 11.5341,
+          "median": 11.5483,
+          "p50": 11.5483,
+          "p95": 11.6285,
+          "std": 0.0907,
+          "min": 11.4166,
+          "max": 11.6374
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 8.2859,
+          "median": 8.2859,
+          "p50": 8.2859,
+          "p95": 8.2859,
+          "std": 0.0,
+          "min": 8.2859,
+          "max": 8.2859
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 352.749,
+          "median": 351.7947,
+          "p50": 351.7947,
+          "p95": 354.8074,
+          "std": 1.7037,
+          "min": 351.3102,
+          "max": 355.1421
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:34:27.151178+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3.5-mini",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Phi-3.5-mini-instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 4.7059,
+      "ttft_ms": 1437.1755,
+      "throughput_tps": 21.3154,
+      "prompt_tps": 356.2543,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1437.175540952012,
+          1433.7970418855548,
+          1446.106875082478
+        ],
+        "throughput_tps": [
+          21.325403982962687,
+          21.315350871615674,
+          21.145696117394202
+        ],
+        "memory_gb": [
+          4.705885286,
+          4.705885286,
+          4.705885286
+        ],
+        "prompt_tps": [
+          356.2543234355642,
+          357.0937762060662,
+          354.0540528657665
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1439.0265,
+          "median": 1437.1755,
+          "p50": 1437.1755,
+          "p95": 1445.2137,
+          "std": 5.1931,
+          "min": 1433.797,
+          "max": 1446.1069
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 21.2622,
+          "median": 21.3154,
+          "p50": 21.3154,
+          "p95": 21.3244,
+          "std": 0.0824,
+          "min": 21.1457,
+          "max": 21.3254
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 4.7059,
+          "median": 4.7059,
+          "p50": 4.7059,
+          "p95": 4.7059,
+          "std": 0.0,
+          "min": 4.7059,
+          "max": 4.7059
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 355.8007,
+          "median": 356.2543,
+          "p50": 356.2543,
+          "p95": 357.0098,
+          "std": 1.2817,
+          "min": 354.0541,
+          "max": 357.0938
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:35:46.620373+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3.5-mini",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Phi-3.5-mini-instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 2.9269,
+      "ttft_ms": 1383.2775,
+      "throughput_tps": 36.9652,
+      "prompt_tps": 370.1354,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          1381.8816251587123,
+          1398.5417501535267,
+          1383.2775000482798
+        ],
+        "throughput_tps": [
+          36.96516078428443,
+          37.04945341785615,
+          36.93734308435123
+        ],
+        "memory_gb": [
+          2.926868594,
+          2.926868594,
+          2.926868594
+        ],
+        "prompt_tps": [
+          370.50930461659163,
+          366.0956134801085,
+          370.1354211155245
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 1387.9003,
+          "median": 1383.2775,
+          "p50": 1383.2775,
+          "p95": 1397.0153,
+          "std": 7.5462,
+          "min": 1381.8816,
+          "max": 1398.5418
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 36.984,
+          "median": 36.9652,
+          "p50": 36.9652,
+          "p95": 37.041,
+          "std": 0.0477,
+          "min": 36.9373,
+          "max": 37.0495
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 2.9269,
+          "median": 2.9269,
+          "p50": 2.9269,
+          "p95": 2.9269,
+          "std": 0.0,
+          "min": 2.9269,
+          "max": 2.9269
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 368.9134,
+          "median": 370.1354,
+          "p50": 370.1354,
+          "p95": 370.4719,
+          "std": 1.9983,
+          "min": 366.0956,
+          "max": 370.5093
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:35:52.495157+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "phi-3.5-mini",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:43:00.188809+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-7b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-7B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 15.4931,
+      "ttft_ms": 2465.5711,
+      "throughput_tps": 6.3222,
+      "prompt_tps": 207.6598,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2424.289958085865,
+          2465.571125037968,
+          2469.816334079951
+        ],
+        "throughput_tps": [
+          6.367345994753042,
+          6.322188102682176,
+          6.266510723408529
+        ],
+        "memory_gb": [
+          15.493149756,
+          15.493149756,
+          15.493149756
+        ],
+        "prompt_tps": [
+          211.1958589327563,
+          207.65979727805075,
+          207.3028641584107
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2453.2258,
+          "median": 2465.5711,
+          "p50": 2465.5711,
+          "p95": 2469.3918,
+          "std": 20.534,
+          "min": 2424.29,
+          "max": 2469.8163
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 6.3187,
+          "median": 6.3222,
+          "p50": 6.3222,
+          "p95": 6.3628,
+          "std": 0.0412,
+          "min": 6.2665,
+          "max": 6.3673
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 15.4931,
+          "median": 15.4931,
+          "p50": 15.4931,
+          "p95": 15.4931,
+          "std": 0.0,
+          "min": 15.4931,
+          "max": 15.4931
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 208.7195,
+          "median": 207.6598,
+          "p50": 207.6598,
+          "p95": 210.8423,
+          "std": 1.7571,
+          "min": 207.3029,
+          "max": 211.1959
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:47:03.796172+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-7b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-7B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 8.5163,
+      "ttft_ms": 2418.0326,
+      "throughput_tps": 11.9128,
+      "prompt_tps": 211.7424,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2418.0325840134174,
+          2415.6030418816954,
+          2420.669791987166
+        ],
+        "throughput_tps": [
+          11.90255074913142,
+          11.965428278608297,
+          11.912782518124342
+        ],
+        "memory_gb": [
+          8.516318304,
+          8.516318304,
+          8.516318304
+        ],
+        "prompt_tps": [
+          211.74239064644422,
+          211.9553548836255,
+          211.51170708818205
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2418.1018,
+          "median": 2418.0326,
+          "p50": 2418.0326,
+          "p95": 2420.4061,
+          "std": 2.0691,
+          "min": 2415.603,
+          "max": 2420.6698
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 11.9269,
+          "median": 11.9128,
+          "p50": 11.9128,
+          "p95": 11.9602,
+          "std": 0.0275,
+          "min": 11.9026,
+          "max": 11.9654
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 8.5163,
+          "median": 8.5163,
+          "p50": 8.5163,
+          "p95": 8.5163,
+          "std": 0.0,
+          "min": 8.5163,
+          "max": 8.5163
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 211.7365,
+          "median": 211.7424,
+          "p50": 211.7424,
+          "p95": 211.9341,
+          "std": 0.1812,
+          "min": 211.5117,
+          "max": 211.9554
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:49:25.555418+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-7b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 4.717,
+      "ttft_ms": 2318.1823,
+      "throughput_tps": 21.8146,
+      "prompt_tps": 220.8627,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2318.8672920223325,
+          2318.182290997356,
+          2316.833999939263
+        ],
+        "throughput_tps": [
+          21.81460533892583,
+          21.377281460641626,
+          21.86591473867367
+        ],
+        "memory_gb": [
+          4.717032544,
+          4.717032544,
+          4.717032544
+        ],
+        "prompt_tps": [
+          220.797456482934,
+          220.86270005096156,
+          220.9912320060144
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2317.9612,
+          "median": 2318.1823,
+          "p50": 2318.1823,
+          "p95": 2318.7988,
+          "std": 0.8447,
+          "min": 2316.834,
+          "max": 2318.8673
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 21.6859,
+          "median": 21.8146,
+          "p50": 21.8146,
+          "p95": 21.8608,
+          "std": 0.2193,
+          "min": 21.3773,
+          "max": 21.8659
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 4.717,
+          "median": 4.717,
+          "p50": 4.717,
+          "p95": 4.717,
+          "std": 0.0,
+          "min": 4.717,
+          "max": 4.717
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 220.8838,
+          "median": 220.8627,
+          "p50": 220.8627,
+          "p95": 220.9784,
+          "std": 0.0805,
+          "min": 220.7975,
+          "max": 220.9912
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:49:31.428379+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "qwen-7b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:51:14.247579+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "mistral-7b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Mistral-7B-Instruct-v0.3",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 14.7654,
+      "ttft_ms": 2595.8281,
+      "throughput_tps": 6.2782,
+      "prompt_tps": 197.2396,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2595.828125020489,
+          2611.5988339297473,
+          2594.8695419356227
+        ],
+        "throughput_tps": [
+          6.194010290445119,
+          6.2782166319901025,
+          6.2942025844637675
+        ],
+        "memory_gb": [
+          14.765418556,
+          14.765418556,
+          14.765418556
+        ],
+        "prompt_tps": [
+          197.23956107300393,
+          196.04848698357665,
+          197.3124242762808
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2600.7655,
+          "median": 2595.8281,
+          "p50": 2595.8281,
+          "p95": 2610.0218,
+          "std": 7.6703,
+          "min": 2594.8695,
+          "max": 2611.5988
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 6.2555,
+          "median": 6.2782,
+          "p50": 6.2782,
+          "p95": 6.2926,
+          "std": 0.044,
+          "min": 6.194,
+          "max": 6.2942
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 14.7654,
+          "median": 14.7654,
+          "p50": 14.7654,
+          "p95": 14.7654,
+          "std": 0.0,
+          "min": 14.7654,
+          "max": 14.7654
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 196.8668,
+          "median": 197.2396,
+          "p50": 197.2396,
+          "p95": 197.3051,
+          "std": 0.5794,
+          "min": 196.0485,
+          "max": 197.3124
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:52:20.655003+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "mistral-7b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Mistral-7B-Instruct-v0.3-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 8.1268,
+      "ttft_ms": 2741.7975,
+      "throughput_tps": 11.8248,
+      "prompt_tps": 186.7388,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2629.2479580733925,
+          2741.7974590789527,
+          2821.3548329658806
+        ],
+        "throughput_tps": [
+          11.886565024226902,
+          11.82479050891131,
+          11.765607317308524
+        ],
+        "memory_gb": [
+          8.1268184,
+          8.1268184,
+          8.1268184
+        ],
+        "prompt_tps": [
+          194.73248935226826,
+          186.73881190771667,
+          181.47309725723952
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2730.8001,
+          "median": 2741.7975,
+          "p50": 2741.7975,
+          "p95": 2813.3991,
+          "std": 78.8119,
+          "min": 2629.248,
+          "max": 2821.3548
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 11.8257,
+          "median": 11.8248,
+          "p50": 11.8248,
+          "p95": 11.8804,
+          "std": 0.0494,
+          "min": 11.7656,
+          "max": 11.8866
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 8.1268,
+          "median": 8.1268,
+          "p50": 8.1268,
+          "p95": 8.1268,
+          "std": 0.0,
+          "min": 8.1268,
+          "max": 8.1268
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 187.6481,
+          "median": 186.7388,
+          "p50": 186.7388,
+          "p95": 193.9331,
+          "std": 5.4512,
+          "min": 181.4731,
+          "max": 194.7325
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:53:04.171757+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "mistral-7b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 4.6151,
+      "ttft_ms": 2725.3831,
+      "throughput_tps": 21.7388,
+      "prompt_tps": 187.8635,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2601.103417109698,
+          2725.3831250127405,
+          2786.7768751457334
+        ],
+        "throughput_tps": [
+          21.738766462341708,
+          21.7975258772119,
+          21.684238831481373
+        ],
+        "memory_gb": [
+          4.61505548,
+          4.61505548,
+          4.61505548
+        ],
+        "prompt_tps": [
+          196.8395399552878,
+          187.8634953379652,
+          183.72479137685724
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2704.4211,
+          "median": 2725.3831,
+          "p50": 2725.3831,
+          "p95": 2780.6375,
+          "std": 77.2365,
+          "min": 2601.1034,
+          "max": 2786.7769
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 21.7402,
+          "median": 21.7388,
+          "p50": 21.7388,
+          "p95": 21.7916,
+          "std": 0.0463,
+          "min": 21.6842,
+          "max": 21.7975
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 4.6151,
+          "median": 4.6151,
+          "p50": 4.6151,
+          "p95": 4.6151,
+          "std": 0.0,
+          "min": 4.6151,
+          "max": 4.6151
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 189.4759,
+          "median": 187.8635,
+          "p50": 187.8635,
+          "p95": 195.9419,
+          "std": 5.4741,
+          "min": 183.7248,
+          "max": 196.8395
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T16:53:10.041729+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "mistral-7b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:01:17.347160+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-qwen-7b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/DeepSeek-R1-Distill-Qwen-7B-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 15.4931,
+      "ttft_ms": 2430.168,
+      "throughput_tps": 6.2189,
+      "prompt_tps": 210.685,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2430.1679998170584,
+          2429.2202501092106,
+          2430.744874989614
+        ],
+        "throughput_tps": [
+          6.168119469100736,
+          6.218864859227606,
+          6.278011013108726
+        ],
+        "memory_gb": [
+          15.493149756,
+          15.493149756,
+          15.493149756
+        ],
+        "prompt_tps": [
+          210.68502261512086,
+          210.76722045972653,
+          210.63502190956493
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2430.0444,
+          "median": 2430.168,
+          "p50": 2430.168,
+          "p95": 2430.6872,
+          "std": 0.6285,
+          "min": 2429.2203,
+          "max": 2430.7449
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 6.2217,
+          "median": 6.2189,
+          "p50": 6.2189,
+          "p95": 6.2721,
+          "std": 0.0449,
+          "min": 6.1681,
+          "max": 6.278
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 15.4931,
+          "median": 15.4931,
+          "p50": 15.4931,
+          "p95": 15.4931,
+          "std": 0.0,
+          "min": 15.4931,
+          "max": 15.4931
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 210.6958,
+          "median": 210.685,
+          "p50": 210.685,
+          "p95": 210.759,
+          "std": 0.0545,
+          "min": 210.635,
+          "max": 210.7672
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:05:52.031630+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-qwen-7b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/DeepSeek-R1-Distill-Qwen-7B-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 8.5163,
+      "ttft_ms": 2416.7728,
+      "throughput_tps": 11.959,
+      "prompt_tps": 211.8528,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2416.7727502062917,
+          2416.771624935791,
+          2417.3601248767227
+        ],
+        "throughput_tps": [
+          11.958976320146196,
+          11.962598282545553,
+          11.909347166298366
+        ],
+        "memory_gb": [
+          8.516318304,
+          8.516318304,
+          8.516318304
+        ],
+        "prompt_tps": [
+          211.85276934138577,
+          211.85286798193144,
+          211.80129296048113
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2416.9682,
+          "median": 2416.7728,
+          "p50": 2416.7728,
+          "p95": 2417.3014,
+          "std": 0.2772,
+          "min": 2416.7716,
+          "max": 2417.3601
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 11.9436,
+          "median": 11.959,
+          "p50": 11.959,
+          "p95": 11.9622,
+          "std": 0.0243,
+          "min": 11.9093,
+          "max": 11.9626
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 8.5163,
+          "median": 8.5163,
+          "p50": 8.5163,
+          "p95": 8.5163,
+          "std": 0.0,
+          "min": 8.5163,
+          "max": 8.5163
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 211.8356,
+          "median": 211.8528,
+          "p50": 211.8528,
+          "p95": 211.8529,
+          "std": 0.0243,
+          "min": 211.8013,
+          "max": 211.8529
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:08:14.290751+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-qwen-7b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/DeepSeek-R1-Distill-Qwen-7B-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 4.717,
+      "ttft_ms": 2317.3563,
+      "throughput_tps": 21.8331,
+      "prompt_tps": 220.9414,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2317.2921671066433,
+          2317.356332903728,
+          2319.5641660131514
+        ],
+        "throughput_tps": [
+          21.882724355335693,
+          21.814767219697153,
+          21.833128673066742
+        ],
+        "memory_gb": [
+          4.717032544,
+          4.717032544,
+          4.717032544
+        ],
+        "prompt_tps": [
+          220.94753836728324,
+          220.94142050154463,
+          220.73112160549607
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2318.0709,
+          "median": 2317.3563,
+          "p50": 2317.3563,
+          "p95": 2319.3434,
+          "std": 1.0562,
+          "min": 2317.2922,
+          "max": 2319.5642
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 21.8435,
+          "median": 21.8331,
+          "p50": 21.8331,
+          "p95": 21.8778,
+          "std": 0.0287,
+          "min": 21.8148,
+          "max": 21.8827
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 4.717,
+          "median": 4.717,
+          "p50": 4.717,
+          "p95": 4.717,
+          "std": 0.0,
+          "min": 4.717,
+          "max": 4.717
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 220.8734,
+          "median": 220.9414,
+          "p50": 220.9414,
+          "p95": 220.9469,
+          "std": 0.1006,
+          "min": 220.7311,
+          "max": 220.9475
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:08:20.151513+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-qwen-7b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:10:33.675393+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama3-8b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 16.3299,
+      "ttft_ms": 2637.274,
+      "throughput_tps": 5.8329,
+      "prompt_tps": 194.1399,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2623.5892919357866,
+          2637.273999862373,
+          2696.6224999632686
+        ],
+        "throughput_tps": [
+          5.8546621627325965,
+          5.832852934624946,
+          5.716781382852083
+        ],
+        "memory_gb": [
+          16.32990214,
+          16.32990214,
+          16.32990214
+        ],
+        "prompt_tps": [
+          195.15249645733476,
+          194.13985806052725,
+          189.86713935931857
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2652.4953,
+          "median": 2637.274,
+          "p50": 2637.274,
+          "p95": 2690.6876,
+          "std": 31.6989,
+          "min": 2623.5893,
+          "max": 2696.6225
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 5.8014,
+          "median": 5.8329,
+          "p50": 5.8329,
+          "p95": 5.8525,
+          "std": 0.0605,
+          "min": 5.7168,
+          "max": 5.8547
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 16.3299,
+          "median": 16.3299,
+          "p50": 16.3299,
+          "p95": 16.3299,
+          "std": 0.0,
+          "min": 16.3299,
+          "max": 16.3299
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 193.0532,
+          "median": 194.1399,
+          "p50": 194.1399,
+          "p95": 195.0512,
+          "std": 2.2905,
+          "min": 189.8671,
+          "max": 195.1525
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:11:41.409893+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama3-8b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 8.958,
+      "ttft_ms": 2775.4588,
+      "throughput_tps": 11.2535,
+      "prompt_tps": 184.474,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2666.350750019774,
+          2775.45875008218,
+          2829.617042094469
+        ],
+        "throughput_tps": [
+          11.253694047119403,
+          11.235212624820537,
+          11.253534712313524
+        ],
+        "memory_gb": [
+          8.957954144,
+          8.957954144,
+          8.957954144
+        ],
+        "prompt_tps": [
+          192.0227486935854,
+          184.47400812022155,
+          180.94321329822782
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2757.1422,
+          "median": 2775.4588,
+          "p50": 2775.4588,
+          "p95": 2824.2012,
+          "std": 67.8999,
+          "min": 2666.3508,
+          "max": 2829.617
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 11.2475,
+          "median": 11.2535,
+          "p50": 11.2535,
+          "p95": 11.2537,
+          "std": 0.0087,
+          "min": 11.2352,
+          "max": 11.2537
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 8.958,
+          "median": 8.958,
+          "p50": 8.958,
+          "p95": 8.958,
+          "std": 0.0,
+          "min": 8.958,
+          "max": 8.958
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 185.8133,
+          "median": 184.474,
+          "p50": 184.474,
+          "p95": 191.2679,
+          "std": 4.6213,
+          "min": 180.9432,
+          "max": 192.0227
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:12:26.032281+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama3-8b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 5.0572,
+      "ttft_ms": 2737.845,
+      "throughput_tps": 20.4547,
+      "prompt_tps": 187.0084,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2613.1467500235885,
+          2737.8450410906225,
+          2809.6852919552475
+        ],
+        "throughput_tps": [
+          20.454705436548775,
+          20.379716713217707,
+          20.65443774154287
+        ],
+        "memory_gb": [
+          5.057169516,
+          5.057169516,
+          5.057169516
+        ],
+        "prompt_tps": [
+          195.93235626563194,
+          187.0083924823022,
+          182.2268143218636
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2720.2257,
+          "median": 2737.845,
+          "p50": 2737.845,
+          "p95": 2802.5013,
+          "std": 81.198,
+          "min": 2613.1468,
+          "max": 2809.6853
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 20.4963,
+          "median": 20.4547,
+          "p50": 20.4547,
+          "p95": 20.6345,
+          "std": 0.1159,
+          "min": 20.3797,
+          "max": 20.6544
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 5.0572,
+          "median": 5.0572,
+          "p50": 5.0572,
+          "p95": 5.0572,
+          "std": 0.0,
+          "min": 5.0572,
+          "max": 5.0572
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 188.3892,
+          "median": 187.0084,
+          "p50": 187.0084,
+          "p95": 195.04,
+          "std": 5.6798,
+          "min": 182.2268,
+          "max": 195.9324
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:12:59.445530+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "llama3-8b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/Llama-3-8B-Instruct-262k-2bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 3.1073,
+      "ttft_ms": 2826.4491,
+      "throughput_tps": 35.7737,
+      "prompt_tps": 181.146,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2663.872000062838,
+          2826.4490829315037,
+          2867.855416843668
+        ],
+        "throughput_tps": [
+          36.17743519713246,
+          35.69512681177074,
+          35.77374309366659
+        ],
+        "memory_gb": [
+          3.107301496,
+          3.107301496,
+          3.107301496
+        ],
+        "prompt_tps": [
+          192.20142709106233,
+          181.14601925500452,
+          178.5306180335625
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2786.0588,
+          "median": 2826.4491,
+          "p50": 2826.4491,
+          "p95": 2863.7148,
+          "std": 88.0373,
+          "min": 2663.872,
+          "max": 2867.8554
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 35.8821,
+          "median": 35.7737,
+          "p50": 35.7737,
+          "p95": 36.1371,
+          "std": 0.2113,
+          "min": 35.6951,
+          "max": 36.1774
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 3.1073,
+          "median": 3.1073,
+          "p50": 3.1073,
+          "p95": 3.1073,
+          "std": 0.0,
+          "min": 3.1073,
+          "max": 3.1073
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 183.9594,
+          "median": 181.146,
+          "p50": 181.146,
+          "p95": 191.0959,
+          "std": 5.925,
+          "min": 178.5306,
+          "max": 192.2014
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:20:52.787556+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-llama-8b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/DeepSeek-R1-Distill-Llama-8B-bf16",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 16.3299,
+      "ttft_ms": 2632.9476,
+      "throughput_tps": 5.7761,
+      "prompt_tps": 194.4589,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2664.881333010271,
+          2610.138542018831,
+          2632.9476251266897
+        ],
+        "throughput_tps": [
+          5.502543136029386,
+          5.776051832284469,
+          5.813239771620642
+        ],
+        "memory_gb": [
+          16.32990214,
+          16.32990214,
+          16.32990214
+        ],
+        "prompt_tps": [
+          192.12863014115555,
+          196.15817005789657,
+          194.45886242243958
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2635.9892,
+          "median": 2632.9476,
+          "p50": 2632.9476,
+          "p95": 2661.688,
+          "std": 22.4519,
+          "min": 2610.1385,
+          "max": 2664.8813
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 5.6973,
+          "median": 5.7761,
+          "p50": 5.7761,
+          "p95": 5.8095,
+          "std": 0.1385,
+          "min": 5.5025,
+          "max": 5.8132
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 16.3299,
+          "median": 16.3299,
+          "p50": 16.3299,
+          "p95": 16.3299,
+          "std": 0.0,
+          "min": 16.3299,
+          "max": 16.3299
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 194.2486,
+          "median": 194.4589,
+          "p50": 194.4589,
+          "p95": 195.9882,
+          "std": 1.6518,
+          "min": 192.1286,
+          "max": 196.1582
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:25:19.718514+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-llama-8b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/DeepSeek-R1-Distill-Llama-8B-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 8.958,
+      "ttft_ms": 2590.631,
+      "throughput_tps": 11.2127,
+      "prompt_tps": 197.6353,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2569.528207881376,
+          2592.194665921852,
+          2590.630958089605
+        ],
+        "throughput_tps": [
+          11.212698819448546,
+          11.228612645512047,
+          10.302481010033237
+        ],
+        "memory_gb": [
+          8.957954144,
+          8.957954144,
+          8.957954144
+        ],
+        "prompt_tps": [
+          199.25836907708188,
+          197.51603023144077,
+          197.63525113494413
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2584.1179,
+          "median": 2590.631,
+          "p50": 2590.631,
+          "p95": 2592.0383,
+          "std": 10.3362,
+          "min": 2569.5282,
+          "max": 2592.1947
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 10.9146,
+          "median": 11.2127,
+          "p50": 11.2127,
+          "p95": 11.227,
+          "std": 0.4329,
+          "min": 10.3025,
+          "max": 11.2286
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 8.958,
+          "median": 8.958,
+          "p50": 8.958,
+          "p95": 8.958,
+          "std": 0.0,
+          "min": 8.958,
+          "max": 8.958
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 198.1366,
+          "median": 197.6353,
+          "p50": 197.6353,
+          "p95": 199.0961,
+          "std": 0.7947,
+          "min": 197.516,
+          "max": 199.2584
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:27:45.819207+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-llama-8b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/DeepSeek-R1-Distill-Llama-8B-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 5.0572,
+      "ttft_ms": 2477.3685,
+      "throughput_tps": 20.6482,
+      "prompt_tps": 206.6709,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          2477.3684579413384,
+          2477.2216249257326,
+          2481.389041058719
+        ],
+        "throughput_tps": [
+          20.683706655067155,
+          20.574466428129362,
+          20.648191215589282
+        ],
+        "memory_gb": [
+          5.057169516,
+          5.057169516,
+          5.057169516
+        ],
+        "prompt_tps": [
+          206.6709125801438,
+          206.68316264006043,
+          206.33604466212523
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 2478.6597,
+          "median": 2477.3685,
+          "p50": 2477.3685,
+          "p95": 2480.987,
+          "std": 1.9309,
+          "min": 2477.2216,
+          "max": 2481.389
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 20.6355,
+          "median": 20.6482,
+          "p50": 20.6482,
+          "p95": 20.6802,
+          "std": 0.0455,
+          "min": 20.5745,
+          "max": 20.6837
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 5.0572,
+          "median": 5.0572,
+          "p50": 5.0572,
+          "p95": 5.0572,
+          "std": 0.0,
+          "min": 5.0572,
+          "max": 5.0572
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 206.5634,
+          "median": 206.6709,
+          "p50": 206.6709,
+          "p95": 206.6819,
+          "std": 0.1608,
+          "min": 206.336,
+          "max": 206.6832
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:27:51.993906+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "deepseek-r1-llama-8b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:32:37.604930+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-9b",
+      "configuration": "fp16",
+      "weight_bits": 16,
+      "optimizations": {
+        "weight_bits": 16,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/gemma-2-9b-it-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 10.5073,
+      "ttft_ms": 3275.9894,
+      "throughput_tps": 8.848,
+      "prompt_tps": 156.2887,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          3275.989416055381,
+          3248.7489578779782,
+          3307.704791193828
+        ],
+        "throughput_tps": [
+          8.848032127268256,
+          8.825174322627497,
+          8.950642207662645
+        ],
+        "memory_gb": [
+          10.507297996,
+          10.507297996,
+          10.507297996
+        ],
+        "prompt_tps": [
+          156.288661218112,
+          157.59912712197644,
+          154.79011348385998
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 3277.4811,
+          "median": 3275.9894,
+          "p50": 3275.9894,
+          "p95": 3304.5333,
+          "std": 24.0917,
+          "min": 3248.749,
+          "max": 3307.7048
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 8.8746,
+          "median": 8.848,
+          "p50": 8.848,
+          "p95": 8.9404,
+          "std": 0.0546,
+          "min": 8.8252,
+          "max": 8.9506
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 10.5073,
+          "median": 10.5073,
+          "p50": 10.5073,
+          "p95": 10.5073,
+          "std": 0.0,
+          "min": 10.5073,
+          "max": 10.5073
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 156.226,
+          "median": 156.2887,
+          "p50": 156.2887,
+          "p95": 157.4681,
+          "std": 1.1476,
+          "min": 154.7901,
+          "max": 157.5991
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:34:01.324522+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-9b",
+      "configuration": "w8",
+      "weight_bits": 8,
+      "optimizations": {
+        "weight_bits": 8,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/gemma-2-9b-it-8bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 10.5073,
+      "ttft_ms": 3418.7041,
+      "throughput_tps": 8.8992,
+      "prompt_tps": 149.7643,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          3337.4602920375764,
+          3418.704125098884,
+          3506.8916659802203
+        ],
+        "throughput_tps": [
+          8.899249845512948,
+          8.932967760391623,
+          8.780153973064577
+        ],
+        "memory_gb": [
+          10.507297996,
+          10.507297996,
+          10.507297996
+        ],
+        "prompt_tps": [
+          153.41006489920372,
+          149.76434966719756,
+          145.99823683372597
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 3421.0187,
+          "median": 3418.7041,
+          "p50": 3418.7041,
+          "p95": 3498.0729,
+          "std": 69.1894,
+          "min": 3337.4603,
+          "max": 3506.8917
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 8.8708,
+          "median": 8.8992,
+          "p50": 8.8992,
+          "p95": 8.9296,
+          "std": 0.0656,
+          "min": 8.7802,
+          "max": 8.933
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 10.5073,
+          "median": 10.5073,
+          "p50": 10.5073,
+          "p95": 10.5073,
+          "std": 0.0,
+          "min": 10.5073,
+          "max": 10.5073
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 149.7242,
+          "median": 149.7643,
+          "p50": 149.7643,
+          "p95": 153.0455,
+          "std": 3.026,
+          "min": 145.9982,
+          "max": 153.4101
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:36:46.221963+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-9b",
+      "configuration": "w4",
+      "weight_bits": 4,
+      "optimizations": {
+        "weight_bits": 4,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": "mlx-community/gemma-2-9b-it-4bit",
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 5.8831,
+      "ttft_ms": 3168.2101,
+      "throughput_tps": 15.8836,
+      "prompt_tps": 161.6054,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "ok",
+      "error": null,
+      "article_id": 1,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": "qwen-0.5b",
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": {
+        "ttft_ms": [
+          3168.210082920268,
+          3150.586707983166,
+          3178.669166052714
+        ],
+        "throughput_tps": [
+          15.908846287941868,
+          15.883645677734899,
+          15.879997670293939
+        ],
+        "memory_gb": [
+          5.883070666,
+          5.883070666,
+          5.883070666
+        ],
+        "prompt_tps": [
+          161.6054449041046,
+          162.5094141045731,
+          161.07369885108363
+        ]
+      },
+      "stats": {
+        "ttft_ms": {
+          "n": 3,
+          "mean": 3165.822,
+          "median": 3168.2101,
+          "p50": 3168.2101,
+          "p95": 3177.6233,
+          "std": 11.5883,
+          "min": 3150.5867,
+          "max": 3178.6692
+        },
+        "throughput_tps": {
+          "n": 3,
+          "mean": 15.8908,
+          "median": 15.8836,
+          "p50": 15.8836,
+          "p95": 15.9063,
+          "std": 0.0128,
+          "min": 15.88,
+          "max": 15.9088
+        },
+        "memory_gb": {
+          "n": 3,
+          "mean": 5.8831,
+          "median": 5.8831,
+          "p50": 5.8831,
+          "p95": 5.8831,
+          "std": 0.0,
+          "min": 5.8831,
+          "max": 5.8831
+        },
+        "prompt_tps": {
+          "n": 3,
+          "mean": 161.7295,
+          "median": 161.6054,
+          "p50": 161.6054,
+          "p95": 162.419,
+          "std": 0.5927,
+          "min": 161.0737,
+          "max": 162.5094
+        }
+      },
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    },
+    {
+      "timestamp": "2026-05-20T17:36:52.406024+00:00",
+      "hardware": "Mac M3",
+      "model_preset": "gemma-9b",
+      "configuration": "w2",
+      "weight_bits": 2,
+      "optimizations": {
+        "weight_bits": 2,
+        "kv_cache": false,
+        "prefill": false
+      },
+      "model_repo": null,
+      "kv_bits": null,
+      "prefill_step_size": 512,
+      "prompt_tokens": 512,
+      "generation_tokens": 128,
+      "num_trials": 3,
+      "memory_gb": 0.0,
+      "ttft_ms": 0.0,
+      "throughput_tps": 0.0,
+      "prompt_tps": 0.0,
+      "mlx_version": "0.31.2",
+      "mlx_lm_version": "0.31.3",
+      "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+      "status": "skipped",
+      "error": "No repo configured for 2-bit",
+      "article_id": null,
+      "run_label": null,
+      "benchmark_mode": "standard",
+      "draft_model_repo": null,
+      "draft_preset": null,
+      "num_draft_tokens": null,
+      "draft_accept_rate": null,
+      "prefix_cache_cold_ttft_ms": null,
+      "prefix_cache_warm_ttft_ms": null,
+      "prefix_system_tokens": null,
+      "workload": null,
+      "schema_version": 1,
+      "trials": null,
+      "stats": null,
+      "warmup_policy": {
+        "warmup_trials": 1,
+        "warmup_discarded": true,
+        "measured_trials_field": "num_trials",
+        "description": "One full generate before timed trials; trials use seed+trial."
+      }
+    }
+  ]
+}

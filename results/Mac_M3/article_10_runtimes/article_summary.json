@@ -1,0 +1,12 @@
+{
+  "article_id": 10,
+  "hardware": "Mac M3",
+  "pairs": [
+    "llama3-8b:fp16",
+    "llama3-8b:w4",
+    "mistral-7b:w4"
+  ],
+  "llama_bench": "/opt/homebrew/bin/llama-bench",
+  "failures": 3,
+  "timestamp": "2026-05-20T19:05:59.628618+00:00"
+}

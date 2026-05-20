@@ -1,0 +1,9 @@
+{
+  "article_id": 0,
+  "slug": "introduction",
+  "title": "Local LLMs on Apple Silicon",
+  "hardware": "Mac M3",
+  "output_dir": "/Users/bhargavchirumamilla/Downloads/LLM-Inference/results/Mac_M3/article_00_introduction",
+  "timestamp": "2026-05-20T16:02:56.445925+00:00",
+  "failures": 0
+}
