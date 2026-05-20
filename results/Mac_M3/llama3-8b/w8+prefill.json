@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-05-19T20:09:46.532313+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "w8+prefill",
+  "weight_bits": 8,
+  "optimizations": {
+    "weight_bits": 8,
+    "kv_cache": false,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-8bit",
+  "kv_bits": null,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 8.957954144,
+  "ttft_ms": 3482.4667087135217,
+  "throughput_tps": 10.451024199222118,
+  "prompt_tps": 148.01911657718836,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null
+}

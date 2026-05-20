@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-05-19T19:56:32.629648+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "llama3-8b",
+  "configuration": "fp16",
+  "weight_bits": 16,
+  "optimizations": {
+    "weight_bits": 16,
+    "kv_cache": false,
+    "prefill": false
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
+  "kv_bits": null,
+  "prefill_step_size": 512,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 16.32990214,
+  "ttft_ms": 2638.0334443723164,
+  "throughput_tps": 5.724725486746885,
+  "prompt_tps": 194.08575488268352,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null
+}

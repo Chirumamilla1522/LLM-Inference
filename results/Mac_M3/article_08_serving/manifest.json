@@ -1,0 +1,16 @@
+{
+  "article_id": 8,
+  "slug": "serving",
+  "title": "Production serving at scale",
+  "hardware": "Mac M3",
+  "benchmark_mode": "concept",
+  "status": "concept_only",
+  "topics": [
+    "continuous_batching",
+    "paged_attention",
+    "disaggregated_prefill_decode",
+    "request_scheduling"
+  ],
+  "timestamp": "2026-05-20T03:47:17.011174+00:00",
+  "note": "No MLX benchmark for this article. See docs/articles/ and write concept content."
+}

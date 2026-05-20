@@ -1,20 +1,36 @@
 # notes.md
 
-# Deploying Open-Source LLMs Locally: The Mac M3 vs. M5 Max Showdown
+# Deploying Open-Source LLMs Locally: Mac M3 vs. M5 Max (article workspace)
 
-This document serves as a comprehensive guide to benchmarking local AI performance using Apple Silicon, MLX, quantization, and version-controlled optimization tracking. It contains the full article draft alongside the complete repository codebase for tracking your own metrics.
+Benchmark repo + draft copy. **12 articles** — one per optimization (or one set). Index: **[docs/ARTICLES_INDEX.md](docs/ARTICLES_INDEX.md)** · run: **`./scripts/run_article.sh <id> "Mac M3"`**
+
+| # | Article |
+|---|---------|
+| 0 | Introduction (M3 vs M5, methodology) |
+| 1 | Weight quantization |
+| 2 | KV cache quantization |
+| 3 | Prefill & Flash Attention |
+| 4 | Model size ladder |
+| 5 | Full stack (capstone) |
+| 6 | Speculative decoding (planned) |
+| 7 | Context, length & prompt cache *(set)* |
+| 8–11 | Serving, parallelism, runtimes, tradeoffs *(concept sets)* |
+
+Technique reference: [INFERENCE_OPTIMIZATIONS_CATALOG.md](docs/INFERENCE_OPTIMIZATIONS_CATALOG.md)
+
+Below: draft prose for **Article 5 (capstone)**. Articles 1–4 use sweeps from `ARTICLE_SERIES.md`.
 
 ---
 
-## Part 1: The Article
+## Part 1: Capstone draft (legacy single article)
 
-**A deep dive into how quantization, KV caching, and Flash Attention transform local AI performance on Apple Silicon.**
+**Stacking quantization, KV cache tuning, and prefill on Apple Silicon — M3 vs M5 Max.**
 
 The era of relying solely on cloud APIs for large language models (LLMs) is rapidly fading. Thanks to Apple Silicon's unified memory architecture and highly specialized frameworks like MLX, deploying capable open-source models locally is now a practical reality. 
 
 However, raw hardware is only half the battle. The software optimizations you apply—such as advanced quantization and dynamic memory management—dictate whether your local assistant is a sluggish memory hog or a lightning-fast reasoning engine. 
 
-This article explores the real-world performance of deploying local models, comparing the capable Mac M3 against the heavyweight Mac M5 Max. More importantly, we will build a reproducible, Git-tracked benchmarking workflow to measure the impact of these optimizations modularly.
+This capstone summarizes end-to-end numbers; see the series table above for posts that isolate each technique.
 
 ### The Hardware Contenders
 
@@ -25,26 +41,18 @@ To understand the spectrum of local AI performance, we tested two vastly differe
 
 ### The Models Tested
 
-We benchmarked three distinct tiers of open-source models:
-1.  **Llama 3 (8B):** The gold standard for highly efficient, capable small models.
-2.  **Mistral (7B):** A classic, efficient model known for strong reasoning relative to its size.
-3.  **Qwen 3.5 (35B):** A dense, heavy model that requires serious memory capacity and bandwidth to run smoothly.
+**21 presets** (~0.5B → 72B); **14** run by default on 24 GB M3. See `python scripts/list_models.py`.
 
-### The Optimization Arsenal
+Capstone highlights: **Llama 3.1 8B**, **Mistral 7B**, **Qwen 2.5 32B** (`qwen-35b`). Article 1 uses the full small/medium ladder for scaling curves.
 
-Running a large language model in its native floating-point format (FP16 or FP32) requires massive memory capacity and bandwidth. To make local deployment viable on consumer and workstation hardware, developers use a combination of mathematical compression and I/O efficiency updates.
+### The Optimization Arsenal (see dedicated articles)
 
-#### 1. Advanced Quantization
-Quantization maps continuous high-precision floating-point weights to discrete lower-precision integers (e.g., mapping FP16 to 8-bit or 4-bit spaces). 
-* **The Impact:** An 8B parameter model requires ~16GB of VRAM in FP16. Under 4-bit quantization, this footprint drops to roughly ~5GB, allowing it to easily fit into the unified memory of a base Mac M3.
-
-#### 2. KV Cache Management
-During generation, the Key-Value (KV) values of past tokens are cached so the model does not have to recalculate the entire context history for every single new token.
-* **The Fix:** Modern frameworks utilize specialized allocation or continuous memory chunking, ensuring the KV cache is packed tightly in unified memory without spilling over or wasting critical space.
-
-#### 3. Flash Attention
-Standard attention mechanisms scale quadratically with sequence length in terms of both time and memory. Flash Attention rearranges the computation.
-* **The Impact:** It utilizes tiling to load blocks of the prompt into high-speed GPU SRAM, computing attention natively in hardware blocks. This dramatically lowers the Time to First Token (TTFT) and prevents severe performance drop-offs as the context grows.
+| Layer | Series article | Deep dive |
+|-------|----------------|------------|
+| Weight quantization | Article 1 | [weight-quantization.md](docs/optimizations/weight-quantization.md) |
+| KV cache quantization | Article 2 | [kv-cache-quantization.md](docs/optimizations/kv-cache-quantization.md) |
+| Prefill / TTFT | Article 3 | [prefill-and-flash-attention.md](docs/optimizations/prefill-and-flash-attention.md) |
+| Full stack | Article 4 (this draft) | [all-optimizations.md](docs/optimizations/all-optimizations.md) |
 
 ### The Benchmark Showdown: Results
 
@@ -69,17 +77,32 @@ By compiling the data from our tracking scripts across the M3 and M5 Max, a clea
 
 ---
 
-## Part 2: The `mlx-llm-benchmarks` Repository
+## Part 2: The benchmark repository
 
-To systematically track performance metrics over time across different branches, models, and optimization flags, construct your codebase using the following structure:
+Implementation lives in this repo. **Optimization docs:**
 
-### Directory Structure
+- [Weight quantization](docs/optimizations/weight-quantization.md)
+- [KV cache quantization](docs/optimizations/kv-cache-quantization.md)
+- [Prefill & Flash Attention](docs/optimizations/prefill-and-flash-attention.md)
+- [All optimizations together](docs/optimizations/all-optimizations.md)
+- [**Article series plan**](docs/ARTICLE_SERIES.md) — one post per optimization + capstone
+- [Benchmark workflow](docs/BENCHMARK_WORKFLOW.md)
+- [README.md](README.md) — quick start
+
+### Directory structure
 ```text
-mlx-llm-benchmarks/
+LLM-Inference/
+├── docs/optimizations/
+│   ├── weight-quantization.md
+│   ├── kv-cache-quantization.md
+│   ├── prefill-and-flash-attention.md
+│   └── all-optimizations.md
+├── docs/BENCHMARK_WORKFLOW.md
 ├── README.md
 ├── requirements.txt
 ├── scripts/
-│   ├── setup_env.sh
-│   └── run_benchmark.py
+│   ├── optimizations.py
+│   ├── run_benchmark.py
+│   └── run_full_sweep.sh
 └── results/
-    └── .keep
+```

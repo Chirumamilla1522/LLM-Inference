@@ -1,8 +1,10 @@
 .venv/
+.env
 __pycache__/
 *.py[cod]
 .DS_Store
-results/*.json
+# Ignore only top-level sweep dumps; track per-config JSON under results/<hardware>/
+results/sweep_*.json
 !results/.gitkeep
 .cursor/hooks/logs/
 .cursor/hooks/.push.lock

@@ -26,30 +26,9 @@ if ! mkdir "$LOCK_FILE" 2>/dev/null; then
 fi
 trap 'rmdir "$LOCK_FILE" 2>/dev/null || true' EXIT
 
-SENSITIVE_PATTERNS=(
-  .env
-  .env.*
-  credentials.json
-  '*.pem'
-  id_rsa
-  id_ed25519
-)
-
-has_sensitive_changes() {
-  local pattern path
-  for pattern in "${SENSITIVE_PATTERNS[@]}"; do
-    while IFS= read -r path; do
-      [[ -n "$path" ]] || continue
-      log "Blocked: refusing to commit sensitive path: $path"
-      return 0
-    done < <(git status --porcelain -- "$pattern" 2>/dev/null || true)
-  done
-  return 1
-}
-
-if has_sensitive_changes; then
-  exit 0
-fi
+# Never commit secrets. .env.example is allowed (template only).
+SENSITIVE_PATHS=(.env .env.local .env.production credentials.json)
+SENSITIVE_GLOBS=('*.pem' id_rsa id_ed25519)
 
 if git diff --quiet && git diff --cached --quiet; then
   if [[ -z "$(git ls-files --others --exclude-standard)" ]]; then
@@ -63,7 +42,13 @@ TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 git add -A
 
-for pattern in "${SENSITIVE_PATTERNS[@]}"; do
+for path in "${SENSITIVE_PATHS[@]}"; do
+  if git ls-files --stage -- "$path" 2>/dev/null | grep -q .; then
+    log "Unstaged sensitive file: $path"
+    git reset -q HEAD -- "$path" 2>/dev/null || true
+  fi
+done
+for pattern in "${SENSITIVE_GLOBS[@]}"; do
   git reset -q HEAD -- $pattern 2>/dev/null || true
 done
 

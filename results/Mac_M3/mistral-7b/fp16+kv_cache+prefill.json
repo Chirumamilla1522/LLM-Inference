@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-05-19T20:33:29.825875+00:00",
+  "hardware": "Mac M3",
+  "model_preset": "mistral-7b",
+  "configuration": "fp16+kv_cache+prefill",
+  "weight_bits": 16,
+  "optimizations": {
+    "weight_bits": 16,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Mistral-7B-Instruct-v0.3",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 14.765418556,
+  "ttft_ms": 3856.937902281061,
+  "throughput_tps": 4.880222570792298,
+  "prompt_tps": 135.23714692420182,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.31.3",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null
+}
