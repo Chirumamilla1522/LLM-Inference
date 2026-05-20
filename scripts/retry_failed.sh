@@ -5,12 +5,15 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 source .venv/bin/activate
+# shellcheck disable=SC1091
 source scripts/hf_env.sh
+# shellcheck disable=SC1091
+source scripts/hf_cli.sh
 
 HARDWARE="${1:-Mac M3}"
 
-if ! .venv/bin/huggingface-cli whoami &>/dev/null; then
-  echo "Run: ./scripts/hf_login.sh  (needed for Mistral fp16)"
+if ! hf_whoami_ok; then
+  echo "Run: ./scripts/hf_login.sh  (hf auth login — needed for Mistral fp16)"
   exit 1
 fi
 

@@ -5,6 +5,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 source .venv/bin/activate
 source scripts/hf_env.sh 2>/dev/null || true
+# shellcheck disable=SC1091
+source scripts/hf_cli.sh
 
 HARDWARE="${1:-Mac M5 Max}"
 
@@ -12,7 +14,7 @@ echo "=== M5 ladder: Article 4 (model size) + Article 5 (capstone) ==="
 echo "Hardware label: $HARDWARE"
 echo ""
 
-if ! huggingface-cli whoami &>/dev/null; then
+if ! hf_whoami_ok; then
   echo "Run ./scripts/hf_login.sh first."
   exit 1
 fi

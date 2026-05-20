@@ -16,6 +16,8 @@ cd "$ROOT"
 source .venv/bin/activate
 # shellcheck disable=SC1091
 source scripts/hf_env.sh 2>/dev/null || true
+# shellcheck disable=SC1091
+source scripts/hf_cli.sh
 
 HARDWARE="${HARDWARE:-Mac M3}"
 MODE="${1:-standard}"
@@ -33,9 +35,9 @@ echo " Hardware: $HARDWARE"
 echo " Mode:     $MODE"
 echo "=============================================="
 
-if ! huggingface-cli whoami &>/dev/null; then
+if ! hf_whoami_ok; then
   echo "ERROR: Hugging Face login required."
-  echo "  ./scripts/hf_login.sh"
+  echo "  ./scripts/hf_login.sh    # runs: hf auth login"
   echo "  Accept licenses at huggingface.co for Llama 3.1, Mistral, etc."
   exit 1
 fi

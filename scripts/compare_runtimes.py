@@ -64,7 +64,7 @@ def find_llama_bench() -> str | None:
 
 
 def ensure_gguf(spec: GGUFSpec, cache_dir: Path | None) -> Path:
-    """Download GGUF via huggingface-cli if missing."""
+    """Download GGUF via huggingface_hub if missing."""
     path = gguf_cache_path(spec, str(cache_dir) if cache_dir else None)
     if path.exists():
         return path
@@ -82,7 +82,7 @@ def ensure_gguf(spec: GGUFSpec, cache_dir: Path | None) -> Path:
     except Exception as exc:
         raise RuntimeError(
             f"Could not download {spec.hf_file_id}. "
-            f"Install huggingface_hub and run: huggingface-cli download {spec.hf_repo} "
+            f"Install huggingface_hub and run: hf download {spec.hf_repo} "
             f"{spec.filename} --local-dir {path.parent}\n{exc}"
         ) from exc
 

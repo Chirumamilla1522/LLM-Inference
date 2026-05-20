@@ -7,17 +7,23 @@ cd "$ROOT"
 
 # shellcheck disable=SC1091
 source .venv/bin/activate
+# shellcheck disable=SC1091
+source "${ROOT}/scripts/hf_cli.sh"
 
 echo "Log in to Hugging Face (token from https://huggingface.co/settings/tokens)"
-echo "Also accept model licenses on huggingface.co for:"
+echo "Uses: hf auth login  (huggingface-cli is deprecated)"
+echo ""
+echo "Also accept model licenses on huggingface.co for gated repos, e.g.:"
 echo "  - mlx-community/Mistral-7B-Instruct-v0.3-bf16"
+echo "  - mlx-community/Meta-Llama-3.1-8B-Instruct-bf16"
 echo ""
 
-"${ROOT}/.venv/bin/huggingface-cli" login
+hf_login
 
 echo ""
 echo "Verify:"
-"${ROOT}/.venv/bin/huggingface-cli" whoami
+hf_whoami
 echo ""
 echo "Optional: save token to .env for scripts:"
 echo "  echo 'HF_TOKEN=hf_...' >> .env"
+echo "  (scripts load .env via scripts/hf_env.sh)"
