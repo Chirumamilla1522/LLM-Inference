@@ -5,7 +5,7 @@
 #   ./scripts/run_m3_all.sh              # recommended (~2–8 h + downloads)
 #   ./scripts/run_m3_all.sh full         # everything including Article 5 full sweep (~1–2 days)
 #   ./scripts/run_m3_all.sh quick        # smoke: articles 0,2,10 only
-#   ./scripts/run_m3_all.sh --from-checkpoint   # resume interrupted sweeps
+#   ./scripts/run_m3_all.sh standard --from-checkpoint   # resume interrupted sweeps
 #
 set -euo pipefail
 
@@ -20,14 +20,26 @@ source scripts/hf_env.sh 2>/dev/null || true
 source scripts/hf_cli.sh
 
 HARDWARE="${HARDWARE:-Mac M3}"
-MODE="${1:-standard}"
-shift || true
-
-EXTRA=("$@")
+MODE="standard"
 FROM_CKPT=()
-if [[ " ${EXTRA[*]:-} " == *" --from-checkpoint "* ]]; then
-  FROM_CKPT=(--from-checkpoint)
-fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --from-checkpoint)
+      FROM_CKPT=(--from-checkpoint)
+      shift
+      ;;
+    quick|standard|full)
+      MODE="$1"
+      shift
+      ;;
+    *)
+      echo "Unknown argument: $1"
+      echo "Usage: $0 [standard|full|quick] [--from-checkpoint]"
+      exit 1
+      ;;
+  esac
+done
 
 echo "=============================================="
 echo " LLM-Inference — Mac M3 full run"
@@ -53,14 +65,22 @@ run_article() {
   echo "=============================================="
   echo " Article $id"
   echo "=============================================="
-  ./scripts/run_article.sh "$id" "$HARDWARE" "$@" "${FROM_CKPT[@]}"
+  if ((${#FROM_CKPT[@]} > 0)); then
+    ./scripts/run_article.sh "$id" "$HARDWARE" "$@" "${FROM_CKPT[@]}"
+  else
+    ./scripts/run_article.sh "$id" "$HARDWARE" "$@"
+  fi
 }
 
 case "$MODE" in
   quick)
     run_article 0
     run_article 2
-    ./scripts/run_article.sh 10 "$HARDWARE" "${FROM_CKPT[@]}" || true
+    if ((${#FROM_CKPT[@]} > 0)); then
+      ./scripts/run_article.sh 10 "$HARDWARE" "${FROM_CKPT[@]}" || true
+    else
+      ./scripts/run_article.sh 10 "$HARDWARE" || true
+    fi
     for id in 8 9 11; do
       run_article "$id"
     done
@@ -68,12 +88,16 @@ case "$MODE" in
   standard)
     # Core MLX articles (M3 is the baseline machine in the series)
     for id in 0 1 2 3 4 6 7; do
-      run_article "$id" "${FROM_CKPT[@]}"
+      run_article "$id"
     done
     # Article 5: hero fp16 vs optimized only (skip 224-run full sweep on 24GB)
     run_article 5 --runs-only
     # Article 10: MLX vs llama.cpp (+ optional server via compare flags)
-    ./scripts/run_article.sh 10 "$HARDWARE" "${FROM_CKPT[@]}" || true
+    if ((${#FROM_CKPT[@]} > 0)); then
+      ./scripts/run_article.sh 10 "$HARDWARE" "${FROM_CKPT[@]}" || true
+    else
+      ./scripts/run_article.sh 10 "$HARDWARE" || true
+    fi
     # Concept manifests
     for id in 8 9 11; do
       run_article "$id"
@@ -81,10 +105,15 @@ case "$MODE" in
     ;;
   full)
     for id in 0 1 2 3 4 5 6 7; do
-      run_article "$id" "${FROM_CKPT[@]}"
+      run_article "$id"
     done
-    ./scripts/run_article.sh 10 "$HARDWARE" --with-server "${FROM_CKPT[@]}" 2>/dev/null \
-      || ./scripts/run_article.sh 10 "$HARDWARE" "${FROM_CKPT[@]}" || true
+    if ((${#FROM_CKPT[@]} > 0)); then
+      ./scripts/run_article.sh 10 "$HARDWARE" --with-server "${FROM_CKPT[@]}" 2>/dev/null \
+        || ./scripts/run_article.sh 10 "$HARDWARE" "${FROM_CKPT[@]}" || true
+    else
+      ./scripts/run_article.sh 10 "$HARDWARE" --with-server 2>/dev/null \
+        || ./scripts/run_article.sh 10 "$HARDWARE" || true
+    fi
     for id in 8 9 11; do
       run_article "$id"
     done

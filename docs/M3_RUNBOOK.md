@@ -29,7 +29,7 @@ python scripts/run_benchmark.py --hf-check
 Resume after interrupt:
 
 ```bash
-./scripts/run_m3_all.sh --from-checkpoint
+./scripts/run_m3_all.sh standard --from-checkpoint
 ```
 
 ---
