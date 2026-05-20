@@ -8,3 +8,4 @@ results/sweep_*.json
 !results/.gitkeep
 .cursor/hooks/logs/
 .cursor/hooks/.push.lock
+plots/

@@ -289,6 +289,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Directory for GGUF downloads",
     )
     p.add_argument("--mlx-only", action="store_true", help="Skip llama.cpp")
+    p.add_argument(
+        "--with-server",
+        action="store_true",
+        help="Also run llama-server HTTP benchmark (spawns server per pair).",
+    )
     p.add_argument("--dry-run", action="store_true")
     return p
 
@@ -309,6 +314,10 @@ def main() -> None:
             g = resolve_gguf(preset, c.weight_bits)
             print(f"  {preset} {cfg}: MLX + {g.hf_file_id if g else 'no GGUF'}")
         print(f"llama-bench: {find_llama_bench() or 'NOT FOUND'}")
+        if args.with_server:
+            from benchmark.llama_server import find_llama_server
+
+            print(f"llama-server: {find_llama_server() or 'NOT FOUND'}")
         return
 
     if args.mlx_only:
@@ -325,6 +334,29 @@ def main() -> None:
             "status"
         ) not in ("ok", "skipped"):
             failures += 1
+        if args.with_server and (
+            spec := resolve_gguf(
+                preset, OptimizationConfig.from_label(cfg).weight_bits
+            )
+        ):
+            try:
+                from benchmark.llama_server import run_server_benchmark
+
+                gguf_path = ensure_gguf(spec, args.gguf_cache)
+                server_out = out_dir / preset / f"{cfg}_server.json"
+                run_server_benchmark(
+                    gguf_path=gguf_path,
+                    hardware=args.hardware,
+                    model_preset=preset,
+                    config_label=cfg,
+                    prompt="Summarize MLX vs llama.cpp for local inference.",
+                    max_tokens=args.generation_tokens,
+                    output_path=server_out,
+                )
+                print(f"Saved: {server_out}")
+            except Exception as exc:
+                print(f"Server bench failed {preset}/{cfg}: {exc}")
+                failures += 1
 
     summary = {
         "article_id": 10,

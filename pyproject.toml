@@ -1,0 +1,41 @@
+[project]
+name = "llm-inference"
+version = "0.1.0"
+description = "MLX LLM inference benchmarks on Apple Silicon"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mlx>=0.22.0,<0.32",
+    "mlx-lm>=0.21.0,<0.32",
+    "psutil>=5.9.0,<7",
+    "huggingface_hub>=0.23.0,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0,<9",
+    "ruff>=0.4.0,<1",
+]
+plots = [
+    "matplotlib>=3.8.0,<4",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["scripts"]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/benchmark_schema.py" = ["F403"]
+"scripts/run_benchmark.py" = ["E402"]
+"scripts/benchmark_server.py" = ["E402"]
+"scripts/list_models.py" = ["E402", "E402"]
+"scripts/articles.py" = ["E741"]

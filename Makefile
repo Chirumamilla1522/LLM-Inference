@@ -1,4 +1,4 @@
-.PHONY: setup validate migrate tables report test smoke article m5
+.PHONY: setup validate migrate tables report test smoke article m5 lint plot server-bench
 
 HW ?= Mac M3
 ARTICLE ?= 1
@@ -25,6 +25,20 @@ report:
 
 test:
 	pytest tests/ -q
+
+lint:
+	ruff check scripts/benchmark scripts/benchmark_schema.py \
+		scripts/run_benchmark.py scripts/plot_results.py \
+		scripts/benchmark_server.py tests
+
+plot:
+	python scripts/plot_results.py --hardware "$(HW)" --preset llama3-8b
+	@if [ -d results/Mac_M5_Max ]; then \
+	  python scripts/plot_results.py --hardware "$(HW)" --compare-hardware "Mac M5 Max" --config w4+kv_cache+prefill; \
+	fi
+
+server-bench:
+	python scripts/benchmark_server.py --hardware "$(HW)" --preset llama3-8b --config w4
 
 smoke:
 	python scripts/run_benchmark.py --dry-run --preset llama3-8b --config w4

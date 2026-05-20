@@ -24,6 +24,12 @@ jobs:
       - name: Compile scripts
         run: python -m py_compile scripts/*.py
 
+      - name: Ruff
+        run: |
+          ruff check scripts/benchmark scripts/benchmark_schema.py \
+            scripts/run_benchmark.py scripts/plot_results.py \
+            scripts/benchmark_server.py tests
+
       - name: Pytest (unit + smoke, no GPU)
         run: pytest tests/ -q
 

@@ -598,6 +598,39 @@ make tables ARTICLE=1 HW="Mac M3"
 make report HW="Mac M3"
 make article ARTICLE=5 HW="Mac M3"
 make m5   # on M5 Max machine only
+make lint
+make plot HW="Mac M3"
+```
+
+### Sweep resume (checkpoint)
+
+Long sweeps write `results/<hardware>/sweep_state.json`. Resume after interrupt:
+
+```bash
+python scripts/run_benchmark.py --sweep --preset llama3-8b --from-checkpoint --hardware "Mac M3"
+python scripts/run_benchmark.py --sweep --all-models --retry-failed --hardware "Mac M3"
+python scripts/run_benchmark.py --sweep --reset-checkpoint --hardware "Mac M3"  # start fresh
+```
+
+### llama-server HTTP benchmark (Article 10)
+
+```bash
+python scripts/benchmark_server.py --hardware "Mac M3" --preset llama3-8b --config w4
+# Or attach to a server you started manually:
+python scripts/benchmark_server.py --url http://127.0.0.1:8080 --preset llama3-8b --config w4
+```
+
+### Plots
+
+```bash
+pip install -r requirements-dev.txt
+make plot HW="Mac M3"
+# charts → plots/Mac_M3/
+```
+
+### Package layout
+
+Benchmark code lives under `scripts/benchmark/` (`cli`, `runner`, `sweep`, `schema`, `llama_server`). `scripts/run_benchmark.py` is a thin entrypoint.
 ```
 
 ---
