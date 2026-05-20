@@ -14,7 +14,21 @@ After the prompt is processed (**prefill**), the model generates tokens one at a
 
 Instead, transformers **cache** per-layer **K** and **V** tensors.
 
-**KV cache quantization** stores those tensors at lower precision (we use **4-bit** in this repo) while weights may stay at fp16, 8-bit, or 4-bit independently.
+**KV cache quantization** stores those tensors at lower precision (we use **4-bit** in this repo) while weights may stay at fp16, 8-bit, or 4-bit independently. Transformer attention and caching: [1]; GQA reduces heads [11]; serving-scale KV management [12], [13].
+
+---
+
+## Figure 1 — KV cache grows with every token
+
+```mermaid
+xychart-beta
+    title "KV cache size vs total tokens T (8B, fp16 KV, rough)"
+    x-axis [256, 512, 640, 1024, 2048]
+    y-axis "MB" 0 --> 280
+    line [33, 67, 84, 134, 268]
+```
+
+With **4-bit KV** (`kv_cache` ON), divide y-values by ~4.
 
 ---
 
@@ -118,6 +132,39 @@ for token in range(max_tokens):
         K_cache, V_cache = quantize_groups(K_cache, V_cache, bits=4)
     logits = attention(q_new, K_cache, V_cache)
     hidden = sample(logits)
+```
+
+---
+
+## Figure 2 — GQA: fewer KV heads than query heads
+
+```mermaid
+flowchart TB
+  Q["Query heads H_q = 32"]
+  K["KV heads H_kv = 8"]
+  Q --> ATT["Attention"]
+  K --> ATT
+  ATT --> OUT["Output"]
+```
+
+Llama-class 8B uses grouped-query attention [11]: \(H_{\text{kv}} < H_q\) shrinks the formula for \(M_{\text{KV}}\).
+
+---
+
+## Figure 3 — Full precision vs 4-bit KV storage
+
+```mermaid
+flowchart LR
+  subgraph off["kv_cache OFF"]
+    K1["K tensor FP16<br/>2 bytes/elem"]
+    V1["V tensor FP16"]
+  end
+  subgraph on["kv_cache ON"]
+    K2["K INT4 groups<br/>~0.5 bytes/elem"]
+    V2["V INT4 groups"]
+  end
+  off --> RAM1["Higher M_KV"]
+  on --> RAM2["~4× lower M_KV"]
 ```
 
 ---
@@ -268,6 +315,20 @@ flowchart LR
 | MLX API | `kv_bits` argument to `stream_generate` / `generate_step` |
 
 Underlying MLX behavior: `maybe_quantize_kv_cache` in `mlx_lm.generate` when `kv_bits` is not `None`.
+
+---
+
+## References
+
+| ID | Source |
+|----|--------|
+| [1] | Vaswani et al. — attention, K/V cache |
+| [11] | Ainslie et al. — GQA |
+| [12] | Kwon et al. — PagedAttention (serving) |
+| [13] | Pope et al. — inference scaling / KV |
+| [22] | mlx-lm — `kv_bits`, cache quant API |
+
+[REFERENCES.md](../REFERENCES.md)
 
 ---
 

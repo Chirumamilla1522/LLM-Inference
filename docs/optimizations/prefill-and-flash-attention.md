@@ -21,7 +21,40 @@ LLM inference splits into two phases:
 
 **Flash Attention** (Dao et al.) reformulates attention to compute in **tiles** that fit in fast GPU SRAM, reducing reads/writes to high-latency DRAM and avoiding huge intermediate matrices.
 
-On Apple Silicon, **MLX** uses Metal kernels that implement these ideas internally—you do not toggle “Flash Attention” in our scripts. We benchmark a related, explicit knob: **`prefill_step_size`**.
+On Apple Silicon, **MLX** uses Metal kernels that implement these ideas internally—you do not toggle “Flash Attention” in our scripts. We benchmark a related, explicit knob: **`prefill_step_size`**. See FlashAttention [4], [5] and online softmax [6].
+
+---
+
+## Figure 1 — Prefill vs decode (user-visible phases)
+
+```mermaid
+gantt
+    title Single request timeline
+    dateFormat X
+    axisFormat %s
+
+    section Prefill
+    Process prompt (TTFT)     :0, 3
+    section Decode
+    Token 1..128 (throughput)   :3, 10
+```
+
+---
+
+## Figure 2 — Naive vs tiled attention memory
+
+```mermaid
+flowchart TB
+  subgraph naive["Naive O(n²) memory"]
+    M["Materialize S ∈ ℝⁿˣⁿ"]
+    M --> BAD["8+ MB per head/layer at n=2048"]
+  end
+  subgraph flash["Flash-style O(n) extra memory"]
+    T["Tiles in SRAM"]
+    T --> GOOD["Streaming softmax [6]"]
+    GOOD --> OK["Feasible long context"]
+  end
+```
 
 ---
 
@@ -98,6 +131,33 @@ For \(T = 2048\):
 | ON (2048) | 1 |
 
 Fewer chunks → less loop overhead; larger tiles → better kernel efficiency. That is why **long prompts** show larger TTFT gains than our default 512-token benchmark.
+
+### Figure 3 — Prefill chunks (`prefill_step_size`)
+
+```mermaid
+flowchart LR
+  P["Prompt T=2048 tokens"]
+  P --> C1["Chunk 1: 512"]
+  C1 --> C2["Chunk 2: 512"]
+  C2 --> C3["Chunk 3: 512"]
+  C3 --> C4["Chunk 4: 512"]
+  C4 --> KV["KV full → first token"]
+```
+
+With `prefill` ON (\(C=2048\)): **one** chunk for \(T \le 2048\).
+
+### Figure 4 — TTFT vs prompt length (conceptual)
+
+```mermaid
+xychart-beta
+    title "Relative TTFT vs prompt tokens (schematic)"
+    x-axis [256, 512, 1024, 2048]
+    y-axis "relative" 1 --> 16
+    line [1, 2.5, 6, 14]
+    line [1, 2, 4, 8]
+```
+
+Dashed curve = with Flash-style + large chunks; solid = baseline—steeper because of \(O(n^2)\) attention work [4].
 
 ---
 
@@ -287,6 +347,19 @@ Article example (M5 Max, Mistral, “optimized” stack): TTFT **75 ms → 40 ms
 | Constants | `PREFILL_BASELINE`, `PREFILL_OPTIMIZED` in `scripts/optimizations.py` |
 | Flag | `OptimizationConfig.prefill` |
 | API | `prefill_step_size` in `stream_generate` |
+
+---
+
+## References
+
+| ID | Source |
+|----|--------|
+| [1] | Vaswani et al. — attention definition |
+| [4], [5] | Dao et al. — FlashAttention 1 & 2 |
+| [6] | Milakov & Gimelshein — online softmax |
+| [21], [22] | MLX / mlx-lm — Metal kernels, `prefill_step_size` |
+
+[REFERENCES.md](../REFERENCES.md)
 
 ---
 

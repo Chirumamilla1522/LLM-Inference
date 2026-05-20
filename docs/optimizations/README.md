@@ -29,10 +29,17 @@ Each **benchmarked** technique has its own guide. The combined guide explains ho
 |----------|--------|
 | [**All optimizations together**](all-optimizations.md) | How the three layers interact, sweep design, metrics, hardware, code map |
 
+## Diagrams & references
+
+Each guide includes **mermaid figures** (pipelines, memory charts, sequence diagrams) and a **References** section with numbered citations.
+
+**Master bibliography:** [REFERENCES.md](../REFERENCES.md) — papers [1]–[24], MLX docs, citation examples for articles.
+
 ## Related
 
-- [**Articles index**](../ARTICLES_INDEX.md) — 12 posts
-- [**Technique catalog**](../INFERENCE_OPTIMIZATIONS_CATALOG.md) — reference taxonomy
-- [**Article series / sweeps**](../ARTICLE_SERIES.md)
-- [Benchmark workflow](../BENCHMARK_WORKFLOW.md) — how to run experiments
+- [**References**](../REFERENCES.md) — full bibliography  
+- [**Articles index**](../ARTICLES_INDEX.md) — 12 posts  
+- [**Technique catalog**](../INFERENCE_OPTIMIZATIONS_CATALOG.md) — reference taxonomy  
+- [**Article series / sweeps**](../ARTICLE_SERIES.md)  
+- [Benchmark workflow](../BENCHMARK_WORKFLOW.md) — how to run experiments  
 - [Article draft / capstone table](../../notes.md) — M3 vs M5 Max results

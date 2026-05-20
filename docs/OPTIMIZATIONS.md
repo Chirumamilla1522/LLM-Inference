@@ -17,6 +17,8 @@ Content is split into focused guides:
 ## Index
 
 - [docs/optimizations/README.md](optimizations/README.md)
+- [References & bibliography](REFERENCES.md)
+- [Math, diagrams, equations](optimizations/math-and-implementation.md)
 - [Articles index](ARTICLES_INDEX.md) — 12 posts
 - [Technique catalog](INFERENCE_OPTIMIZATIONS_CATALOG.md)
 - [Article series / sweeps](ARTICLE_SERIES.md)

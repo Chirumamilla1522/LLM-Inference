@@ -207,6 +207,20 @@ Defaults are fixed across articles so comparisons stay fair: `-p 512`, `-g 128`,
 
 ---
 
+## Diagrams and references in docs
+
+Every optimization guide includes **mermaid figures** (flowcharts, sequence diagrams, memory charts) and **numbered citations** [1]–[24].
+
+| Resource | Content |
+|----------|---------|
+| [math-and-implementation.md](docs/optimizations/math-and-implementation.md) | Figures 1–4: pipeline, memory stack, article flow |
+| [REFERENCES.md](docs/REFERENCES.md) | Papers: Attention [1], FlashAttention [4][5], GPTQ [8], GQA [11], speculative [14], MLX [21][22] |
+| Per-topic guides | Weight packing, KV growth curves, speculative timeline, capstone M3 vs M5 |
+
+**Citing in articles:** e.g. “FlashAttention [4, 5]” — full links in [REFERENCES.md](docs/REFERENCES.md).
+
+---
+
 ## Optimizations under test
 
 Three independent axes. They stack; the article “fully optimized” row is **`w4+kv_cache+prefill`**.
@@ -249,7 +263,7 @@ flowchart TB
 
 Guides: [math & implementation](docs/optimizations/math-and-implementation.md) · [weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [prefill](docs/optimizations/prefill-and-flash-attention.md) · [speculative](docs/optimizations/speculative-decoding.md) · [full stack](docs/optimizations/all-optimizations.md)
 
-Each guide includes **equations** (memory, complexity, quantization) and **programming** notes (bit packing, MLX flags, pseudocode).
+Each guide includes **mermaid diagrams**, **equations** (memory, complexity, quantization), **programming** notes (bit packing, MLX flags), and **numbered references** [1]–[24] to papers and MLX docs ([bibliography](docs/REFERENCES.md)).
 
 ---
 
@@ -539,7 +553,8 @@ LLM-Inference/
 
 | Topic | Link |
 |-------|------|
-| **Math + programming (equations)** | [docs/optimizations/math-and-implementation.md](docs/optimizations/math-and-implementation.md) |
+| **Math + diagrams + equations** | [docs/optimizations/math-and-implementation.md](docs/optimizations/math-and-implementation.md) |
+| **References (papers & docs)** | [docs/REFERENCES.md](docs/REFERENCES.md) |
 | Article index (12 posts) | [docs/ARTICLES_INDEX.md](docs/ARTICLES_INDEX.md) |
 | Run articles | [docs/ARTICLE_SERIES.md](docs/ARTICLE_SERIES.md) |
 | Benchmark workflow | [docs/BENCHMARK_WORKFLOW.md](docs/BENCHMARK_WORKFLOW.md) |

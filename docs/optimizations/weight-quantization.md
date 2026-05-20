@@ -21,7 +21,19 @@ A transformer’s **weights** are the largest fixed cost in memory. For an 8B-pa
 
 On a **24 GB Mac**, fp16 for an 8B model can consume most of unified memory before the KV cache or activations exist. Larger models (32B+) may not load at all at full precision.
 
-Quantization answers: *“Can we store and compute with fewer bits per weight while keeping output quality acceptable?”*
+Quantization answers: *“Can we store and compute with fewer bits per weight while keeping output quality acceptable?”* See affine quantization [7] and LLM post-training quant [8], [9].
+
+---
+
+## Figure 1 — Memory vs bit width (8B model)
+
+```mermaid
+xychart-beta
+    title "Weight memory vs b_w (8B params, ideal)"
+    x-axis [w2, w4, w8, fp16]
+    y-axis "GB" 0 --> 18
+    bar [2, 4, 8, 16]
+```
 
 ---
 
@@ -64,7 +76,37 @@ $$
 | \(z\) | Zero-point (integer offset, per group) |
 | \(b\) | Bits per stored value (8, 4, 2 in our sweeps) |
 
-**Group-wise:** Weights are split into blocks of size \(G\) (e.g. 64 or 128). One \((s, z)\) pair per block → much lower metadata overhead than per-tensor scales.
+**Group-wise:** Weights are split into blocks of size \(G\) (e.g. 64 or 128). One \((s, z)\) pair per block → much lower metadata overhead than per-tensor scales [7], [8].
+
+### Figure 2 — Group-wise affine quantization
+
+```mermaid
+flowchart LR
+  subgraph tensor["Weight tensor (FP16)"]
+    G1["Group 1<br/>64 values"]
+    G2["Group 2<br/>64 values"]
+    G3["…"]
+  end
+  G1 --> Q1["INT4 + s₁, z₁"]
+  G2 --> Q2["INT4 + s₂, z₂"]
+  Q1 --> P1["Packed bytes"]
+  Q2 --> P2["Packed bytes"]
+```
+
+### Figure 3 — 4-bit packing in one byte
+
+```mermaid
+block-beta
+  columns 2
+  block:byte:1
+    columns 2
+    q0["q₀ low nibble"]
+    q1["q₁ high nibble"]
+  end
+  block:meta:1
+    s["per-group scale s"]
+    z["zero-point z"]
+```
 
 ### Memory scaling (parameters only)
 
@@ -261,6 +303,21 @@ Roughly **64% less memory** and about **2× throughput** for this class of hardw
 | Repo map | `scripts/optimizations.py` → `DEFAULT_MODEL_REPOS` |
 | Sweep order | `fp16` → `w8` → `w4` → `w2` in `iter_sweep_configs()` |
 | Overrides | `models.json` |
+
+---
+
+## References
+
+| ID | Source |
+|----|--------|
+| [7] | Jacob et al. — integer quantization / affine mapping |
+| [8] | Frantar et al. — GPTQ post-training quant |
+| [9] | Lin et al. — AWQ activation-aware 4-bit |
+| [10] | Dettmers et al. — LLM.int8() mixed precision |
+| [19] | Williams et al. — roofline (bandwidth-bound decode) |
+| [21]–[23] | MLX, mlx-lm, mlx-community checkpoints |
+
+Full bibliography: [REFERENCES.md](../REFERENCES.md).
 
 ---
 

@@ -9,6 +9,59 @@ Every technique in this benchmark suite has two sides:
 
 Articles in this repo should explain **both**: the formula (why it works) and the code path (what MLX actually does).
 
+**References:** numbered citations [1]–[24] in [REFERENCES.md](../REFERENCES.md).
+
+---
+
+## Figure 1 — End-to-end inference pipeline
+
+```mermaid
+flowchart TB
+  subgraph load["① Load (once)"]
+    HF["Hugging Face checkpoint"]
+    W["Weights N × b_w bits"]
+  end
+  subgraph prefill["② Prefill (TTFT)"]
+    P["Prompt T_p tokens"]
+    ATT["Attention QKᵀV [1,4,5]"]
+    KV0["Fill KV cache"]
+  end
+  subgraph decode["③ Decode (tok/s)"]
+    LOOP["For each new token"]
+    KVg["KV grows: T = T_p + T_g"]
+    OUT["Sample next token"]
+  end
+  HF --> W
+  W --> P
+  P --> ATT --> KV0 --> LOOP
+  LOOP --> KVg --> OUT
+  OUT --> LOOP
+```
+
+| Phase | Metric in JSON | Dominant optimization |
+|-------|----------------|----------------------|
+| ② Prefill | `ttft_ms` | Weight \(b_w\), prefill chunks, Flash-style kernels |
+| ③ Decode | `throughput_tps` | Weight \(b_w\), KV \(b_{\text{kv}}\), speculative |
+| Whole run | `memory_gb` | All terms in budget below |
+
+---
+
+## Figure 2 — Memory budget (stacked)
+
+```mermaid
+flowchart TB
+  subgraph peak["M_peak on 24 GB Mac — Llama 8B example"]
+    direction TB
+    A["Weights fp16 ~16 GB"]
+    B["Weights w4 ~4 GB"]
+    C["KV @ T=640 fp16 ~84 MB"]
+    D["KV @ T=640 4-bit ~21 MB"]
+    E["Framework + activations ~1–3 GB"]
+  end
+```
+
+**Takeaway:** Weight precision sets the **floor**; KV precision sets **growth rate** as \(T\) increases [11, 13].
+
 ---
 
 ## Map: articles → math + code
@@ -110,10 +163,59 @@ Halving weight bytes (\(b_w: 16 \to 4\)) roughly halves \(B_{\text{token}}\) for
 
 | Operation | Math view | Programming view |
 |-----------|-----------|------------------|
-| Store weight \(x\) in 4 bits | \(q = \text{quantize}(x, s, z)\) | `uint8` array + scale tensor per group |
-| Matrix multiply | \(\hat{W} \approx s \cdot Q\) | Dequant fused into GEMM |
-| Store KV vector | Round FP16 → INT4 groups | In-place cache quant after step 5000 (MLX default) |
-| Attention scores | \(\mathrm{softmax}(QK^\top/\sqrt{d})\) | Tiled softmax without full \(N \times N\) matrix |
+| Store weight \(x\) in 4 bits | \(q = \text{quantize}(x, s, z)\) [7] | `uint8` array + scale tensor per group |
+| Matrix multiply | \(\hat{W} \approx s \cdot Q\) | Dequant fused into GEMM [21] |
+| Store KV vector | Round FP16 → INT4 groups | `to_quantized()` on cache [22] |
+| Attention scores | \(\mathrm{softmax}(QK^\top/\sqrt{d})\) [1] | Tiled softmax [4, 5] |
+
+---
+
+## Figure 3 — Optimization layers vs bottlenecks
+
+```mermaid
+quadrantChart
+  title When each optimization matters most
+  x Low implementation effort in this repo
+  x High implementation effort
+  y Solves capacity / OOM
+  y Solves latency / bandwidth
+  Weight w4: [0.25, 0.85]
+  KV quant: [0.35, 0.55]
+  Prefill 2048: [0.2, 0.35]
+  Speculative: [0.75, 0.75]
+```
+
+---
+
+## Figure 4 — Article series data flow
+
+```mermaid
+flowchart LR
+  A0[Art 0 Intro] --> A1[Art 1 Weights]
+  A1 --> A2[Art 2 KV]
+  A2 --> A3[Art 3 Prefill]
+  A3 --> A4[Art 4 Scale]
+  A4 --> A5[Art 5 Capstone]
+  A5 --> A6[Art 6 Speculative]
+  A6 --> A7[Art 7 Context]
+  A5 --> A8[Art 8–11 Concept]
+```
+
+---
+
+## References (key)
+
+| Topic | Citations |
+|-------|-----------|
+| Transformer / attention | [1] |
+| Flash Attention | [4], [5], [6] |
+| Weight quant (GPTQ, AWQ) | [7], [8], [9] |
+| GQA / KV memory | [11], [13] |
+| Speculative decoding | [14], [15] |
+| Roofline / bandwidth | [19] |
+| MLX stack | [21], [22], [23], [24] |
+
+Full list: [REFERENCES.md](../REFERENCES.md).
 
 ---
 

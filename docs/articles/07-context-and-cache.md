@@ -2,6 +2,20 @@
 
 **One article** covering three related ideas—same math (sequence length \(T\)), different programming levers.
 
+**References:** [1], [4], [11], [13], [22] — [REFERENCES.md](../REFERENCES.md).
+
+---
+
+## Figure — Three levers on sequence length \(T\)
+
+```mermaid
+flowchart TB
+  T["Total tokens T = T_prefix + T_prompt + T_gen"]
+  T --> P["-p prompt length<br/>affects prefill O(T²) [4]"]
+  T --> G["-g generation<br/>linear KV growth [11]"]
+  T --> PC["prefix cache<br/>skip re-prefill T_prefix [22]"]
+```
+
 ---
 
 ## 1. Prompt length — math

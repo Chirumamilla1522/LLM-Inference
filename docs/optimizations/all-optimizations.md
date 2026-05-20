@@ -263,16 +263,65 @@ w4+kv_cache+prefill
 
 ---
 
+## Figure — Capstone: baseline vs optimized stack
+
+```mermaid
+flowchart TB
+  subgraph base["fp16 baseline"]
+    B1["b_w=16 ~16 GB"]
+    B2["b_kv=16"]
+    B3["C=512"]
+  end
+  subgraph opt["w4+kv_cache+prefill"]
+    O1["b_w=4 ~4 GB [8,9]"]
+    O2["b_kv=4 [22]"]
+    O3["C=2048 [4,5]"]
+  end
+  base --> MET1["Higher RAM · slower TTFT/t/s"]
+  opt --> MET2["Article targets: ~6 GB · ~2× t/s"]
+```
+
+---
+
+## Figure — M3 vs M5: same config, different bottleneck
+
+```mermaid
+flowchart LR
+  subgraph m3["Mac M3 24GB"]
+    M3A["32B w4 fits"]
+    M3B["Bandwidth limited<br/>~6 t/s"]
+  end
+  subgraph m5["Mac M5 Max 128GB"]
+    M5A["32B w4 fits easily"]
+    M5B["~78 t/s [notes]"]
+  end
+  CFG["Same w4+kv+prefill"] --> m3
+  CFG --> m5
+```
+
+Hardware bandwidth [19], [20]; measurements in [notes.md](../../notes.md).
+
+---
+
 ## Suggested reading order
 
-1. [Weight quantization](weight-quantization.md) — largest static savings  
-2. [KV cache quantization](kv-cache-quantization.md) — dynamic memory  
-3. [Prefill & Flash Attention](prefill-and-flash-attention.md) — TTFT  
-4. [Benchmark workflow](../BENCHMARK_WORKFLOW.md) — run the sweep  
+1. [Math & programming](math-and-implementation.md) — equations + figures  
+2. [Weight quantization](weight-quantization.md) — largest static savings [8], [9]  
+3. [KV cache quantization](kv-cache-quantization.md) — dynamic memory [11]  
+4. [Prefill & Flash Attention](prefill-and-flash-attention.md) — TTFT [4], [5]  
+5. [Benchmark workflow](../BENCHMARK_WORKFLOW.md) — run the sweep  
+
+---
+
+## References
+
+Full numbered bibliography (papers, MLX, repo): **[REFERENCES.md](../REFERENCES.md)**.
+
+Quick links: [1] Transformer · [4][5] FlashAttention · [8][9] quant · [11] GQA · [14] speculative · [21][22] MLX.
 
 ---
 
 ## Further reading
 
 - [notes.md](../../notes.md) — article and results table  
-- [MLX](https://github.com/ml-explore/mlx) · [mlx-lm](https://github.com/ml-explore/mlx-lm)
+- [ARTICLES_INDEX.md](../ARTICLES_INDEX.md) — 12-post series

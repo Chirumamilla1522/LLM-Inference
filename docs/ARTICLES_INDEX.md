@@ -50,7 +50,9 @@ These stay **sections** inside the articles above—not their own posts:
 - Reproducibility / trials → § in **Article 0**
 - LoRA, MoE, compile, offload → § in **6**, **9**, or **11** until benchmarked
 
-**Equations and code for every optimization:** [optimizations/math-and-implementation.md](optimizations/math-and-implementation.md)
+**Equations, diagrams, and code:** [optimizations/math-and-implementation.md](optimizations/math-and-implementation.md)
+
+**Papers & MLX references (cite as [1]–[24]):** [REFERENCES.md](REFERENCES.md)
 
 Full technique list (reference only): [INFERENCE_OPTIMIZATIONS_CATALOG.md](INFERENCE_OPTIMIZATIONS_CATALOG.md).
 

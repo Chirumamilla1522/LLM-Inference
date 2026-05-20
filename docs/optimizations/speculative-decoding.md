@@ -22,7 +22,45 @@ $$
 \text{tok/s} = \frac{1}{\tau_{\text{target}}}
 $$
 
-Speculative decoding introduces a **small draft model** that proposes \(k\) tokens cheaply; the **target** verifies them in fewer parallel steps.
+Speculative decoding introduces a **small draft model** that proposes \(k\) tokens cheaply; the **target** verifies them in fewer parallel steps. See [14], [15]; Medusa-style variants [16].
+
+---
+
+## Figure 1 — Baseline vs speculative decode
+
+```mermaid
+sequenceDiagram
+  participant T as Target model
+  Note over T: Baseline: 1 forward per token
+  loop 128 tokens
+    T->>T: forward()
+  end
+```
+
+```mermaid
+sequenceDiagram
+  participant D as Draft model
+  participant T as Target model
+  Note over D,T: Speculative: k proposals, 1 verify
+  loop rounds
+    D->>D: propose k tokens
+    D->>T: verify batch
+    T-->>D: accept m ≤ k
+  end
+```
+
+---
+
+## Figure 2 — Two models in memory
+
+```mermaid
+flowchart TB
+  subgraph RAM["Unified memory"]
+    TW["Target w4 ~4 GB"]
+    DW["Draft 0.5B w4 ~0.25 GB"]
+    KV["KV caches × 2"]
+  end
+```
 
 ---
 
@@ -134,6 +172,19 @@ Bitwise/matmul work is identical to normal decode—**extra control flow** and *
 | Draft is much smaller / faster | Draft vocab ≠ target |
 | High \(\alpha\) (distilled pair) | RAM too tight for two models |
 | Long generations (`-g` large) | TTFT-bound short replies |
+
+---
+
+## References
+
+| ID | Source |
+|----|--------|
+| [14] | Leviathan et al. — speculative decoding |
+| [15] | Chen et al. — speculative sampling |
+| [16] | Cai et al. — Medusa multi-head |
+| [22] | mlx-lm — `draft_model`, `num_draft_tokens` |
+
+[REFERENCES.md](../REFERENCES.md)
 
 ---
 
