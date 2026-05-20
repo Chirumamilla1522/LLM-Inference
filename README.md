@@ -1,219 +1,279 @@
 # LLM-Inference
 
-Reproducible benchmarking of **open-source LLM inference on Apple Silicon** using [MLX](https://github.com/ml-explore/mlx). Measures how **weight precision**, **KV cache quantization**, and **prefill chunking** affect memory, time-to-first-token (TTFT), and decode throughput—across a structured sweep you can version in Git.
+Reproducible benchmarks for **open-source LLM inference on Apple Silicon**, built on [MLX](https://github.com/ml-explore/mlx) and [mlx-lm](https://github.com/ml-explore/mlx-lm). Measure how weight quantization, KV-cache compression, and prefill tuning change **memory**, **time-to-first-token (TTFT)**, and **decode throughput**—then version the numbers in Git.
 
-**Articles:** [notes.md](notes.md) (capstone draft) · [**12-article index**](docs/ARTICLES_INDEX.md) · [sweeps](docs/ARTICLE_SERIES.md)
-
-**Documentation:**
-
-| | Document |
-|---|----------|
-| **Articles (12)** | [docs/ARTICLES_INDEX.md](docs/ARTICLES_INDEX.md) — one per optimization or set |
-| **Technique catalog** | [docs/INFERENCE_OPTIMIZATIONS_CATALOG.md](docs/INFERENCE_OPTIMIZATIONS_CATALOG.md) |
-| **Outlines** | [docs/articles/](docs/articles/) |
-| **Run an article** | `./scripts/run_article.sh <0-11> "Mac M3"` |
-| **Each technique** | [Weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [Prefill / Flash](docs/optimizations/prefill-and-flash-attention.md) |
-| **All together** | [docs/optimizations/all-optimizations.md](docs/optimizations/all-optimizations.md) |
-| **How to run** | [docs/BENCHMARK_WORKFLOW.md](docs/BENCHMARK_WORKFLOW.md) |
-| **Index** | [docs/optimizations/README.md](docs/optimizations/README.md) |
+Designed for a hands-on article series (Mac M3 vs M5 Max), but usable as a standalone sweep harness for any MLX-capable Mac.
 
 ---
 
-## Why these optimizations?
+## What you get
 
-Local LLMs are limited by **unified memory** on Macs—not just raw GPU speed. Three levers dominate:
+- **Structured sweeps** — 16 configs per model (`fp16` / `w8` / `w4` / `w2` × optional `kv_cache` + `prefill`)
+- **21 model presets** — ~0.5B through 72B from `mlx-community` on Hugging Face
+- **Article-driven runs** — one command per blog post (`./scripts/run_article.sh 1 "Mac M3"`)
+- **Isolated subprocesses** — a Metal OOM on one config does not kill the whole sweep
+- **JSON results** — comparable fields for tables, charts, and CI diffs
 
-```mermaid
-flowchart TB
-  subgraph problem["Without optimizations"]
-    OOM["OOM on 24GB Mac"]
-    SLOW["Low tokens/sec"]
-    TTFT["Slow first token"]
-  end
+---
 
-  subgraph levers["This repo benchmarks"]
-    Q["Weight precision<br/>fp16 → 8 → 4 → 2 bit"]
-    KV["KV cache quant<br/>4-bit K/V tensors"]
-    PF["Prefill chunks<br/>512 vs 2048 tokens"]
-  end
+## Requirements
 
-  Q --> better["Lower memory · faster decode"]
-  KV --> better
-  PF --> better
-  better --> goal["Fit model + snappy TTFT"]
-```
-
-| Optimization | Problem it solves | In this repo |
-|--------------|-------------------|--------------|
-| **Weight quantization** | 8B fp16 ≈ 16 GB; won’t leave room for KV on 24 GB | Separate HF repos per bit width (`fp16`, `w8`, `w4`, `w2`) |
-| **KV cache quant** | KV grows with every token; blows memory on long chats | `kv_bits=4` in `stream_generate` |
-| **Prefill tiling** | Long prompts are slow (attention ∝ context) | `prefill_step_size` 512 vs 2048 (Flash-style kernels in MLX) |
-
-Read the guides: [weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [prefill](docs/optimizations/prefill-and-flash-attention.md) · [all combined](docs/optimizations/all-optimizations.md).
+| | |
+|---|---|
+| **OS** | macOS on Apple Silicon |
+| **Python** | 3.10+ (3.11–3.13 tested via venv) |
+| **RAM** | ~20 GB+ for 8B fp16; ~24 GB comfortable for 8B at 4-bit; 64 GB+ for 32B+ sweeps |
+| **Network** | Hugging Face download on first run per model |
 
 ---
 
 ## Quick start
 
 ```bash
+git clone <your-repo-url> LLM-Inference && cd LLM-Inference
+
 ./scripts/setup_env.sh
 source .venv/bin/activate
 
-# Optional: Hugging Face (rate limits + custom gated models)
+# Optional: HF login (rate limits + gated models)
 ./scripts/hf_login.sh
 
+# Verify all configured repos resolve
 python scripts/run_benchmark.py --hf-check
-./scripts/run_full_sweep.sh "Mac M3"
-```
 
-**24 GB M3:** skips 12B+ models by default. **64 GB+:** use `--include-large` for the full lineup.
+# Single smoke test (~1–3 min depending on download)
+python scripts/run_benchmark.py --preset llama3-8b --config fp16 --hardware "Mac M3" -n 1
+```
 
 ---
 
-## Sweep at a glance
+## Two ways to run benchmarks
 
-**16 configurations per model** — for each weight level (`fp16` → `w8` → `w4` → `w2`), run:
+### 1. Article series (recommended for writing)
 
-1. weight only → 2. `+kv_cache` → 3. `+prefill` → 4. `+kv_cache+prefill`
+Twelve posts: one optimization (or small set) each. Results land under `results/<hardware>/article_XX_<slug>/`.
+
+```bash
+python scripts/run_article.py --list
+
+./scripts/run_article.sh 0 "Mac M3"    # intro demo
+./scripts/run_article.sh 1 "Mac M3"    # weight quantization (all models, w8/w4/w2)
+./scripts/run_article.sh 2 "Mac M3"    # KV cache on/off
+./scripts/run_article.sh 6 "Mac M3"    # speculative decoding
+./scripts/run_article.sh 7 "Mac M3"    # context length, generation length, prefix cache
+
+# All MLX-backed articles (0–7)
+./scripts/run_article.sh all "Mac M3"
+
+# Preview planned runs without executing
+python scripts/run_article.py --article 5 --dry-run --hardware "Mac M3"
+
+# Build markdown tables from JSON
+python scripts/generate_article_tables.py --hardware "Mac M3" --article 2
+```
+
+Index and sweep details: [docs/ARTICLES_INDEX.md](docs/ARTICLES_INDEX.md) · [docs/ARTICLE_SERIES.md](docs/ARTICLE_SERIES.md)
+
+### 2. Full optimization matrix
+
+Every weight level × runtime combo for many models (224 runs on a 24 GB M3 by default).
+
+```bash
+# M3: 14 small/medium models (skips 12B+)
+./scripts/run_full_sweep.sh "Mac M3"
+
+# Workstation: all 21 presets
+python scripts/run_benchmark.py \
+  --sweep --all-models --include-large \
+  --hardware "Mac M5 Max"
+```
+
+Step-by-step workflow: [docs/BENCHMARK_WORKFLOW.md](docs/BENCHMARK_WORKFLOW.md)
+
+---
+
+## Optimizations under test
+
+Three independent axes. They stack; the capstone config is `w4+kv_cache+prefill`.
 
 ```mermaid
 flowchart LR
-  subgraph one_weight["Example: w4"]
-    A[w4] --> B[w4+kv_cache]
-    B --> C[w4+prefill]
-    C --> D[w4+kv_cache+prefill]
-  end
+  W["Weight precision<br/>fp16 · w8 · w4 · w2"]
+  KV["KV cache quant<br/>kv_bits=4"]
+  PF["Prefill chunks<br/>512 vs 2048 tokens"]
+  W --> R["One run"]
+  KV --> R
+  PF --> R
+  R --> M["memory_gb · ttft_ms · throughput_tps"]
 ```
+
+| Axis | What changes | In code |
+|------|----------------|---------|
+| **Weights** | Checkpoint size and memory bandwidth | Separate HF repos per bit width |
+| **KV cache** | Memory during long generations | `kv_bits=4` in `stream_generate` |
+| **Prefill** | Prompt processing / TTFT | `prefill_step_size` 512 (off) vs 2048 (on) |
+
+**Also benchmarked (article runners):**
+
+| Feature | Flag / article | Notes |
+|---------|----------------|-------|
+| Speculative decoding | `--speculative` · article 6 | Draft model + target (see `DRAFT_PRESET_BY_TARGET` in `optimizations.py`) |
+| Prefix KV cache | `--prefix-cache` · article 7 | Cold vs warm TTFT with saved cache |
+| Context / gen length | article 7 | Sweep `-p` and `-g` |
+
+Deep dives: [weight quant](docs/optimizations/weight-quantization.md) · [KV cache](docs/optimizations/kv-cache-quantization.md) · [prefill](docs/optimizations/prefill-and-flash-attention.md) · [full stack](docs/optimizations/all-optimizations.md)
+
+---
+
+## Sweep size
+
+**16 configs per model** — for each weight level, run: baseline → `+kv_cache` → `+prefill` → `+kv_cache+prefill`.
 
 | Machine | Models (default) | Total runs |
 |---------|------------------|------------|
-| M3 24 GB | 0.5B → 9B (**14** presets) | **224** (14 × 16 configs) |
-| 64 GB+ (`--include-large`) | all **21** presets | **336** (21 × 16) |
+| 24 GB M3 | 14 presets (0.5B–9B) | **224** |
+| 64 GB+ with `--include-large` | 21 presets (up to 72B) | **336** |
+
+List presets and RAM hints:
+
+```bash
+python scripts/list_models.py
+```
+
+Override Hugging Face repos in [models.json](models.json) without editing Python.
 
 ---
 
-## Weight precisions
+## Models
 
-| Label | Bits | Role |
-|-------|------|------|
-| `fp16` | 16 | Baseline (bf16 MLX weights) |
-| `w8` | 8 | High quality, smaller than fp16 |
-| `w4` | 4 | Article “optimized” weight level |
-| `w2` | 2 | Smallest; repo-dependent |
+Presets are sorted **smallest → largest** during `--all-models` sweeps. Large tiers need `--include-large` on 24 GB Macs.
 
-## Runtime flags (combine with any weight)
+| Tier | Examples | ~Params |
+|------|----------|---------|
+| Tiny | `qwen-0.5b` | 0.5B |
+| Very small | `llama-3.2-1b`, `qwen-1.5b`, `gemma-2-2b` | 1–2B |
+| Small | `llama-3.2-3b`, `qwen-3b`, `phi-3-mini`, `phi-3.5-mini` | 3–4B |
+| Medium | `mistral-7b`, `llama3-8b`, `qwen-7b`, DeepSeek R1 7B/8B, `gemma-9b` | 7–9B |
+| Large+ | `mistral-nemo-12b`, `qwen-14b`, `mistral-small-22b`, `gemma-27b`, `qwen-35b`, `llama-70b`, `qwen-72b` | 12–72B |
 
-| Flag | Off | On |
-|------|-----|-----|
-| `kv_cache` | full-precision KV | 4-bit KV |
-| `prefill` | 512-token prefill steps | 2048-token steps |
-
----
-
-## Models (Hugging Face)
-
-Sorted **smallest → largest** during `--all-models` sweeps. **21 presets** total.
-
-| Tier | Preset | Params | 24GB M3 default |
-|------|--------|--------|-----------------|
-| Tiny | `qwen-0.5b` | ~0.5B | ✓ |
-| Very small | `llama-3.2-1b` | ~1B | ✓ |
-| Very small | `qwen-1.5b` | ~1.5B | ✓ |
-| Very small | `gemma-2-2b` | ~2B | ✓* |
-| Small | `llama-3.2-3b` | ~3B | ✓ |
-| Small | `qwen-3b` | ~3B | ✓ |
-| Small | `phi-3-mini` | ~3.8B | ✓* |
-| Small | `phi-3.5-mini` | ~3.8B | ✓ |
-| Medium | `qwen-7b` | ~7B | ✓ |
-| Medium | `mistral-7b` | ~7B | ✓ |
-| Medium | `deepseek-r1-qwen-7b` | ~7B R1 | ✓ |
-| Medium | `llama3-8b` | ~8B | ✓ |
-| Medium | `deepseek-r1-llama-8b` | ~8B R1 | ✓ |
-| Medium | `gemma-9b` | ~9B | ✓* |
-| Large | `mistral-nemo-12b` | ~12B | large |
-| Large | `qwen-14b` | ~14B | large |
-| Large | `mistral-small-22b` | ~22B | large |
-| Large | `gemma-27b` | ~27B | large |
-| XL | `qwen-35b` | ~32B | large |
-| XXL | `llama-70b` | ~70B | large |
-| XXL | `qwen-72b` | ~72B | large |
-
-\*`fp16` uses 8-bit repo when no public bf16 build exists. **large** = needs `--include-large` on 24GB Macs.
-
-List all presets: `python scripts/list_models.py`
-
-Override any repo in [models.json](models.json).
+Some families have no public bf16 MLX build; `fp16` maps to the best available 8-bit repo (called out in `list_models.py`).
 
 ---
 
 ## Results
 
+Per-run JSON under `results/<hardware>/`:
+
 ```text
-results/Mac_M3/llama3-8b/fp16.json
 results/Mac_M3/llama3-8b/w4+kv_cache+prefill.json
-results/sweep_Mac_M3_<timestamp>.json
+results/Mac_M3/article_01_weight-quant/llama3-8b/w4.json
+results/Mac_M3/article_06_speculative-decoding/llama3-8b/llama3-8b_w4_speculative.json
 ```
 
-Metrics: `ttft_ms`, `throughput_tps`, `memory_gb`, `status`.
+**Key fields**
+
+| Field | Meaning |
+|-------|---------|
+| `ttft_ms` | Time to first token |
+| `throughput_tps` | Decode tokens per second |
+| `memory_gb` | Peak memory during run |
+| `configuration` | e.g. `w4+kv_cache+prefill` |
+| `status` | `ok`, `oom`, `skipped`, `error` |
+| `draft_accept_rate` | Speculative runs only |
+| `prefix_cache_cold_ttft_ms` / `prefix_cache_warm_ttft_ms` | Prefix-cache runs only |
+
+Sweep summaries: `results/sweep_<hardware>_<timestamp>.json` (gitignored at repo root; per-config JSON under `results/<hardware>/` is meant to be tracked).
 
 ---
 
-## Common commands
+## Command reference
 
 ```bash
-# Full sweep (M3)
-./scripts/run_full_sweep.sh "Mac M3"
+# --- Single run ---
+python scripts/run_benchmark.py \
+  --preset llama3-8b --config w4+kv_cache+prefill \
+  --hardware "Mac M3" -p 512 -g 128 -n 3
 
-# All models on large Mac
-python scripts/run_benchmark.py --sweep --all-models --include-large --hardware "Mac M5 Max"
+# --- Partial sweeps ---
+python scripts/run_benchmark.py --sweep --weights-only --all-models --hardware "Mac M3"
+python scripts/run_benchmark.py --sweep --preset llama3-8b --max-combo-size 1 --hardware "Mac M3"
 
-# Weight levels only
-python scripts/run_benchmark.py --sweep --weights-only --preset llama3-8b --hardware "Mac M3"
+# --- Advanced ---
+python scripts/run_benchmark.py --preset llama3-8b --config w4 --speculative --hardware "Mac M3"
+python scripts/run_benchmark.py --preset llama3-8b --config w4 --prefix-cache --hardware "Mac M3"
 
-# Single config
-python scripts/run_benchmark.py --preset llama3-8b --config w4+kv_cache+prefill --hardware "Mac M3"
-
-# Retry failed fp16 / w8 runs
+# --- Recovery ---
 ./scripts/retry_failed.sh "Mac M3"
 ```
 
+| Flag | Purpose |
+|------|---------|
+| `--sweep` | Full or partial config matrix |
+| `--all-models` | All presets (smallest first) |
+| `--include-large` | Include 12B+ on low-RAM Macs |
+| `--weights-only` | fp16 / w8 / w4 / w2 only |
+| `--config` | Single label, e.g. `w4+kv_cache` |
+| `--hardware` | Label in JSON (e.g. `Mac M3`, `Mac M5 Max`) |
+| `-p` / `-g` | Prompt and generation token counts |
+| `-n` | Trials after warmup |
+
 ---
 
-## Repository layout
+## Project layout
 
 ```text
 LLM-Inference/
 ├── docs/
-│   ├── optimizations/
-│   │   ├── weight-quantization.md
-│   │   ├── kv-cache-quantization.md
-│   │   ├── prefill-and-flash-attention.md
-│   │   └── all-optimizations.md
-│   └── BENCHMARK_WORKFLOW.md
+│   ├── ARTICLES_INDEX.md           # 12-article map
+│   ├── ARTICLE_SERIES.md             # Per-article commands
+│   ├── BENCHMARK_WORKFLOW.md
+│   ├── INFERENCE_OPTIMIZATIONS_CATALOG.md
+│   ├── articles/                     # Post outlines
+│   └── optimizations/                # Technique guides
 ├── scripts/
-│   ├── optimizations.py      # Config matrix, repos, memory estimates
-│   ├── run_benchmark.py      # Runner + sweep
+│   ├── run_article.py / run_article.sh   # Article benchmarks
+│   ├── run_benchmark.py                  # Core runner + sweep
+│   ├── optimizations.py                  # Configs, repos, RAM estimates
+│   ├── articles.py                       # Article definitions
+│   ├── list_models.py
+│   ├── generate_article_tables.py
 │   ├── run_full_sweep.sh
+│   ├── setup_env.sh
 │   ├── hf_login.sh
 │   └── retry_failed.sh
-├── results/                  # Per-config JSON tracked; sweep_*.json at repo root ignored
-├── notes.md                  # Article draft
-└── models.json               # HF repo overrides
+├── results/                        # Benchmark JSON (per machine)
+├── models.json                     # HF repo overrides
+├── notes.md                        # Capstone article draft
+└── requirements.txt
 ```
+
+---
+
+## Documentation
+
+| Topic | Link |
+|-------|------|
+| Article index (12 posts) | [docs/ARTICLES_INDEX.md](docs/ARTICLES_INDEX.md) |
+| Run articles | [docs/ARTICLE_SERIES.md](docs/ARTICLE_SERIES.md) |
+| Benchmark workflow | [docs/BENCHMARK_WORKFLOW.md](docs/BENCHMARK_WORKFLOW.md) |
+| All inference techniques (reference) | [docs/INFERENCE_OPTIMIZATIONS_CATALOG.md](docs/INFERENCE_OPTIMIZATIONS_CATALOG.md) |
+| Capstone draft | [notes.md](notes.md) |
 
 ---
 
 ## Troubleshooting
 
-| Issue | Fix |
-|-------|-----|
-| `404` on `*-bf16` | Use latest repos (see [weight quant doc](docs/optimizations/weight-quantization.md)) |
-| Qwen OOM on M3 | Expected; use M5 Max or `--weight-bits 4` only |
-| Sweep killed mid-run | Update scripts (subprocess isolation) |
+| Symptom | What to do |
+|---------|----------------|
+| `401` / `403` on Hugging Face | `./scripts/hf_login.sh` and accept the model license on huggingface.co |
+| `404` on `*-bf16` repo | Pull latest repo; see [weight-quantization.md](docs/optimizations/weight-quantization.md) |
+| Many `skipped` rows | RAM budget; try `--weight-bits 4` or `--include-large` only on big Macs |
+| Sweep dies mid-run | Use current `run_benchmark.py` (subprocess per config) |
+| Speculative: vocab mismatch | Pick a draft preset with matching tokenizer (`optimizations.py`) |
+| Qwen 32B OOM on 24 GB | Expected; run on M5 Max with `--include-large` |
 
 ---
 
-## Requirements
+## License
 
-- macOS, Apple Silicon, Python 3.10+
-- ~20 GB free unified memory for 8B fp16; ~24 GB+ for 8B at 4-bit; 64 GB+ for Qwen 32B sweep
+See [LICENSE](LICENSE).
