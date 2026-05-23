@@ -1,0 +1,541 @@
+{
+  "version": 1,
+  "hardware": "Mac M5 Max",
+  "models": [
+    "qwen-0.5b",
+    "llama-3.2-1b",
+    "qwen-1.5b",
+    "gemma-2-2b",
+    "llama-3.2-3b",
+    "qwen-3b",
+    "phi-3-mini",
+    "phi-3.5-mini",
+    "qwen-7b",
+    "mistral-7b",
+    "deepseek-r1-qwen-7b",
+    "llama3-8b",
+    "deepseek-r1-llama-8b",
+    "gemma-9b",
+    "mistral-nemo-12b",
+    "qwen-14b",
+    "mistral-small-22b",
+    "gemma-27b",
+    "qwen-35b",
+    "llama-70b",
+    "qwen-72b"
+  ],
+  "config_order": [
+    "fp16",
+    "w8",
+    "w4",
+    "w2"
+  ],
+  "sweep_output_root": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder",
+  "completed": {
+    "qwen-0.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-0.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:36:14.465443+00:00"
+    },
+    "qwen-0.5b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-0.5b/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:36:32.759100+00:00"
+    },
+    "qwen-0.5b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-0.5b/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:36:46.700188+00:00"
+    },
+    "qwen-0.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-0.5b/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:36:52.286516+00:00"
+    },
+    "llama-3.2-1b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-1b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:37:36.373484+00:00"
+    },
+    "llama-3.2-1b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-1b/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:38:07.327243+00:00"
+    },
+    "llama-3.2-1b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-1b/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:38:27.713125+00:00"
+    },
+    "llama-3.2-1b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-1b/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:38:33.308507+00:00"
+    },
+    "qwen-1.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-1.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:39:27.312163+00:00"
+    },
+    "qwen-1.5b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-1.5b/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:40:07.921897+00:00"
+    },
+    "qwen-1.5b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-1.5b/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:40:37.026091+00:00"
+    },
+    "qwen-1.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-1.5b/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:40:42.621864+00:00"
+    },
+    "gemma-2-2b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-2-2b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:41:47.723176+00:00"
+    },
+    "gemma-2-2b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-2-2b/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:41:58.974268+00:00"
+    },
+    "gemma-2-2b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-2-2b/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:42:37.583255+00:00"
+    },
+    "gemma-2-2b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-2-2b/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:42:43.172975+00:00"
+    },
+    "llama-3.2-3b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-3b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:44:38.379163+00:00"
+    },
+    "llama-3.2-3b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-3b/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:45:56.735512+00:00"
+    },
+    "llama-3.2-3b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-3b/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:46:06.261932+00:00"
+    },
+    "llama-3.2-3b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-3.2-3b/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:46:11.854546+00:00"
+    },
+    "qwen-3b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-3b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:48:00.409966+00:00"
+    },
+    "qwen-3b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-3b/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:49:07.926422+00:00"
+    },
+    "qwen-3b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-3b/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:49:49.888701+00:00"
+    },
+    "qwen-3b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-3b/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:49:55.469211+00:00"
+    },
+    "phi-3-mini:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3-mini/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:51:13.984651+00:00"
+    },
+    "phi-3-mini:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3-mini/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:51:25.766005+00:00"
+    },
+    "phi-3-mini:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3-mini/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:51:35.449832+00:00"
+    },
+    "phi-3-mini:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3-mini/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:51:41.053790+00:00"
+    },
+    "phi-3.5-mini:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3.5-mini/fp16.json",
+      "error": null,
+      "at": "2026-05-23T03:53:50.597980+00:00"
+    },
+    "phi-3.5-mini:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3.5-mini/w8.json",
+      "error": null,
+      "at": "2026-05-23T03:55:18.965157+00:00"
+    },
+    "phi-3.5-mini:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3.5-mini/w4.json",
+      "error": null,
+      "at": "2026-05-23T03:56:16.865659+00:00"
+    },
+    "phi-3.5-mini:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/phi-3.5-mini/w2.json",
+      "error": null,
+      "at": "2026-05-23T03:56:22.454725+00:00"
+    },
+    "qwen-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:01:03.111198+00:00"
+    },
+    "qwen-7b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-7b/w8.json",
+      "error": null,
+      "at": "2026-05-23T04:03:43.458972+00:00"
+    },
+    "qwen-7b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-7b/w4.json",
+      "error": null,
+      "at": "2026-05-23T04:05:26.153654+00:00"
+    },
+    "qwen-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-7b/w2.json",
+      "error": null,
+      "at": "2026-05-23T04:05:31.743225+00:00"
+    },
+    "mistral-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:10:09.660565+00:00"
+    },
+    "mistral-7b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-7b/w8.json",
+      "error": null,
+      "at": "2026-05-23T04:12:40.380552+00:00"
+    },
+    "mistral-7b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-7b/w4.json",
+      "error": null,
+      "at": "2026-05-23T04:12:52.379310+00:00"
+    },
+    "mistral-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-7b/w2.json",
+      "error": null,
+      "at": "2026-05-23T04:12:58.011517+00:00"
+    },
+    "deepseek-r1-qwen-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-qwen-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:17:24.631266+00:00"
+    },
+    "deepseek-r1-qwen-7b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-qwen-7b/w8.json",
+      "error": null,
+      "at": "2026-05-23T04:20:09.374157+00:00"
+    },
+    "deepseek-r1-qwen-7b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-qwen-7b/w4.json",
+      "error": null,
+      "at": "2026-05-23T04:21:45.489754+00:00"
+    },
+    "deepseek-r1-qwen-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-qwen-7b/w2.json",
+      "error": null,
+      "at": "2026-05-23T04:21:51.109960+00:00"
+    },
+    "llama3-8b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama3-8b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:27:05.666965+00:00"
+    },
+    "llama3-8b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama3-8b/w8.json",
+      "error": null,
+      "at": "2026-05-23T04:30:27.745996+00:00"
+    },
+    "llama3-8b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama3-8b/w4.json",
+      "error": null,
+      "at": "2026-05-23T04:30:40.125691+00:00"
+    },
+    "llama3-8b:w2": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama3-8b/w2.json",
+      "error": null,
+      "at": "2026-05-23T04:31:44.537953+00:00"
+    },
+    "deepseek-r1-llama-8b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-llama-8b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:37:01.131281+00:00"
+    },
+    "deepseek-r1-llama-8b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-llama-8b/w8.json",
+      "error": null,
+      "at": "2026-05-23T04:40:22.637294+00:00"
+    },
+    "deepseek-r1-llama-8b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-llama-8b/w4.json",
+      "error": null,
+      "at": "2026-05-23T04:42:04.838900+00:00"
+    },
+    "deepseek-r1-llama-8b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/deepseek-r1-llama-8b/w2.json",
+      "error": null,
+      "at": "2026-05-23T04:42:10.411365+00:00"
+    },
+    "gemma-9b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-9b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:46:05.814914+00:00"
+    },
+    "gemma-9b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-9b/w8.json",
+      "error": null,
+      "at": "2026-05-23T04:46:24.987787+00:00"
+    },
+    "gemma-9b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-9b/w4.json",
+      "error": null,
+      "at": "2026-05-23T04:48:25.139556+00:00"
+    },
+    "gemma-9b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-9b/w2.json",
+      "error": null,
+      "at": "2026-05-23T04:48:30.706823+00:00"
+    },
+    "mistral-nemo-12b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-nemo-12b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T04:56:30.960851+00:00"
+    },
+    "mistral-nemo-12b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-nemo-12b/w8.json",
+      "error": null,
+      "at": "2026-05-23T05:01:26.380801+00:00"
+    },
+    "mistral-nemo-12b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-nemo-12b/w4.json",
+      "error": null,
+      "at": "2026-05-23T05:03:59.791425+00:00"
+    },
+    "mistral-nemo-12b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-nemo-12b/w2.json",
+      "error": null,
+      "at": "2026-05-23T05:04:05.367056+00:00"
+    },
+    "qwen-14b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-14b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T05:13:20.480716+00:00"
+    },
+    "qwen-14b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-14b/w8.json",
+      "error": null,
+      "at": "2026-05-23T05:19:20.022198+00:00"
+    },
+    "qwen-14b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-14b/w4.json",
+      "error": null,
+      "at": "2026-05-23T05:22:18.087929+00:00"
+    },
+    "qwen-14b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-14b/w2.json",
+      "error": null,
+      "at": "2026-05-23T05:22:23.697183+00:00"
+    },
+    "mistral-small-22b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-small-22b/fp16.json",
+      "error": "Estimated peak 44.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T05:22:24.272520+00:00"
+    },
+    "mistral-small-22b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-small-22b/w8.json",
+      "error": null,
+      "at": "2026-05-23T05:30:34.349821+00:00"
+    },
+    "mistral-small-22b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-small-22b/w4.json",
+      "error": null,
+      "at": "2026-05-23T05:35:04.608490+00:00"
+    },
+    "mistral-small-22b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/mistral-small-22b/w2.json",
+      "error": null,
+      "at": "2026-05-23T05:35:10.201183+00:00"
+    },
+    "gemma-27b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-27b/fp16.json",
+      "error": "Estimated peak 54.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T05:35:10.774604+00:00"
+    },
+    "gemma-27b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-27b/w8.json",
+      "error": null,
+      "at": "2026-05-23T05:45:38.334178+00:00"
+    },
+    "gemma-27b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-27b/w4.json",
+      "error": null,
+      "at": "2026-05-23T05:51:17.484569+00:00"
+    },
+    "gemma-27b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/gemma-27b/w2.json",
+      "error": null,
+      "at": "2026-05-23T05:51:23.075154+00:00"
+    },
+    "qwen-35b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-35b/fp16.json",
+      "error": "Estimated peak 72.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T05:51:23.690545+00:00"
+    },
+    "qwen-35b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-35b/w8.json",
+      "error": null,
+      "at": "2026-05-23T06:04:03.276853+00:00"
+    },
+    "qwen-35b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-35b/w4.json",
+      "error": null,
+      "at": "2026-05-23T06:10:38.363080+00:00"
+    },
+    "qwen-35b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-35b/w2.json",
+      "error": null,
+      "at": "2026-05-23T06:10:43.946678+00:00"
+    },
+    "llama-70b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-70b/fp16.json",
+      "error": "Estimated peak 140.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T06:10:44.527296+00:00"
+    },
+    "llama-70b:w8": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-70b/w8.json",
+      "error": "Estimated peak 72.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T06:10:45.083175+00:00"
+    },
+    "llama-70b:w4": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-70b/w4.json",
+      "error": "Estimated peak 42.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T06:10:45.661456+00:00"
+    },
+    "llama-70b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/llama-70b/w2.json",
+      "error": null,
+      "at": "2026-05-23T06:10:46.229394+00:00"
+    },
+    "qwen-72b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-72b/fp16.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T06:10:46.816883+00:00"
+    },
+    "qwen-72b:w8": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-72b/w8.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T06:10:47.388156+00:00"
+    },
+    "qwen-72b:w4": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-72b/w4.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T06:10:47.991531+00:00"
+    },
+    "qwen-72b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_04_model-size-ladder/qwen-72b/w2.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T06:10:48.597580+00:00"
+    }
+  },
+  "updated_at": "2026-05-23T06:10:48.597611+00:00"
+}
