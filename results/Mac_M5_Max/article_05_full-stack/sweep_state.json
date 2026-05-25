@@ -1,0 +1,2065 @@
+{
+  "version": 1,
+  "hardware": "Mac M5 Max",
+  "models": [
+    "qwen-0.5b",
+    "llama-3.2-1b",
+    "qwen-1.5b",
+    "gemma-2-2b",
+    "llama-3.2-3b",
+    "qwen-3b",
+    "phi-3-mini",
+    "phi-3.5-mini",
+    "qwen-7b",
+    "mistral-7b",
+    "deepseek-r1-qwen-7b",
+    "llama3-8b",
+    "deepseek-r1-llama-8b",
+    "gemma-9b",
+    "mistral-nemo-12b",
+    "qwen-14b",
+    "mistral-small-22b",
+    "gemma-27b",
+    "qwen-35b",
+    "llama-70b",
+    "qwen-72b"
+  ],
+  "config_order": [
+    "fp16",
+    "fp16+kv_cache",
+    "fp16+prefill",
+    "fp16+kv_cache+prefill",
+    "w8",
+    "w8+kv_cache",
+    "w8+prefill",
+    "w8+kv_cache+prefill",
+    "w4",
+    "w4+kv_cache",
+    "w4+prefill",
+    "w4+kv_cache+prefill",
+    "w2",
+    "w2+kv_cache",
+    "w2+prefill",
+    "w2+kv_cache+prefill"
+  ],
+  "sweep_output_root": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack",
+  "completed": {
+    "qwen-0.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:35:23.095718+00:00"
+    },
+    "qwen-0.5b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:35:31.819164+00:00"
+    },
+    "qwen-0.5b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:35:39.983473+00:00"
+    },
+    "qwen-0.5b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:35:48.635395+00:00"
+    },
+    "qwen-0.5b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:35:56.599764+00:00"
+    },
+    "qwen-0.5b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:36:05.260422+00:00"
+    },
+    "qwen-0.5b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:36:13.273523+00:00"
+    },
+    "qwen-0.5b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:36:21.889668+00:00"
+    },
+    "qwen-0.5b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:36:29.644169+00:00"
+    },
+    "qwen-0.5b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:36:38.228207+00:00"
+    },
+    "qwen-0.5b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:36:45.926999+00:00"
+    },
+    "qwen-0.5b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:36:54.424027+00:00"
+    },
+    "qwen-0.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:37:00.020445+00:00"
+    },
+    "qwen-0.5b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:37:00.596711+00:00"
+    },
+    "qwen-0.5b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:37:01.176056+00:00"
+    },
+    "qwen-0.5b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-0.5b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:37:01.742889+00:00"
+    },
+    "llama-3.2-1b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:37:06.771819+00:00"
+    },
+    "llama-3.2-1b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:37:16.579404+00:00"
+    },
+    "llama-3.2-1b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:37:26.283473+00:00"
+    },
+    "llama-3.2-1b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:37:36.073766+00:00"
+    },
+    "llama-3.2-1b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:37:44.627580+00:00"
+    },
+    "llama-3.2-1b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:37:53.159827+00:00"
+    },
+    "llama-3.2-1b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:38:01.704302+00:00"
+    },
+    "llama-3.2-1b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:38:10.260233+00:00"
+    },
+    "llama-3.2-1b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:38:18.236243+00:00"
+    },
+    "llama-3.2-1b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:38:26.310876+00:00"
+    },
+    "llama-3.2-1b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:38:34.259374+00:00"
+    },
+    "llama-3.2-1b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:38:42.318473+00:00"
+    },
+    "llama-3.2-1b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:38:47.927430+00:00"
+    },
+    "llama-3.2-1b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:38:48.558345+00:00"
+    },
+    "llama-3.2-1b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:38:49.153432+00:00"
+    },
+    "llama-3.2-1b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-1b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:38:49.743518+00:00"
+    },
+    "qwen-1.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:38:55.622434+00:00"
+    },
+    "qwen-1.5b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:39:06.265210+00:00"
+    },
+    "qwen-1.5b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:39:16.725084+00:00"
+    },
+    "qwen-1.5b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:39:27.417146+00:00"
+    },
+    "qwen-1.5b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:39:36.629228+00:00"
+    },
+    "qwen-1.5b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:39:46.128284+00:00"
+    },
+    "qwen-1.5b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:39:55.255448+00:00"
+    },
+    "qwen-1.5b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:40:04.685017+00:00"
+    },
+    "qwen-1.5b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:40:13.091143+00:00"
+    },
+    "qwen-1.5b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:40:21.905698+00:00"
+    },
+    "qwen-1.5b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:40:30.259719+00:00"
+    },
+    "qwen-1.5b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:40:39.027887+00:00"
+    },
+    "qwen-1.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:40:44.631196+00:00"
+    },
+    "qwen-1.5b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:40:45.189929+00:00"
+    },
+    "qwen-1.5b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:40:45.808755+00:00"
+    },
+    "qwen-1.5b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-1.5b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:40:46.418990+00:00"
+    },
+    "gemma-2-2b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:40:52.581422+00:00"
+    },
+    "gemma-2-2b:fp16+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/fp16+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T14:40:59.598299+00:00"
+    },
+    "gemma-2-2b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:41:10.613015+00:00"
+    },
+    "gemma-2-2b:fp16+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/fp16+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T14:41:17.649574+00:00"
+    },
+    "gemma-2-2b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:41:28.763297+00:00"
+    },
+    "gemma-2-2b:w8+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w8+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T14:41:35.767469+00:00"
+    },
+    "gemma-2-2b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:41:46.832760+00:00"
+    },
+    "gemma-2-2b:w8+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w8+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T14:41:53.860360+00:00"
+    },
+    "gemma-2-2b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:42:03.765903+00:00"
+    },
+    "gemma-2-2b:w4+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w4+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T14:42:10.690995+00:00"
+    },
+    "gemma-2-2b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:42:20.581365+00:00"
+    },
+    "gemma-2-2b:w4+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w4+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T14:42:27.544253+00:00"
+    },
+    "gemma-2-2b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:42:33.126898+00:00"
+    },
+    "gemma-2-2b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:42:33.737399+00:00"
+    },
+    "gemma-2-2b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:42:34.315733+00:00"
+    },
+    "gemma-2-2b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-2-2b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:42:34.896305+00:00"
+    },
+    "llama-3.2-3b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:42:44.299673+00:00"
+    },
+    "llama-3.2-3b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:42:58.596116+00:00"
+    },
+    "llama-3.2-3b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:43:12.781627+00:00"
+    },
+    "llama-3.2-3b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:43:27.095000+00:00"
+    },
+    "llama-3.2-3b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:43:38.325933+00:00"
+    },
+    "llama-3.2-3b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:43:49.604757+00:00"
+    },
+    "llama-3.2-3b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:44:00.614420+00:00"
+    },
+    "llama-3.2-3b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:44:11.834405+00:00"
+    },
+    "llama-3.2-3b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:44:21.291343+00:00"
+    },
+    "llama-3.2-3b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:44:30.979456+00:00"
+    },
+    "llama-3.2-3b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:44:40.362042+00:00"
+    },
+    "llama-3.2-3b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:44:50.028573+00:00"
+    },
+    "llama-3.2-3b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:44:55.615306+00:00"
+    },
+    "llama-3.2-3b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:44:56.191286+00:00"
+    },
+    "llama-3.2-3b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:44:56.772948+00:00"
+    },
+    "llama-3.2-3b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-3.2-3b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:44:57.355146+00:00"
+    },
+    "qwen-3b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:45:06.583002+00:00"
+    },
+    "qwen-3b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:45:20.818142+00:00"
+    },
+    "qwen-3b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:45:34.694231+00:00"
+    },
+    "qwen-3b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:45:48.914986+00:00"
+    },
+    "qwen-3b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:46:00.110522+00:00"
+    },
+    "qwen-3b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:46:11.464193+00:00"
+    },
+    "qwen-3b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:46:22.400664+00:00"
+    },
+    "qwen-3b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:46:33.730741+00:00"
+    },
+    "qwen-3b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:46:43.353901+00:00"
+    },
+    "qwen-3b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:46:53.186222+00:00"
+    },
+    "qwen-3b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:47:02.692479+00:00"
+    },
+    "qwen-3b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:47:12.762243+00:00"
+    },
+    "qwen-3b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:47:18.345196+00:00"
+    },
+    "qwen-3b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:47:18.902721+00:00"
+    },
+    "qwen-3b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:47:19.440174+00:00"
+    },
+    "qwen-3b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-3b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:47:19.980571+00:00"
+    },
+    "phi-3-mini:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:47:26.738444+00:00"
+    },
+    "phi-3-mini:fp16+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/fp16+kv_cache.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:47:33.293151+00:00"
+    },
+    "phi-3-mini:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:47:44.850470+00:00"
+    },
+    "phi-3-mini:fp16+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/fp16+kv_cache+prefill.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:47:51.417172+00:00"
+    },
+    "phi-3-mini:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:48:03.043572+00:00"
+    },
+    "phi-3-mini:w8+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w8+kv_cache.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:48:09.627306+00:00"
+    },
+    "phi-3-mini:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:48:21.298966+00:00"
+    },
+    "phi-3-mini:w8+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w8+kv_cache+prefill.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:48:27.924529+00:00"
+    },
+    "phi-3-mini:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:48:37.636634+00:00"
+    },
+    "phi-3-mini:w4+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w4+kv_cache.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:48:44.122199+00:00"
+    },
+    "phi-3-mini:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:48:53.696946+00:00"
+    },
+    "phi-3-mini:w4+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w4+kv_cache+prefill.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:49:00.211636+00:00"
+    },
+    "phi-3-mini:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:49:05.809390+00:00"
+    },
+    "phi-3-mini:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:49:06.385570+00:00"
+    },
+    "phi-3-mini:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:49:06.955592+00:00"
+    },
+    "phi-3-mini:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3-mini/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:49:07.512252+00:00"
+    },
+    "phi-3.5-mini:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:49:18.411112+00:00"
+    },
+    "phi-3.5-mini:fp16+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/fp16+kv_cache.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:49:25.081376+00:00"
+    },
+    "phi-3.5-mini:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:49:40.273557+00:00"
+    },
+    "phi-3.5-mini:fp16+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/fp16+kv_cache+prefill.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:49:46.977662+00:00"
+    },
+    "phi-3.5-mini:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:49:58.858223+00:00"
+    },
+    "phi-3.5-mini:w8+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w8+kv_cache.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:50:05.385082+00:00"
+    },
+    "phi-3.5-mini:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:50:17.058759+00:00"
+    },
+    "phi-3.5-mini:w8+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w8+kv_cache+prefill.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:50:23.584932+00:00"
+    },
+    "phi-3.5-mini:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:50:33.333742+00:00"
+    },
+    "phi-3.5-mini:w4+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w4+kv_cache.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:50:39.806517+00:00"
+    },
+    "phi-3.5-mini:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:50:49.509206+00:00"
+    },
+    "phi-3.5-mini:w4+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w4+kv_cache+prefill.json",
+      "error": "[quantize] The last dimension of the matrix needs to be divisible by the quantization group size 64. However the provided  matrix has shape (1,32,512,96)",
+      "at": "2026-05-23T14:50:55.935999+00:00"
+    },
+    "phi-3.5-mini:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:51:01.542837+00:00"
+    },
+    "phi-3.5-mini:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:51:02.101398+00:00"
+    },
+    "phi-3.5-mini:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:51:02.695341+00:00"
+    },
+    "phi-3.5-mini:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/phi-3.5-mini/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:51:03.264727+00:00"
+    },
+    "qwen-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:51:21.576542+00:00"
+    },
+    "qwen-7b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:51:44.020010+00:00"
+    },
+    "qwen-7b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:52:06.481148+00:00"
+    },
+    "qwen-7b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:52:29.326448+00:00"
+    },
+    "qwen-7b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:52:45.179349+00:00"
+    },
+    "qwen-7b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:53:00.850850+00:00"
+    },
+    "qwen-7b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:53:16.306789+00:00"
+    },
+    "qwen-7b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:53:31.982006+00:00"
+    },
+    "qwen-7b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:53:43.929717+00:00"
+    },
+    "qwen-7b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:53:55.940304+00:00"
+    },
+    "qwen-7b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:54:07.678437+00:00"
+    },
+    "qwen-7b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:54:19.690100+00:00"
+    },
+    "qwen-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:54:25.277305+00:00"
+    },
+    "qwen-7b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:54:25.856178+00:00"
+    },
+    "qwen-7b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:54:26.411046+00:00"
+    },
+    "qwen-7b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-7b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:54:26.991613+00:00"
+    },
+    "mistral-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:54:46.990864+00:00"
+    },
+    "mistral-7b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:55:09.627958+00:00"
+    },
+    "mistral-7b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:55:31.435974+00:00"
+    },
+    "mistral-7b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:55:53.541752+00:00"
+    },
+    "mistral-7b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:56:09.159087+00:00"
+    },
+    "mistral-7b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:56:24.660154+00:00"
+    },
+    "mistral-7b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:56:39.882712+00:00"
+    },
+    "mistral-7b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:56:55.292389+00:00"
+    },
+    "mistral-7b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w4.json",
+      "error": null,
+      "at": "2026-05-23T14:57:07.210136+00:00"
+    },
+    "mistral-7b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:57:19.008342+00:00"
+    },
+    "mistral-7b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:57:30.773263+00:00"
+    },
+    "mistral-7b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:57:42.711875+00:00"
+    },
+    "mistral-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w2.json",
+      "error": null,
+      "at": "2026-05-23T14:57:48.295559+00:00"
+    },
+    "mistral-7b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:57:48.876909+00:00"
+    },
+    "mistral-7b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:57:49.455912+00:00"
+    },
+    "mistral-7b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-7b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:57:50.047441+00:00"
+    },
+    "deepseek-r1-qwen-7b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T14:58:08.063093+00:00"
+    },
+    "deepseek-r1-qwen-7b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:58:30.529564+00:00"
+    },
+    "deepseek-r1-qwen-7b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:58:52.851820+00:00"
+    },
+    "deepseek-r1-qwen-7b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T14:59:15.663368+00:00"
+    },
+    "deepseek-r1-qwen-7b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w8.json",
+      "error": null,
+      "at": "2026-05-23T14:59:31.625187+00:00"
+    },
+    "deepseek-r1-qwen-7b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T14:59:47.352848+00:00"
+    },
+    "deepseek-r1-qwen-7b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:00:02.784621+00:00"
+    },
+    "deepseek-r1-qwen-7b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:00:18.564490+00:00"
+    },
+    "deepseek-r1-qwen-7b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:00:30.567159+00:00"
+    },
+    "deepseek-r1-qwen-7b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:00:42.620594+00:00"
+    },
+    "deepseek-r1-qwen-7b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:00:54.370701+00:00"
+    },
+    "deepseek-r1-qwen-7b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:01:06.532186+00:00"
+    },
+    "deepseek-r1-qwen-7b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:01:12.103792+00:00"
+    },
+    "deepseek-r1-qwen-7b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:01:12.719423+00:00"
+    },
+    "deepseek-r1-qwen-7b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:01:13.309938+00:00"
+    },
+    "deepseek-r1-qwen-7b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-qwen-7b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:01:13.888281+00:00"
+    },
+    "llama3-8b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T15:01:35.372826+00:00"
+    },
+    "llama3-8b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:02:01.831787+00:00"
+    },
+    "llama3-8b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:02:25.423342+00:00"
+    },
+    "llama3-8b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:02:48.959911+00:00"
+    },
+    "llama3-8b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:03:05.277267+00:00"
+    },
+    "llama3-8b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:03:21.396897+00:00"
+    },
+    "llama3-8b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:03:37.229593+00:00"
+    },
+    "llama3-8b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:03:53.339945+00:00"
+    },
+    "llama3-8b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:04:05.663416+00:00"
+    },
+    "llama3-8b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:04:17.999206+00:00"
+    },
+    "llama3-8b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:04:30.103738+00:00"
+    },
+    "llama3-8b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:04:42.372370+00:00"
+    },
+    "llama3-8b:w2": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:04:52.882105+00:00"
+    },
+    "llama3-8b:w2+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:05:03.580760+00:00"
+    },
+    "llama3-8b:w2+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:05:13.974436+00:00"
+    },
+    "llama3-8b:w2+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama3-8b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:05:24.569800+00:00"
+    },
+    "deepseek-r1-llama-8b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T15:05:50.374944+00:00"
+    },
+    "deepseek-r1-llama-8b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:06:15.943989+00:00"
+    },
+    "deepseek-r1-llama-8b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:06:40.857696+00:00"
+    },
+    "deepseek-r1-llama-8b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:07:04.543135+00:00"
+    },
+    "deepseek-r1-llama-8b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:07:20.866960+00:00"
+    },
+    "deepseek-r1-llama-8b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:07:37.090186+00:00"
+    },
+    "deepseek-r1-llama-8b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:07:53.126009+00:00"
+    },
+    "deepseek-r1-llama-8b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:08:09.351417+00:00"
+    },
+    "deepseek-r1-llama-8b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:08:21.760710+00:00"
+    },
+    "deepseek-r1-llama-8b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:08:34.162639+00:00"
+    },
+    "deepseek-r1-llama-8b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:08:46.448910+00:00"
+    },
+    "deepseek-r1-llama-8b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:08:58.871521+00:00"
+    },
+    "deepseek-r1-llama-8b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:09:04.467693+00:00"
+    },
+    "deepseek-r1-llama-8b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:09:05.037391+00:00"
+    },
+    "deepseek-r1-llama-8b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:09:05.619169+00:00"
+    },
+    "deepseek-r1-llama-8b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/deepseek-r1-llama-8b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:09:06.186733+00:00"
+    },
+    "gemma-9b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T15:09:20.769249+00:00"
+    },
+    "gemma-9b:fp16+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/fp16+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:09:28.293114+00:00"
+    },
+    "gemma-9b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:09:47.249875+00:00"
+    },
+    "gemma-9b:fp16+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/fp16+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:09:54.764770+00:00"
+    },
+    "gemma-9b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:10:13.701526+00:00"
+    },
+    "gemma-9b:w8+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w8+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:10:21.564581+00:00"
+    },
+    "gemma-9b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:10:40.558796+00:00"
+    },
+    "gemma-9b:w8+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w8+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:10:48.025857+00:00"
+    },
+    "gemma-9b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:11:02.675974+00:00"
+    },
+    "gemma-9b:w4+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w4+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:11:09.962922+00:00"
+    },
+    "gemma-9b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:11:24.412170+00:00"
+    },
+    "gemma-9b:w4+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w4+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:11:31.667377+00:00"
+    },
+    "gemma-9b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:11:37.238945+00:00"
+    },
+    "gemma-9b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:11:37.818038+00:00"
+    },
+    "gemma-9b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:11:38.396014+00:00"
+    },
+    "gemma-9b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-9b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:11:38.973465+00:00"
+    },
+    "mistral-nemo-12b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T15:12:11.200516+00:00"
+    },
+    "mistral-nemo-12b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:12:48.459114+00:00"
+    },
+    "mistral-nemo-12b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:13:23.911287+00:00"
+    },
+    "mistral-nemo-12b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:14:00.167951+00:00"
+    },
+    "mistral-nemo-12b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:14:21.615315+00:00"
+    },
+    "mistral-nemo-12b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:14:42.786462+00:00"
+    },
+    "mistral-nemo-12b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:15:03.539016+00:00"
+    },
+    "mistral-nemo-12b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:15:24.730625+00:00"
+    },
+    "mistral-nemo-12b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:15:40.102671+00:00"
+    },
+    "mistral-nemo-12b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:15:55.426914+00:00"
+    },
+    "mistral-nemo-12b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:16:10.285636+00:00"
+    },
+    "mistral-nemo-12b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:16:25.588928+00:00"
+    },
+    "mistral-nemo-12b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:16:31.168756+00:00"
+    },
+    "mistral-nemo-12b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:16:31.745760+00:00"
+    },
+    "mistral-nemo-12b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:16:32.309003+00:00"
+    },
+    "mistral-nemo-12b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-nemo-12b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:16:32.877223+00:00"
+    },
+    "qwen-14b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/fp16.json",
+      "error": null,
+      "at": "2026-05-23T15:17:11.418180+00:00"
+    },
+    "qwen-14b:fp16+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/fp16+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:17:55.255004+00:00"
+    },
+    "qwen-14b:fp16+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/fp16+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:18:37.061389+00:00"
+    },
+    "qwen-14b:fp16+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/fp16+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:19:19.841234+00:00"
+    },
+    "qwen-14b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:19:44.420950+00:00"
+    },
+    "qwen-14b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:20:08.791639+00:00"
+    },
+    "qwen-14b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:20:32.647261+00:00"
+    },
+    "qwen-14b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:20:57.406104+00:00"
+    },
+    "qwen-14b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:21:14.597385+00:00"
+    },
+    "qwen-14b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:21:31.734437+00:00"
+    },
+    "qwen-14b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:21:48.503703+00:00"
+    },
+    "qwen-14b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:22:05.663220+00:00"
+    },
+    "qwen-14b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:22:11.254546+00:00"
+    },
+    "qwen-14b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:22:11.832799+00:00"
+    },
+    "qwen-14b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:22:12.403639+00:00"
+    },
+    "qwen-14b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-14b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:22:12.985177+00:00"
+    },
+    "mistral-small-22b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/fp16.json",
+      "error": "Estimated peak 44.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:22:13.550746+00:00"
+    },
+    "mistral-small-22b:fp16+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/fp16+kv_cache.json",
+      "error": "Estimated peak 45.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:22:14.126641+00:00"
+    },
+    "mistral-small-22b:fp16+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/fp16+prefill.json",
+      "error": "Estimated peak 44.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:22:14.700179+00:00"
+    },
+    "mistral-small-22b:fp16+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/fp16+kv_cache+prefill.json",
+      "error": "Estimated peak 45.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:22:15.268547+00:00"
+    },
+    "mistral-small-22b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:22:48.706099+00:00"
+    },
+    "mistral-small-22b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:23:25.140687+00:00"
+    },
+    "mistral-small-22b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:24:02.928379+00:00"
+    },
+    "mistral-small-22b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:24:40.978941+00:00"
+    },
+    "mistral-small-22b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:25:03.589378+00:00"
+    },
+    "mistral-small-22b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:25:25.861671+00:00"
+    },
+    "mistral-small-22b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:25:48.253507+00:00"
+    },
+    "mistral-small-22b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:26:11.082368+00:00"
+    },
+    "mistral-small-22b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:26:16.686187+00:00"
+    },
+    "mistral-small-22b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:26:17.242244+00:00"
+    },
+    "mistral-small-22b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:26:17.798482+00:00"
+    },
+    "mistral-small-22b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/mistral-small-22b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:26:18.376582+00:00"
+    },
+    "gemma-27b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/fp16.json",
+      "error": "Estimated peak 54.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:26:18.943833+00:00"
+    },
+    "gemma-27b:fp16+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/fp16+kv_cache.json",
+      "error": "Estimated peak 55.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:26:19.518261+00:00"
+    },
+    "gemma-27b:fp16+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/fp16+prefill.json",
+      "error": "Estimated peak 54.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:26:20.092777+00:00"
+    },
+    "gemma-27b:fp16+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/fp16+kv_cache+prefill.json",
+      "error": "Estimated peak 55.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:26:20.689043+00:00"
+    },
+    "gemma-27b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:27:04.000321+00:00"
+    },
+    "gemma-27b:w8+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w8+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:27:18.152178+00:00"
+    },
+    "gemma-27b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:28:04.066843+00:00"
+    },
+    "gemma-27b:w8+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w8+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:28:18.536711+00:00"
+    },
+    "gemma-27b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:28:46.827178+00:00"
+    },
+    "gemma-27b:w4+kv_cache": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w4+kv_cache.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:28:54.869338+00:00"
+    },
+    "gemma-27b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:29:22.232812+00:00"
+    },
+    "gemma-27b:w4+kv_cache+prefill": {
+      "status": "error",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w4+kv_cache+prefill.json",
+      "error": "expand_dims(): incompatible function arguments. The following argument types are supported:\n    1. expand_dims(a: array, /, axis: Union[int, Sequence[int]], *, stream: Union[None, Stream, Device] = None) -> array\n\nInvoked with types: list, int",
+      "at": "2026-05-23T15:29:30.284588+00:00"
+    },
+    "gemma-27b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:29:35.871663+00:00"
+    },
+    "gemma-27b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:29:36.471539+00:00"
+    },
+    "gemma-27b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:29:37.036345+00:00"
+    },
+    "gemma-27b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/gemma-27b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:29:37.611432+00:00"
+    },
+    "qwen-35b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/fp16.json",
+      "error": "Estimated peak 72.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:29:38.182513+00:00"
+    },
+    "qwen-35b:fp16+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/fp16+kv_cache.json",
+      "error": "Estimated peak 73.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:29:38.755321+00:00"
+    },
+    "qwen-35b:fp16+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/fp16+prefill.json",
+      "error": "Estimated peak 72.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:29:39.322988+00:00"
+    },
+    "qwen-35b:fp16+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/fp16+kv_cache+prefill.json",
+      "error": "Estimated peak 73.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:29:39.901274+00:00"
+    },
+    "qwen-35b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w8.json",
+      "error": null,
+      "at": "2026-05-23T15:30:44.088823+00:00"
+    },
+    "qwen-35b:w8+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w8+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:31:43.875303+00:00"
+    },
+    "qwen-35b:w8+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w8+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:32:49.304572+00:00"
+    },
+    "qwen-35b:w8+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w8+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:33:48.435646+00:00"
+    },
+    "qwen-35b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w4.json",
+      "error": null,
+      "at": "2026-05-23T15:34:19.300249+00:00"
+    },
+    "qwen-35b:w4+kv_cache": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w4+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:34:50.112711+00:00"
+    },
+    "qwen-35b:w4+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w4+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:35:20.729433+00:00"
+    },
+    "qwen-35b:w4+kv_cache+prefill": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w4+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:35:52.649137+00:00"
+    },
+    "qwen-35b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:35:58.257092+00:00"
+    },
+    "qwen-35b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:35:58.832900+00:00"
+    },
+    "qwen-35b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:35:59.403102+00:00"
+    },
+    "qwen-35b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-35b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:35:59.974974+00:00"
+    },
+    "llama-70b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/fp16.json",
+      "error": "Estimated peak 140.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:00.595698+00:00"
+    },
+    "llama-70b:fp16+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/fp16+kv_cache.json",
+      "error": "Estimated peak 141.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:01.189365+00:00"
+    },
+    "llama-70b:fp16+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/fp16+prefill.json",
+      "error": "Estimated peak 140.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:01.760192+00:00"
+    },
+    "llama-70b:fp16+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/fp16+kv_cache+prefill.json",
+      "error": "Estimated peak 141.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:02.321685+00:00"
+    },
+    "llama-70b:w8": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w8.json",
+      "error": "Estimated peak 72.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:02.896149+00:00"
+    },
+    "llama-70b:w8+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w8+kv_cache.json",
+      "error": "Estimated peak 73.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:03.481062+00:00"
+    },
+    "llama-70b:w8+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w8+prefill.json",
+      "error": "Estimated peak 72.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:04.061878+00:00"
+    },
+    "llama-70b:w8+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w8+kv_cache+prefill.json",
+      "error": "Estimated peak 73.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:04.647213+00:00"
+    },
+    "llama-70b:w4": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w4.json",
+      "error": "Estimated peak 42.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:05.220343+00:00"
+    },
+    "llama-70b:w4+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w4+kv_cache.json",
+      "error": "Estimated peak 43.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:05.829279+00:00"
+    },
+    "llama-70b:w4+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w4+prefill.json",
+      "error": "Estimated peak 42.0 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:06.441609+00:00"
+    },
+    "llama-70b:w4+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w4+kv_cache+prefill.json",
+      "error": "Estimated peak 43.5 GB exceeds budget 36.0 GB",
+      "at": "2026-05-23T15:36:07.030602+00:00"
+    },
+    "llama-70b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w2.json",
+      "error": null,
+      "at": "2026-05-23T15:36:07.609418+00:00"
+    },
+    "llama-70b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w2+kv_cache.json",
+      "error": null,
+      "at": "2026-05-23T15:36:08.190310+00:00"
+    },
+    "llama-70b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w2+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:36:08.768543+00:00"
+    },
+    "llama-70b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/llama-70b/w2+kv_cache+prefill.json",
+      "error": null,
+      "at": "2026-05-23T15:36:09.354402+00:00"
+    },
+    "qwen-72b:fp16": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/fp16.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:09.939294+00:00"
+    },
+    "qwen-72b:fp16+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/fp16+kv_cache.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:10.525746+00:00"
+    },
+    "qwen-72b:fp16+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/fp16+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:11.108863+00:00"
+    },
+    "qwen-72b:fp16+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/fp16+kv_cache+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:11.690155+00:00"
+    },
+    "qwen-72b:w8": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w8.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:12.271574+00:00"
+    },
+    "qwen-72b:w8+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w8+kv_cache.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:12.844307+00:00"
+    },
+    "qwen-72b:w8+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w8+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:13.415202+00:00"
+    },
+    "qwen-72b:w8+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w8+kv_cache+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:13.994862+00:00"
+    },
+    "qwen-72b:w4": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w4.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:14.553084+00:00"
+    },
+    "qwen-72b:w4+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w4+kv_cache.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:15.126780+00:00"
+    },
+    "qwen-72b:w4+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w4+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:15.696351+00:00"
+    },
+    "qwen-72b:w4+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w4+kv_cache+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:16.279313+00:00"
+    },
+    "qwen-72b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w2.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:16.837874+00:00"
+    },
+    "qwen-72b:w2+kv_cache": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w2+kv_cache.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:17.416900+00:00"
+    },
+    "qwen-72b:w2+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w2+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:17.967644+00:00"
+    },
+    "qwen-72b:w2+kv_cache+prefill": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_05_full-stack/qwen-72b/w2+kv_cache+prefill.json",
+      "error": "qwen-72b (~72B) needs ~64GB+ unified memory (this machine has ~48GB). Use --include-large on a bigger Mac, or run a single config with `--preset qwen-72b --weight-bits 4`.",
+      "at": "2026-05-23T15:36:18.523209+00:00"
+    }
+  },
+  "updated_at": "2026-05-23T15:36:18.523232+00:00"
+}
