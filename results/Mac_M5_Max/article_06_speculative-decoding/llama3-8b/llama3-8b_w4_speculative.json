@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-05-25T04:10:39.082071+00:00",
+  "hardware": "Mac M5 Max",
+  "model_preset": "llama3-8b",
+  "configuration": "w4+speculative",
+  "weight_bits": 4,
+  "optimizations": {
+    "weight_bits": 4,
+    "kv_cache": false,
+    "prefill": false
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+  "kv_bits": null,
+  "prefill_step_size": 512,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 5.9778,
+  "ttft_ms": 203.0273,
+  "throughput_tps": 112.5496,
+  "prompt_tps": 2521.8279,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.29.1",
+  "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 6,
+  "run_label": "llama3-8b_w4_speculative",
+  "benchmark_mode": "speculative",
+  "draft_model_repo": "mlx-community/Llama-3.2-1B-Instruct-4bit",
+  "draft_preset": "llama-3.2-1b",
+  "num_draft_tokens": 3,
+  "draft_accept_rate": 0.5859,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": null,
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      203.5422078333795,
+      202.47895806096497,
+      203.0273340642452
+    ],
+    "throughput_tps": [
+      106.49692607714479,
+      114.79029613502487,
+      112.54958251871585
+    ],
+    "memory_gb": [
+      5.977782396,
+      5.977782396,
+      5.977782396
+    ],
+    "prompt_tps": [
+      2515.448787993522,
+      2528.6578166104573,
+      2521.8279221357684
+    ],
+    "draft_accept_rate": [
+      0.5625,
+      0.5859375,
+      0.5859375
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 203.0162,
+      "median": 203.0273,
+      "p50": 203.0273,
+      "p95": 203.4907,
+      "std": 0.4341,
+      "min": 202.479,
+      "max": 203.5422
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 111.2789,
+      "median": 112.5496,
+      "p50": 112.5496,
+      "p95": 114.5662,
+      "std": 3.5029,
+      "min": 106.4969,
+      "max": 114.7903
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 5.9778,
+      "median": 5.9778,
+      "p50": 5.9778,
+      "p95": 5.9778,
+      "std": 0.0,
+      "min": 5.9778,
+      "max": 5.9778
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 2521.9782,
+      "median": 2521.8279,
+      "p50": 2521.8279,
+      "p95": 2527.9748,
+      "std": 5.3936,
+      "min": 2515.4488,
+      "max": 2528.6578
+    },
+    "draft_accept_rate": {
+      "n": 3,
+      "mean": 0.5781,
+      "median": 0.5859,
+      "p50": 0.5859,
+      "p95": 0.5859,
+      "std": 0.011,
+      "min": 0.5625,
+      "max": 0.5859
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}

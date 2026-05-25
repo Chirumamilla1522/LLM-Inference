@@ -1,0 +1,9 @@
+{
+  "article_id": 0,
+  "slug": "introduction",
+  "title": "Local LLMs on Apple Silicon",
+  "hardware": "Mac M5 Max",
+  "output_dir": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_00_introduction",
+  "timestamp": "2026-05-25T04:10:04.346034+00:00",
+  "failures": 0
+}

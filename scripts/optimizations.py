@@ -390,18 +390,18 @@ MODEL_REPOS = get_model_repos()
 # Draft presets for speculative decoding (Article 6). Must share tokenizer vocab.
 DRAFT_PRESET_BY_TARGET: dict[str, str] = {
     "qwen-0.5b": "qwen-0.5b",
-    "llama-3.2-1b": "qwen-0.5b",
+    "llama-3.2-1b": "llama-3.2-1b",
     "qwen-1.5b": "qwen-0.5b",
     "gemma-2-2b": "qwen-0.5b",
-    "llama-3.2-3b": "qwen-0.5b",
+    "llama-3.2-3b": "llama-3.2-1b",
     "qwen-3b": "qwen-0.5b",
     "phi-3-mini": "qwen-0.5b",
     "phi-3.5-mini": "qwen-0.5b",
     "qwen-7b": "qwen-0.5b",
-    "mistral-7b": "qwen-0.5b",
+    # mistral-7b: no smaller mlx-community model shares v0.3 vocab (32768)
     "deepseek-r1-qwen-7b": "qwen-0.5b",
-    "llama3-8b": "qwen-0.5b",
-    "deepseek-r1-llama-8b": "qwen-0.5b",
+    "llama3-8b": "llama-3.2-1b",
+    "deepseek-r1-llama-8b": "llama-3.2-1b",
     "gemma-9b": "qwen-0.5b",
     "mistral-nemo-12b": "qwen-0.5b",
     "qwen-14b": "qwen-1.5b",

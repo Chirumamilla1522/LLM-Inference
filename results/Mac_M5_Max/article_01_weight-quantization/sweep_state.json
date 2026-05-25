@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "hardware": "Mac M5 Max",
+  "models": [
+    "qwen-0.5b",
+    "llama-3.2-1b",
+    "qwen-1.5b",
+    "gemma-2-2b",
+    "llama-3.2-3b",
+    "qwen-3b",
+    "phi-3-mini",
+    "phi-3.5-mini",
+    "qwen-7b",
+    "mistral-7b",
+    "deepseek-r1-qwen-7b",
+    "llama3-8b",
+    "deepseek-r1-llama-8b",
+    "gemma-9b",
+    "mistral-nemo-12b",
+    "qwen-14b",
+    "mistral-small-22b",
+    "gemma-27b",
+    "qwen-35b",
+    "llama-70b",
+    "qwen-72b"
+  ],
+  "config_order": [
+    "fp16",
+    "w8",
+    "w4",
+    "w2"
+  ],
+  "sweep_output_root": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_01_weight-quantization",
+  "completed": {
+    "qwen-0.5b:fp16": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_01_weight-quantization/qwen-0.5b/fp16.json",
+      "error": null,
+      "at": "2026-05-25T04:10:14.912732+00:00"
+    },
+    "qwen-0.5b:w8": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_01_weight-quantization/qwen-0.5b/w8.json",
+      "error": null,
+      "at": "2026-05-25T04:10:23.001122+00:00"
+    },
+    "qwen-0.5b:w4": {
+      "status": "ok",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_01_weight-quantization/qwen-0.5b/w4.json",
+      "error": null,
+      "at": "2026-05-25T04:10:30.998902+00:00"
+    },
+    "qwen-0.5b:w2": {
+      "status": "skipped",
+      "output": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_01_weight-quantization/qwen-0.5b/w2.json",
+      "error": null,
+      "at": "2026-05-25T04:10:36.643608+00:00"
+    }
+  },
+  "updated_at": "2026-05-25T04:10:36.643640+00:00"
+}
