@@ -1,0 +1,9 @@
+{
+  "article_id": 7,
+  "slug": "context-and-cache",
+  "title": "Context, generation length & prompt cache",
+  "hardware": "Mac M5 Max",
+  "output_dir": "/Users/veera/Downloads/LLM-Inference/results/Mac_M5_Max/article_07_context-and-cache",
+  "timestamp": "2026-05-25T06:11:48.146908+00:00",
+  "failures": 0
+}

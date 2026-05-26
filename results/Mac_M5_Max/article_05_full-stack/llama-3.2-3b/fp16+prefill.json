@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-23T14:43:12.072180+00:00",
+  "timestamp": "2026-05-25T05:12:46.486816+00:00",
   "hardware": "Mac M5 Max",
   "model_preset": "llama-3.2-3b",
   "configuration": "fp16+prefill",
@@ -15,20 +15,20 @@
   "prompt_tokens": 512,
   "generation_tokens": 128,
   "num_trials": 3,
-  "memory_gb": 6.7787,
-  "ttft_ms": 85.8819,
-  "throughput_tps": 75.705,
-  "prompt_tps": 5961.6741,
+  "memory_gb": 0.0,
+  "ttft_ms": 0.0,
+  "throughput_tps": 0.0,
+  "prompt_tps": 0.0,
   "mlx_version": "0.31.2",
   "mlx_lm_version": "0.29.1",
   "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
-  "status": "ok",
-  "error": null,
-  "article_id": 5,
+  "status": "error",
+  "error": "Cannot access mlx-community/Llama-3.2-3B-Instruct-bf16: (MaxRetryError('HTTPSConnectionPool(host=\\'huggingface.co\\', port=443): Max retries exceeded with url: /api/models/mlx-community/Llama-3.2-3B-Instruct-bf16 (Caused by NameResolutionError(\"HTTPSConnection(host=\\'huggingface.co\\', port=443): Failed to resolve \\'huggingface.co\\' ([Errno 8] nodename nor servname provided, or not known)\"))'), '(Request ID: b663c480-fe40-4597-b79e-5a7fddf0433b)')",
+  "article_id": null,
   "run_label": null,
   "benchmark_mode": "standard",
   "draft_model_repo": null,
-  "draft_preset": "qwen-0.5b",
+  "draft_preset": null,
   "num_draft_tokens": null,
   "draft_accept_rate": null,
   "prefix_cache_cold_ttft_ms": null,
@@ -36,70 +36,8 @@
   "prefix_system_tokens": null,
   "workload": null,
   "schema_version": 1,
-  "trials": {
-    "ttft_ms": [
-      85.97641694359481,
-      84.78458295576274,
-      85.88191703893244
-    ],
-    "throughput_tps": [
-      75.70504946633429,
-      75.47585907154125,
-      75.72583473438041
-    ],
-    "memory_gb": [
-      6.778698848,
-      6.778698848,
-      6.778698848
-    ],
-    "prompt_tps": [
-      5955.121394927399,
-      6038.83373781695,
-      5961.674094534912
-    ]
-  },
-  "stats": {
-    "ttft_ms": {
-      "n": 3,
-      "mean": 85.5476,
-      "median": 85.8819,
-      "p50": 85.8819,
-      "p95": 85.967,
-      "std": 0.5409,
-      "min": 84.7846,
-      "max": 85.9764
-    },
-    "throughput_tps": {
-      "n": 3,
-      "mean": 75.6356,
-      "median": 75.705,
-      "p50": 75.705,
-      "p95": 75.7238,
-      "std": 0.1133,
-      "min": 75.4759,
-      "max": 75.7258
-    },
-    "memory_gb": {
-      "n": 3,
-      "mean": 6.7787,
-      "median": 6.7787,
-      "p50": 6.7787,
-      "p95": 6.7787,
-      "std": 0.0,
-      "min": 6.7787,
-      "max": 6.7787
-    },
-    "prompt_tps": {
-      "n": 3,
-      "mean": 5985.2097,
-      "median": 5961.6741,
-      "p50": 5961.6741,
-      "p95": 6031.1178,
-      "std": 38.0121,
-      "min": 5955.1214,
-      "max": 6038.8337
-    }
-  },
+  "trials": null,
+  "stats": null,
   "warmup_policy": {
     "warmup_trials": 1,
     "warmup_discarded": true,

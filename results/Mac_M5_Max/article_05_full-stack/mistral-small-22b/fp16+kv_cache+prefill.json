@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-23T15:22:14.700734+00:00",
+  "timestamp": "2026-05-25T05:52:13.025882+00:00",
   "hardware": "Mac M5 Max",
   "model_preset": "mistral-small-22b",
   "configuration": "fp16+kv_cache+prefill",

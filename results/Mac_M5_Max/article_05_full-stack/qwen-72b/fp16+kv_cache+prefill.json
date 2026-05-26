@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-23T15:36:11.109365+00:00",
+  "timestamp": "2026-05-25T06:05:52.644829+00:00",
   "hardware": "Mac M5 Max",
   "model_preset": "qwen-72b",
   "configuration": "fp16+kv_cache+prefill",

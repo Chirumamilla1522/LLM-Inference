@@ -1,0 +1,12 @@
+{
+  "article_id": 10,
+  "hardware": "Mac M5 Max",
+  "pairs": [
+    "llama3-8b:fp16",
+    "llama3-8b:w4",
+    "mistral-7b:w4"
+  ],
+  "llama_bench": "/opt/homebrew/bin/llama-bench",
+  "failures": 3,
+  "timestamp": "2026-05-25T06:15:06.604800+00:00"
+}

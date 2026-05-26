@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "timestamp": "2026-05-25T06:13:44.247808+00:00",
+  "article_id": 10,
+  "hardware": "Mac M5 Max",
+  "model_preset": "llama3-8b",
+  "configuration": "w4",
+  "weight_bits": 4,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "runtime": "mlx_vs_llamacpp",
+  "mlx": {
+    "timestamp": "2026-05-25T06:12:13.706829+00:00",
+    "hardware": "Mac M5 Max",
+    "model_preset": "llama3-8b",
+    "configuration": "w4",
+    "weight_bits": 4,
+    "optimizations": {
+      "weight_bits": 4,
+      "kv_cache": false,
+      "prefill": false
+    },
+    "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+    "kv_bits": null,
+    "prefill_step_size": 512,
+    "prompt_tokens": 512,
+    "generation_tokens": 128,
+    "num_trials": 3,
+    "memory_gb": 5.1148,
+    "ttft_ms": 161.8487,
+    "throughput_tps": 113.9175,
+    "prompt_tps": 3163.4482,
+    "mlx_version": "0.31.2",
+    "mlx_lm_version": "0.29.1",
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+    "status": "ok",
+    "error": null,
+    "article_id": null,
+    "run_label": null,
+    "benchmark_mode": "standard",
+    "draft_model_repo": null,
+    "draft_preset": "llama-3.2-1b",
+    "num_draft_tokens": null,
+    "draft_accept_rate": null,
+    "prefix_cache_cold_ttft_ms": null,
+    "prefix_cache_warm_ttft_ms": null,
+    "prefix_system_tokens": null,
+    "workload": null,
+    "schema_version": 1,
+    "trials": {
+      "ttft_ms": [
+        162.92658308520913,
+        161.54041606932878,
+        161.84870805591345
+      ],
+      "throughput_tps": [
+        113.91746592049219,
+        114.03493497786192,
+        112.91732676546037
+      ],
+      "memory_gb": [
+        5.11480844,
+        5.11480844,
+        5.11480844
+      ],
+      "prompt_tps": [
+        3142.5197184196063,
+        3169.485460408022,
+        3163.448174224046
+      ]
+    },
+    "stats": {
+      "ttft_ms": {
+        "n": 3,
+        "mean": 162.1052,
+        "median": 161.8487,
+        "p50": 161.8487,
+        "p95": 162.8188,
+        "std": 0.5943,
+        "min": 161.5404,
+        "max": 162.9266
+      },
+      "throughput_tps": {
+        "n": 3,
+        "mean": 113.6232,
+        "median": 113.9175,
+        "p50": 113.9175,
+        "p95": 114.0232,
+        "std": 0.5015,
+        "min": 112.9173,
+        "max": 114.0349
+      },
+      "memory_gb": {
+        "n": 3,
+        "mean": 5.1148,
+        "median": 5.1148,
+        "p50": 5.1148,
+        "p95": 5.1148,
+        "std": 0.0,
+        "min": 5.1148,
+        "max": 5.1148
+      },
+      "prompt_tps": {
+        "n": 3,
+        "mean": 3158.4845,
+        "median": 3163.4482,
+        "p50": 3163.4482,
+        "p95": 3168.8817,
+        "std": 11.5547,
+        "min": 3142.5197,
+        "max": 3169.4855
+      }
+    },
+    "warmup_policy": {
+      "warmup_trials": 1,
+      "warmup_discarded": true,
+      "measured_trials_field": "num_trials",
+      "description": "One full generate before timed trials; trials use seed+trial."
+    }
+  },
+  "llamacpp": {
+    "binary": "/opt/homebrew/bin/llama-bench",
+    "gguf_path": "/Users/veera/.cache/llama-cpp-models/bartowski--Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+    "hf_file": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+    "quant_name": "Q4_K_M",
+    "prompt_tokens": 512,
+    "generation_tokens": 128,
+    "pp_tps": null,
+    "tg_tps": null,
+    "ngl": 99,
+    "status": "error",
+    "error": "exit 1",
+    "raw_output": "        (default: unused)\n  -hff, --hf-file <file>                      Hugging Face model file. If specified, it will override the quant in --hf-repo\n                                              (default: unused)\n  -hft, --hf-token <token>                    Hugging Face access token\n                                              (default: value from HF_TOKEN environment variable)\n  -p, --n-prompt <n>                          (default: 512)\n  -n, --n-gen <n>                             (default: 128)\n  -pg <pp,tg>                                 (default: )\n  -d, --n-depth <n>                           (default: 0)\n  -b, --batch-size <n>                        (default: 2048)\n  -ub, --ubatch-size <n>                      (default: 512)\n  -ctk, --cache-type-k <t>                    (default: f16)\n  -ctv, --cache-type-v <t>                    (default: f16)\n  -t, --threads <n>                           (default: 6)\n  -C, --cpu-mask <hex,hex>                    (default: 0x0)\n  --cpu-strict <0|1>                          (default: 0)\n  --poll <0...100>                            (default: 50)\n  -ngl, --n-gpu-layers <n>                    (default: 99)\n  -ncmoe, --n-cpu-moe <n>                     (default: 0)\n  -sm, --split-mode <none|layer|row|tensor>   (default: layer)\n  -mg, --main-gpu <i>                         (default: 0)\n  -nkvo, --no-kv-offload <0|1>                (default: 0)\n  -fa, --flash-attn <0|1>                     (default: 0)\n  -dev, --device <dev0/dev1/...>              (default: auto)\n  -mmp, --mmap <0|1>                          (default: 1)\n  -dio, --direct-io <0|1>                     (default: 0)\n  -embd, --embeddings <0|1>                   (default: 0)\n  -ts, --tensor-split <ts0/ts1/..>            (default: 0)\n  -ot --override-tensor <tensor name pattern>=<buffer type>;...\n                                              (default: disabled)\n  -nopo, --no-op-offload <0|1>                (default: 0)\n  --no-host <0|1>                             (default: 0)\n\nMultiple values can be given for each parameter by separating them with ','\nor by specifying the parameter multiple times. Ranges can be given as\n'first-last' or 'first-last+step' or 'first-last*mult'.\nload_backend: loaded BLAS backend from /opt/homebrew/Cellar/ggml/0.10.0/libexec/libggml-blas.so\nggml_metal_device_init: testing tensor API for f16 support\nggml_metal_library_compile_pipeline: compiling pipeline: base = 'dummy_kernel', name = 'dummy_kernel'\nggml_metal_library_compile_pipeline: loaded dummy_kernel                                  0x102d38e70 | th_max = 1024 | th_width =   32\nggml_metal_device_init: testing tensor API for bfloat support\nggml_metal_library_compile_pipeline: compiling pipeline: base = 'dummy_kernel', name = 'dummy_kernel'\nggml_metal_library_compile_pipeline: loaded dummy_kernel                                  0x102d38970 | th_max = 1024 | th_width =   32\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.015 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple10  (1010)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = true\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 40200.90 MB\nload_backend: loaded MTL backend from /opt/homebrew/Cellar/ggml/0.10.0/libexec/libggml-metal.so\nload_backend: loaded CPU backend from /opt/homebrew/Cellar/ggml/0.10.0/libexec/libggml-cpu-apple_m4.so\nerror: invalid parameter for argument: -fa\n"
+  },
+  "comparison": {}
+}

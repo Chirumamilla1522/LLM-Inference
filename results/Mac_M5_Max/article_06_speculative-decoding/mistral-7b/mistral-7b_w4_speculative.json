@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-25T04:08:54.180487+00:00",
+  "timestamp": "2026-05-25T06:07:59.830252+00:00",
   "hardware": "Mac M5 Max",
   "model_preset": "mistral-7b",
   "configuration": "w4",
@@ -23,7 +23,7 @@
   "mlx_lm_version": "0.29.1",
   "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
   "status": "error",
-  "error": "Draft vocab (151643) != target vocab (32768). Pick a draft preset with a matching tokenizer.",
+  "error": "No draft repo for mistral-7b at 4-bit. Set DRAFT_PRESET_BY_TARGET in optimizations.py.",
   "article_id": null,
   "run_label": null,
   "benchmark_mode": "standard",

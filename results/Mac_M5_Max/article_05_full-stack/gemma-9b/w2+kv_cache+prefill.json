@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-23T15:11:38.396529+00:00",
+  "timestamp": "2026-05-25T05:41:36.965613+00:00",
   "hardware": "Mac M5 Max",
   "model_preset": "gemma-9b",
   "configuration": "w2+kv_cache+prefill",

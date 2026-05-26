@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-05-25T06:11:30.146245+00:00",
+  "hardware": "Mac M5 Max",
+  "model_preset": "llama3-8b",
+  "configuration": "w4+kv_cache+prefill",
+  "weight_bits": 4,
+  "optimizations": {
+    "weight_bits": 4,
+    "kv_cache": true,
+    "prefill": true
+  },
+  "model_repo": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+  "kv_bits": 4,
+  "prefill_step_size": 2048,
+  "prompt_tokens": 4096,
+  "generation_tokens": 256,
+  "num_trials": 3,
+  "memory_gb": 6.1655,
+  "ttft_ms": 1507.0596,
+  "throughput_tps": 103.7702,
+  "prompt_tps": 2717.8752,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.29.1",
+  "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 7,
+  "run_label": "wl_rag_agent",
+  "benchmark_mode": "standard",
+  "draft_model_repo": null,
+  "draft_preset": "llama-3.2-1b",
+  "num_draft_tokens": null,
+  "draft_accept_rate": null,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": {
+    "workload_id": "rag_agent",
+    "workload_task": "rag_agent",
+    "workload_data_type": "mixed",
+    "workload_modality": "text",
+    "workload_pressure": 4,
+    "workload_primary_stress": "memory",
+    "workload_description": "RAG-style long context + medium generation \u2014 memory bandwidth."
+  },
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      1582.0687080267817,
+      1507.0596248842776,
+      1481.1197500675917
+    ],
+    "throughput_tps": [
+      103.66049780152744,
+      103.77017622248813,
+      104.0253298709961
+    ],
+    "memory_gb": [
+      6.165536816,
+      6.165536816,
+      6.165536816
+    ],
+    "prompt_tps": [
+      2589.015242649412,
+      2717.8752136727962,
+      2765.475242506946
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 1523.416,
+      "median": 1507.0596,
+      "p50": 1507.0596,
+      "p95": 1574.5678,
+      "std": 42.8044,
+      "min": 1481.1198,
+      "max": 1582.0687
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 103.8187,
+      "median": 103.7702,
+      "p50": 103.7702,
+      "p95": 103.9998,
+      "std": 0.1528,
+      "min": 103.6605,
+      "max": 104.0253
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 6.1655,
+      "median": 6.1655,
+      "p50": 6.1655,
+      "p95": 6.1655,
+      "std": 0.0,
+      "min": 6.1655,
+      "max": 6.1655
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 2690.7886,
+      "median": 2717.8752,
+      "p50": 2717.8752,
+      "p95": 2760.7152,
+      "std": 74.5421,
+      "min": 2589.0152,
+      "max": 2765.4752
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}

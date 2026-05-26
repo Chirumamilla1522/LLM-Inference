@@ -1,0 +1,109 @@
+{
+  "timestamp": "2026-05-25T04:21:05.681373+00:00",
+  "hardware": "Mac M5 Max",
+  "model_preset": "mistral-nemo-12b",
+  "configuration": "w8",
+  "weight_bits": 8,
+  "optimizations": {
+    "weight_bits": 8,
+    "kv_cache": false,
+    "prefill": false
+  },
+  "model_repo": "mlx-community/Mistral-Nemo-Instruct-2407-8bit",
+  "kv_bits": null,
+  "prefill_step_size": 512,
+  "prompt_tokens": 512,
+  "generation_tokens": 128,
+  "num_trials": 3,
+  "memory_gb": 13.4822,
+  "ttft_ms": 292.0843,
+  "throughput_tps": 41.561,
+  "prompt_tps": 1752.9189,
+  "mlx_version": "0.31.2",
+  "mlx_lm_version": "0.29.1",
+  "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "status": "ok",
+  "error": null,
+  "article_id": 1,
+  "run_label": null,
+  "benchmark_mode": "standard",
+  "draft_model_repo": null,
+  "draft_preset": "qwen-0.5b",
+  "num_draft_tokens": null,
+  "draft_accept_rate": null,
+  "prefix_cache_cold_ttft_ms": null,
+  "prefix_cache_warm_ttft_ms": null,
+  "prefix_system_tokens": null,
+  "workload": null,
+  "schema_version": 1,
+  "trials": {
+    "ttft_ms": [
+      304.92933304049075,
+      292.0842501334846,
+      291.10937495715916
+    ],
+    "throughput_tps": [
+      41.560980637066365,
+      41.50574127385093,
+      41.571220551651344
+    ],
+    "memory_gb": [
+      13.482192992,
+      13.482192992,
+      13.482192992
+    ],
+    "prompt_tps": [
+      1679.0775583797736,
+      1752.918891607515,
+      1758.7891151748308
+    ]
+  },
+  "stats": {
+    "ttft_ms": {
+      "n": 3,
+      "mean": 296.041,
+      "median": 292.0843,
+      "p50": 292.0843,
+      "p95": 303.6448,
+      "std": 6.2976,
+      "min": 291.1094,
+      "max": 304.9293
+    },
+    "throughput_tps": {
+      "n": 3,
+      "mean": 41.546,
+      "median": 41.561,
+      "p50": 41.561,
+      "p95": 41.5702,
+      "std": 0.0288,
+      "min": 41.5057,
+      "max": 41.5712
+    },
+    "memory_gb": {
+      "n": 3,
+      "mean": 13.4822,
+      "median": 13.4822,
+      "p50": 13.4822,
+      "p95": 13.4822,
+      "std": 0.0,
+      "min": 13.4822,
+      "max": 13.4822
+    },
+    "prompt_tps": {
+      "n": 3,
+      "mean": 1730.2619,
+      "median": 1752.9189,
+      "p50": 1752.9189,
+      "p95": 1758.2021,
+      "std": 36.272,
+      "min": 1679.0776,
+      "max": 1758.7891
+    }
+  },
+  "warmup_policy": {
+    "warmup_trials": 1,
+    "warmup_discarded": true,
+    "measured_trials_field": "num_trials",
+    "description": "One full generate before timed trials; trials use seed+trial."
+  }
+}
