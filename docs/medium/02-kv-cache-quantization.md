@@ -5,7 +5,10 @@ tags: LLM, KV Cache, Memory, Apple Silicon, GQA, Inference, Transformers, MLX
 series: 3 of 7
 read_time: 20 min
 figures: 5
+thumbnail: images/thumbnails/thumb_02_kv_cache.png
 ---
+
+![Cover — KV Cache Quantization](images/thumbnails/thumb_02_kv_cache.png)
 
 # The Hidden Memory Hog: KV Cache Quantization
 

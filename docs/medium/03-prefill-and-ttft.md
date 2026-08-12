@@ -5,7 +5,10 @@ tags: LLM, TTFT, Flash Attention, Latency, Apple Silicon, UX, Prefill, MLX
 series: 4 of 7
 read_time: 21 min
 figures: 5
+thumbnail: images/thumbnails/thumb_03_prefill_ttft.png
 ---
+
+![Cover — Prefill & TTFT](images/thumbnails/thumb_03_prefill_ttft.png)
 
 # Why Your Chatbot Feels Slow Before the First Word
 

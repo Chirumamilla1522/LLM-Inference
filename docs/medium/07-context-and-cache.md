@@ -5,7 +5,10 @@ tags: LLM, RAG, Context Window, KV Cache, Caching, Apple Silicon, Latency, MLX
 series: Bonus (Week 3)
 read_time: 22 min
 figures: 9
+thumbnail: images/thumbnails/thumb_07_rag_context.png
 ---
+
+![Cover — The RAG Wall](images/thumbnails/thumb_07_rag_context.png)
 
 # The RAG Wall: Context Length, KV Growth, and Prefix Caching on Apple Silicon
 

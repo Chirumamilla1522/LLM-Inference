@@ -2,6 +2,23 @@
 
 Data-heavy Medium drafts for **Local LLMs on Apple Silicon**.
 
+## Cover thumbnails (Medium story images)
+
+All 16:9 covers live in [`images/thumbnails/`](images/thumbnails/):
+
+| Article | Thumbnail |
+|---------|-----------|
+| 00 Introduction | `thumb_00_introduction.png` |
+| 01 Weight quantization | `thumb_01_weight_quantization.png` |
+| 02 KV cache | `thumb_02_kv_cache.png` |
+| 03 Prefill / TTFT | `thumb_03_prefill_ttft.png` |
+| 04 Model ladder | `thumb_04_model_ladder.png` |
+| 05 Full stack | `thumb_05_full_stack.png` |
+| 06 Speculative | `thumb_06_speculative.png` |
+| 07 Context / RAG | `thumb_07_rag_context.png` |
+
+On Medium: set each file as the **story cover / preview image** when publishing.
+
 ## Stats (current)
 
 | Article | ~Words | Figures |

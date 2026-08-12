@@ -5,7 +5,10 @@ tags: LLM, Model Size, Apple Silicon, Benchmark, Qwen, Llama, Memory, MLX
 series: 5 of 7
 read_time: 22 min
 figures: 6
+thumbnail: images/thumbnails/thumb_04_model_ladder.png
 ---
+
+![Cover — Model Size Ladder](images/thumbnails/thumb_04_model_ladder.png)
 
 # From 0.5B to 70B: What Fits on Apple Silicon
 

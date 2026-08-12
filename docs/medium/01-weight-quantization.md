@@ -5,7 +5,10 @@ tags: Quantization, LLM, Apple Silicon, MLX, GPTQ, AWQ, Performance
 series: 2 of 7
 read_time: 22 min
 figures: 13
+thumbnail: images/thumbnails/thumb_01_weight_quantization.png
 ---
+
+![Cover — 4-Bit Weights](images/thumbnails/thumb_01_weight_quantization.png)
 
 # 4-Bit Weights Changed Everything on My M3 Mac
 

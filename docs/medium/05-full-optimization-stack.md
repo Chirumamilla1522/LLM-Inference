@@ -5,7 +5,10 @@ tags: LLM, Optimization, Performance, MLX, Apple Silicon, Engineering, Quantizat
 series: 6 of 7
 read_time: 20 min
 figures: 7
+thumbnail: images/thumbnails/thumb_05_full_stack.png
 ---
+
+![Cover — Full Optimization Stack](images/thumbnails/thumb_05_full_stack.png)
 
 # Stacking Optimizations: 3.5× Faster Than FP16 on a 24 GB Mac
 

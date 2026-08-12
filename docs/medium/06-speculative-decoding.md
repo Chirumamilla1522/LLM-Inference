@@ -5,7 +5,10 @@ tags: LLM, Speculative Decoding, Inference, Apple Silicon, Performance, MLX, Opt
 series: 7 of 7
 read_time: 21 min
 figures: 6
+thumbnail: images/thumbnails/thumb_06_speculative.png
 ---
+
+![Cover — Speculative Decoding](images/thumbnails/thumb_06_speculative.png)
 
 # Draft Models: Free Speed Without Retraining — Until Acceptance Drops
 

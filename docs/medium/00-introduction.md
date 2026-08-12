@@ -5,7 +5,10 @@ tags: Machine Learning, Apple, LLM, MLX, Local AI, Apple Silicon
 series: 1 of 7
 read_time: 24 min
 figures: 15
+thumbnail: images/thumbnails/thumb_00_introduction.png
 ---
+
+![Cover — Local LLMs on Apple Silicon](images/thumbnails/thumb_00_introduction.png)
 
 # Running 8B LLMs on a MacBook: What Actually Matters
 
