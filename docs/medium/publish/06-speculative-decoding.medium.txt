@@ -17,14 +17,14 @@ The large target verifies them in one parallel pass.
 
 When the draft is right, you emit multiple tokens per expensive step — without retraining.
 
-IMAGE: docs/medium/images/06-speculative-decoding/speculative_redraw.png
-Figure — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
+IMAGE: docs/medium/images/06-speculative-decoding/fig1.png
+Figure 1 — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
 
-IMAGE: docs/medium/images/06-speculative-decoding/accept_reject.png
-Figure — Accept the matching prefix; reject and resample at the first mismatch.
+IMAGE: docs/medium/images/06-speculative-decoding/fig2.png
+Figure 2 — Accept the matching prefix; reject and resample at the first mismatch.
 
-IMAGE: docs/medium/images/06-speculative-decoding/medusa.png
-Figure — Original redraw of a Medusa-style variant (Cai et al., 2024).
+IMAGE: docs/medium/images/06-speculative-decoding/fig3.png
+Figure 3 — Original redraw of a Medusa-style variant (Cai et al., 2024).
 
 ---
 
@@ -34,11 +34,11 @@ The Clean Win: Qwen-7B on Mac M3
 • Speculative (Qwen 0.5B draft) — 28.3 tok/s
 • Acceptance rate — 74.2%
 
-IMAGE: docs/medium/images/06-speculative-decoding/speculative_qwen.png
-Figure — About 1.78× throughput at 74% acceptance.
+IMAGE: docs/medium/images/06-speculative-decoding/fig4.png
+Figure 4 — About 1.78× throughput at 74% acceptance.
 
-IMAGE: docs/medium/images/06-speculative-decoding/speculative_speed_memory.png
-Figure — Big speed gain for roughly 0.3 GB extra RAM.
+IMAGE: docs/medium/images/06-speculative-decoding/fig5.png
+Figure 5 — Big speed gain for roughly 0.3 GB extra RAM.
 
 ---
 
@@ -50,11 +50,11 @@ On M5 Max, Qwen still wins: 122 → 170 tok/s.
 
 Llama speculative was slightly slower: 113 → 110 tok/s at 59% acceptance.
 
-IMAGE: docs/medium/images/06-speculative-decoding/spec_m3_m5_qwen.png
-Figure — Qwen speculative on M3 versus M5 Max.
+IMAGE: docs/medium/images/06-speculative-decoding/fig6.png
+Figure 6 — Qwen speculative on M3 versus M5 Max.
 
-IMAGE: docs/medium/images/06-speculative-decoding/spec_speedup_vs_accept.png
-Figure — Speedup versus acceptance. Low acceptance can erase the win.
+IMAGE: docs/medium/images/06-speculative-decoding/fig7.png
+Figure 7 — Speedup versus acceptance. Low acceptance can erase the win.
 
 Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure acceptance rate. Don't assume.
 

@@ -1,15 +1,14 @@
 # Images for `06-speculative-decoding`
 
-All figures for this Medium article live in this folder.
-Featured cover: `thumb.png`
+Featured cover: `thumb.png` (not numbered).
 
-## Files
+## Figures
 
-- `thumb.png`
-- `speculative_redraw.png`
-- `accept_reject.png`
-- `medusa.png`
-- `speculative_qwen.png`
-- `speculative_speed_memory.png`
-- `spec_m3_m5_qwen.png`
-- `spec_speedup_vs_accept.png`
+- **Fig 1** — `fig1.png` (leviathan speculative)
+- **Fig 2** — `fig2.png` (06 accept reject)
+- **Fig 3** — `fig3.png` (cai medusa)
+- **Fig 4** — `fig4.png` (06 speculative qwen-7b)
+- **Fig 5** — `fig5.png` (06 speculative speed memory)
+- **Fig 6** — `fig6.png` (06 spec m3 m5 qwen)
+- **Fig 7** — `fig7.png` (06 spec speedup vs accept)
+

@@ -134,7 +134,7 @@ CPU and GPU share a unified memory pool.
 
 That means model weights, KV cache, macOS, Safari, your IDE, and other applications all consume the same physical memory.
 
-IMAGE: {I("00-introduction", "unified_memory.png")}
+IMAGE: {I("00-introduction", "fig1.png")}
 Figure 1 — CPU and GPU share unified memory. Model weights, KV cache, macOS, and applications all compete for the same memory ceiling.
 
 This is why a 24 GB Mac can be both surprisingly capable and surprisingly easy to overwhelm.
@@ -176,7 +176,7 @@ Every chat response has two major phases, and they have different bottlenecks.
 
 Confusing them is one of the easiest ways to optimize the wrong thing.
 
-IMAGE: {I("00-introduction", "inference_pipeline.png")}
+IMAGE: {I("00-introduction", "fig2.png")}
 Figure 2 — Load weights → prefill the prompt → generate the first token → autoregressive decode.
 
 The three metrics I care about most are:
@@ -207,13 +207,13 @@ This is why reducing the number of bytes required per parameter can improve thro
 
 The Roofline model provides a useful mental model here: when arithmetic intensity is low, memory bandwidth rather than peak compute becomes the limiting factor.
 
-IMAGE: {I("00-introduction", "roofline.png")}
-Figure — Redraw of the Roofline model. LLM decode often operates in a bandwidth-limited regime.
+IMAGE: {I("00-introduction", "fig3.png")}
+Figure 3 — Redraw of the Roofline model. LLM decode often operates in a bandwidth-limited regime.
 
 And attention introduces another important concept: the KV cache.
 
-IMAGE: {I("00-introduction", "attention.png")}
-Figure — Scaled dot-product attention and the role of cached keys and values during autoregressive decoding.
+IMAGE: {I("00-introduction", "fig4.png")}
+Figure 4 — Scaled dot-product attention and the role of cached keys and values during autoregressive decoding.
 
 The rest of this series therefore attacks the system one bottleneck at a time:
 
@@ -295,8 +295,8 @@ Performance is a silicon problem.
 
 Quantization attacks both.
 
-IMAGE: {I("00-introduction", "hardware_compare.png")}
-Figure 3 — Hardware and precision comparison. Quantization dramatically reduces memory requirements while newer Apple Silicon raises the absolute performance ceiling.
+IMAGE: {I("00-introduction", "fig5.png")}
+Figure 5 — Hardware and precision comparison. Quantization dramatically reduces memory requirements while newer Apple Silicon raises the absolute performance ceiling.
 
 ---
 
@@ -461,17 +461,17 @@ The next articles will turn those runs into:
 • Full-stack optimization results
 • Speculative decoding experiments
 
-IMAGE: {I("00-introduction", "heatmap_tps.png")}
-Figure 4 — Decode throughput across models and bit-widths.
+IMAGE: {I("00-introduction", "fig6.png")}
+Figure 6 — Decode throughput across models and bit-widths.
 
-IMAGE: {I("00-introduction", "heatmap_memory.png")}
-Figure 5 — Peak memory across the same model/precision matrix.
+IMAGE: {I("00-introduction", "fig7.png")}
+Figure 7 — Peak memory across the same model/precision matrix.
 
-IMAGE: {I("00-introduction", "speedup_all_models.png")}
-Figure 6 — FP16 → W4 decode speedup and memory reduction.
+IMAGE: {I("00-introduction", "fig8.png")}
+Figure 8 — FP16 → W4 decode speedup and memory reduction.
 
-IMAGE: {I("00-introduction", "efficiency_tps_per_gb.png")}
-Figure 7 — Decode efficiency measured as tokens/sec per GB.
+IMAGE: {I("00-introduction", "fig9.png")}
+Figure 9 — Decode efficiency measured as tokens/sec per GB.
 
 ---
 
@@ -479,13 +479,13 @@ The Silicon Gap
 
 The same quantized model can behave very differently across Apple Silicon generations.
 
-IMAGE: {I("00-introduction", "m3_vs_m5_w4.png")}
-Figure 8 — W4 performance comparison between M3 and M5 Max.
+IMAGE: {I("00-introduction", "fig10.png")}
+Figure 10 — W4 performance comparison between M3 and M5 Max.
 
 For Llama 3.1 8B, the difference becomes particularly interesting when looking across multiple precisions.
 
-IMAGE: {I("00-introduction", "llama_m3_m5_all_bits.png")}
-Figure 9 — Llama 3.1 8B across FP16, W8, W4, and W2 on M3 and M5 Max.
+IMAGE: {I("00-introduction", "fig11.png")}
+Figure 11 — Llama 3.1 8B across FP16, W8, W4, and W2 on M3 and M5 Max.
 
 One result from the broader sweep is particularly striking:
 
@@ -501,15 +501,15 @@ Model Size Changes the Game
 
 Smaller models are dramatically easier to run.
 
-IMAGE: {I("00-introduction", "model_size_ladder.png")}
-Figure 10 — W4 model-size ladder on Mac M3.
+IMAGE: {I("00-introduction", "fig12.png")}
+Figure 12 — W4 model-size ladder on Mac M3.
 
 The M3 benchmark spans models from roughly 0.5B to 9B, with performance dropping as model size increases.
 
 On the M5 Max, the usable model range extends considerably further.
 
-IMAGE: {I("00-introduction", "m5_extended_ladder.png")}
-Figure 11 — M5 Max extends the practical model-size range into larger models.
+IMAGE: {I("00-introduction", "fig13.png")}
+Figure 13 — M5 Max extends the practical model-size range into larger models.
 
 This leads to another important principle:
 
@@ -540,8 +540,8 @@ Real applications increasingly involve long prompts:
 
 As context grows, the KV cache becomes increasingly important.
 
-IMAGE: {I("00-introduction", "context_m3_m5_panels.png")}
-Figure 12 — Context-length experiments showing the impact of longer prompts on TTFT and throughput.
+IMAGE: {I("00-introduction", "fig14.png")}
+Figure 14 — Context-length experiments showing the impact of longer prompts on TTFT and throughput.
 
 This is why KV-cache optimization is Part 3 of the series.
 
@@ -553,8 +553,8 @@ The Full Optimization Stack
 
 Eventually, these optimizations need to work together.
 
-IMAGE: {I("00-introduction", "full_stack_m3_m5.png")}
-Figure 13 — Preview of the optimized inference stack across M3 and M5 Max.
+IMAGE: {I("00-introduction", "fig15.png")}
+Figure 15 — Preview of the optimized inference stack across M3 and M5 Max.
 
 The goal isn't to maximize one benchmark metric.
 
@@ -568,8 +568,8 @@ The final part of the series explores speculative decoding.
 
 Instead of relying entirely on a large model to generate every token sequentially, a smaller draft model proposes multiple tokens that the larger model can verify.
 
-IMAGE: {I("00-introduction", "spec_m3_m5_qwen.png")}
-Figure 14 — Speculative decoding preview using Qwen-7B.
+IMAGE: {I("00-introduction", "fig16.png")}
+Figure 16 — Speculative decoding preview using Qwen-7B.
 
 The preliminary measurements show approximately:
 
@@ -841,16 +841,16 @@ How Quantization Works
 
 We map each high-precision weight to a smaller integer code, plus a scale.
 
-IMAGE: {I("01-weight-quantization", "affine_quant.png")}
-Figure — Original redraw of affine quantization (Jacob et al., 2018).
+IMAGE: {I("01-weight-quantization", "fig1.png")}
+Figure 1 — Original redraw of affine quantization (Jacob et al., 2018).
 
 In practice, LLM checkpoints use recipes like GPTQ and AWQ.
 
-IMAGE: {I("01-weight-quantization", "gptq.png")}
-Figure — Original redraw of the GPTQ idea (Frantar et al., 2022).
+IMAGE: {I("01-weight-quantization", "fig2.png")}
+Figure 2 — Original redraw of the GPTQ idea (Frantar et al., 2022).
 
-IMAGE: {I("01-weight-quantization", "awq.png")}
-Figure — Original redraw of the AWQ idea (Lin et al., 2023).
+IMAGE: {I("01-weight-quantization", "fig3.png")}
+Figure 3 — Original redraw of the AWQ idea (Lin et al., 2023).
 
 Fun fact: GPTQ was built for 175B-class models that couldn't fit on one GPU at FP16. The same math now makes 8B models comfortable on a laptop.
 
@@ -862,8 +862,8 @@ Each decode step often reads nearly all weights from memory.
 
 Fewer bytes per weight means less memory traffic.
 
-IMAGE: {I("01-weight-quantization", "roofline.png")}
-Figure — Original redraw of the Roofline idea. LLM decode often sits on the bandwidth slope.
+IMAGE: {I("01-weight-quantization", "fig4.png")}
+Figure 4 — Original redraw of the Roofline idea. LLM decode often sits on the bandwidth slope.
 
 ---
 
@@ -874,14 +874,14 @@ Llama 3.1 8B on Mac M3
 • W4 — 5.1 GB · 20.5 tok/s (~3.5×)
 • W2 — 3.1 GB · 35.8 tok/s (~6×)
 
-IMAGE: {I("01-weight-quantization", "llama_weight_quant.png")}
-Figure — Memory and throughput as bit-width drops.
+IMAGE: {I("01-weight-quantization", "fig5.png")}
+Figure 5 — Memory and throughput as bit-width drops.
 
-IMAGE: {I("01-weight-quantization", "pareto_memory_speed.png")}
-Figure — Pareto frontier. W4 is the practical sweet spot on 24 GB.
+IMAGE: {I("01-weight-quantization", "fig6.png")}
+Figure 6 — Pareto frontier. W4 is the practical sweet spot on 24 GB.
 
-IMAGE: {I("01-weight-quantization", "speedup_vs_fp16.png")}
-Figure — Explicit speedup versus FP16.
+IMAGE: {I("01-weight-quantization", "fig7.png")}
+Figure 7 — Explicit speedup versus FP16.
 
 ---
 
@@ -891,17 +891,17 @@ The surprising part isn't one lucky Llama run.
 
 It's that the pattern holds across the board.
 
-IMAGE: {I("01-weight-quantization", "heatmap_tps.png")}
-Figure — Decode tok/s across models and bit-widths on Mac M3.
+IMAGE: {I("01-weight-quantization", "fig8.png")}
+Figure 8 — Decode tok/s across models and bit-widths on Mac M3.
 
-IMAGE: {I("01-weight-quantization", "heatmap_memory.png")}
-Figure — Peak memory for the same matrix. FP16 is the danger zone on 24 GB.
+IMAGE: {I("01-weight-quantization", "fig9.png")}
+Figure 9 — Peak memory for the same matrix. FP16 is the danger zone on 24 GB.
 
-IMAGE: {I("01-weight-quantization", "speedup_all_models.png")}
-Figure — FP16 → W4 speedup and memory reduction across models.
+IMAGE: {I("01-weight-quantization", "fig10.png")}
+Figure 10 — FP16 → W4 speedup and memory reduction across models.
 
-IMAGE: {I("01-weight-quantization", "family_panels.png")}
-Figure — Family zoom-ins: Qwen, Llama, Phi, Gemma, Mistral/DeepSeek.
+IMAGE: {I("01-weight-quantization", "fig11.png")}
+Figure 11 — Family zoom-ins: Qwen, Llama, Phi, Gemma, Mistral/DeepSeek.
 
 ---
 
@@ -912,11 +912,11 @@ Same W4 checkpoints. Different silicon.
 • Llama 8B W4 — 20.5 → 112 tok/s
 • Qwen 0.5B W4 — 215 → 581 tok/s
 
-IMAGE: {I("01-weight-quantization", "m3_vs_m5_w4.png")}
-Figure — M3 vs. M5 Max at W4.
+IMAGE: {I("01-weight-quantization", "fig12.png")}
+Figure 12 — M3 vs. M5 Max at W4.
 
-IMAGE: {I("01-weight-quantization", "llama_m3_m5_all_bits.png")}
-Figure — Llama 8B across every bit-width on both chips.
+IMAGE: {I("01-weight-quantization", "fig13.png")}
+Figure 13 — Llama 8B across every bit-width on both chips.
 
 Hardware generation and quantization stack. They are not competing explanations.
 
@@ -990,14 +990,14 @@ During decode, each new token attends to all previous tokens.
 
 Recomputing keys and values every step would be wasteful, so transformers cache them.
 
-IMAGE: {I("02-kv-cache-quantization", "kv_cache_workflow.png")}
-Figure — KV grows linearly with sequence length. 4-bit KV is roughly one-fourth the footprint.
+IMAGE: {I("02-kv-cache-quantization", "fig1.png")}
+Figure 1 — KV grows linearly with sequence length. 4-bit KV is roughly one-fourth the footprint.
 
-IMAGE: {I("02-kv-cache-quantization", "attention.png")}
-Figure — Original redraw of attention (Vaswani et al., 2017).
+IMAGE: {I("02-kv-cache-quantization", "fig2.png")}
+Figure 2 — Original redraw of attention (Vaswani et al., 2017).
 
-IMAGE: {I("02-kv-cache-quantization", "kv_scaling.png")}
-Figure — Original redraw inspired by Pope et al. (2022): weights stay flat while KV grows with T.
+IMAGE: {I("02-kv-cache-quantization", "fig3.png")}
+Figure 3 — Original redraw inspired by Pope et al. (2022): weights stay flat while KV grows with T.
 
 ---
 
@@ -1007,8 +1007,8 @@ Llama 3, Mistral, and Qwen use Grouped-Query Attention.
 
 Many query heads share fewer KV heads.
 
-IMAGE: {I("02-kv-cache-quantization", "gqa.png")}
-Figure — Original redraw of GQA vs. multi-head attention (Ainslie et al., 2023).
+IMAGE: {I("02-kv-cache-quantization", "fig4.png")}
+Figure 4 — Original redraw of GQA vs. multi-head attention (Ainslie et al., 2023).
 
 That shrinks the cache before you even touch bit width.
 
@@ -1022,19 +1022,19 @@ At 512 prompt + 128 generation tokens on Mac M3:
 • Mistral 7B — 21.6 → 21.2
 • Qwen 7B — 21.8 → 21.4
 
-IMAGE: {I("02-kv-cache-quantization", "kv_cache_compare.png")}
-Figure — Short context: throughput almost unchanged.
+IMAGE: {I("02-kv-cache-quantization", "fig5.png")}
+Figure 5 — Short context: throughput almost unchanged.
 
-IMAGE: {I("02-kv-cache-quantization", "kv_long_generation.png")}
-Figure — Longer generation: still mostly weight-bound at laptop batch size 1.
+IMAGE: {I("02-kv-cache-quantization", "fig6.png")}
+Figure 6 — Longer generation: still mostly weight-bound at laptop batch size 1.
 
 The win appears at long context, multi-session serving, or tight RAM — not in a 640-token microbench.
 
-IMAGE: {I("02-kv-cache-quantization", "context_dual_axis.png")}
-Figure — Where pressure shows up: TTFT explodes as prompts grow.
+IMAGE: {I("02-kv-cache-quantization", "fig7.png")}
+Figure 7 — Where pressure shows up: TTFT explodes as prompts grow.
 
-IMAGE: {I("02-kv-cache-quantization", "paged_attention.png")}
-Figure — Original redraw of paged KV (Kwon et al., 2023). Serving systems page the cache; local MLX is the single-user cousin of the same memory problem.
+IMAGE: {I("02-kv-cache-quantization", "fig8.png")}
+Figure 8 — Original redraw of paged KV (Kwon et al., 2023). Serving systems page the cache; local MLX is the single-user cousin of the same memory problem.
 
 ---
 
@@ -1096,8 +1096,8 @@ Often the real pain is earlier: time-to-first-token — the pause before the fir
 
 Prefill vs. Decode
 
-IMAGE: {I("03-prefill-and-ttft", "prefill_vs_decode.png")}
-Figure — Two phases, two bottlenecks.
+IMAGE: {I("03-prefill-and-ttft", "fig1.png")}
+Figure 1 — Two phases, two bottlenecks.
 
 • Prefill → TTFT
 • Decode → tok/s
@@ -1108,11 +1108,11 @@ Optimize the wrong one and your "faster model" still feels broken.
 
 FlashAttention — Exact, Not Approximate
 
-IMAGE: {I("03-prefill-and-ttft", "flashattention.png")}
-Figure — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
+IMAGE: {I("03-prefill-and-ttft", "fig2.png")}
+Figure 2 — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
 
-IMAGE: {I("03-prefill-and-ttft", "online_softmax.png")}
-Figure — Original redraw of online softmax (Milakov & Gimelshein, 2018).
+IMAGE: {I("03-prefill-and-ttft", "fig3.png")}
+Figure 3 — Original redraw of online softmax (Milakov & Gimelshein, 2018).
 
 Fun fact: FlashAttention computes the same math as naive attention. It just refuses to materialize the giant score matrix in slow memory.
 
@@ -1127,14 +1127,14 @@ Llama 3.1 8B, W4, Mac M3:
 • p=1024 → ~5.8 s
 • p=2048 → ~15.4 s
 
-IMAGE: {I("03-prefill-and-ttft", "prefill_ttft.png")}
-Figure — TTFT versus prompt shape.
+IMAGE: {I("03-prefill-and-ttft", "fig4.png")}
+Figure 4 — TTFT versus prompt shape.
 
-IMAGE: {I("03-prefill-and-ttft", "ttft_vs_prompt_curve.png")}
-Figure — Measured TTFT versus a roughly quadratic reference.
+IMAGE: {I("03-prefill-and-ttft", "fig5.png")}
+Figure 5 — Measured TTFT versus a roughly quadratic reference.
 
-IMAGE: {I("03-prefill-and-ttft", "workload_ttft.png")}
-Figure — The rag_agent workload hits about 31 seconds TTFT on M3.
+IMAGE: {I("03-prefill-and-ttft", "fig6.png")}
+Figure 6 — The rag_agent workload hits about 31 seconds TTFT on M3.
 
 That is why pasting a PDF into a local RAG demo often feels broken.
 
@@ -1195,8 +1195,8 @@ CAPTION: Model size ladder — Part 5
 1. Will it fit?
 2. Will it be fast enough?
 
-IMAGE: {I("04-model-size-ladder", "fit_ladder.png")}
-Figure — Decision ladder for 24 GB unified memory.
+IMAGE: {I("04-model-size-ladder", "fig1.png")}
+Figure 1 — Decision ladder for 24 GB unified memory.
 
 ---
 
@@ -1208,14 +1208,14 @@ The W4 Ladder on Mac M3
 • Llama 8B — 21 tok/s · 5.1 GB
 • Gemma 9B — 15 tok/s · 5.9 GB
 
-IMAGE: {I("04-model-size-ladder", "model_size_ladder.png")}
-Figure — Tokens/sec and memory across sizes at W4.
+IMAGE: {I("04-model-size-ladder", "fig2.png")}
+Figure 2 — Tokens/sec and memory across sizes at W4.
 
-IMAGE: {I("04-model-size-ladder", "ladder_scatter.png")}
-Figure — Memory versus speed scatter.
+IMAGE: {I("04-model-size-ladder", "fig3.png")}
+Figure 3 — Memory versus speed scatter.
 
-IMAGE: {I("04-model-size-ladder", "efficiency_tps_per_gb.png")}
-Figure — Efficiency = tok/s per GB at W4.
+IMAGE: {I("04-model-size-ladder", "fig4.png")}
+Figure 4 — Efficiency = tok/s per GB at W4.
 
 Fun fact: Qwen 0.5B at W4 exceeds 238 tok/s on M3 — faster than most people type.
 
@@ -1223,11 +1223,11 @@ Fun fact: Qwen 0.5B at W4 exceeds 238 tok/s on M3 — faster than most people ty
 
 M5 Max Extends the Ladder
 
-IMAGE: {I("04-model-size-ladder", "m5_extended_ladder.png")}
-Figure — M5 Max W4 ladder through larger models.
+IMAGE: {I("04-model-size-ladder", "fig5.png")}
+Figure 5 — M5 Max W4 ladder through larger models.
 
-IMAGE: {I("04-model-size-ladder", "m3_vs_m5_w4.png")}
-Figure — Same checkpoints, different silicon.
+IMAGE: {I("04-model-size-ladder", "fig6.png")}
+Figure 6 — Same checkpoints, different silicon.
 
 ---
 
@@ -1286,11 +1286,11 @@ Blog posts love clean A/B tests.
 
 Real local inference turns several knobs at once.
 
-IMAGE: {I("05-full-optimization-stack", "optimization_funnel.png")}
-Figure — Stacking funnel: FP16 → W4 → +KV → +prefill.
+IMAGE: {I("05-full-optimization-stack", "fig1.png")}
+Figure 1 — Stacking funnel: FP16 → W4 → +KV → +prefill.
 
-IMAGE: {I("05-full-optimization-stack", "decision_tree.png")}
-Figure — Pick the lever that matches your pain.
+IMAGE: {I("05-full-optimization-stack", "fig2.png")}
+Figure 2 — Pick the lever that matches your pain.
 
 ---
 
@@ -1299,27 +1299,27 @@ Headline Result — Mac M3, Llama 8B
 • FP16 — 16.3 GB · 5.6 tok/s
 • W4+KV+prefill — 5.1 GB · 19.9 tok/s (~3.5×)
 
-IMAGE: {I("05-full-optimization-stack", "full_stack.png")}
-Figure — FP16 versus optimized.
+IMAGE: {I("05-full-optimization-stack", "fig3.png")}
+Figure 3 — FP16 versus optimized.
 
-IMAGE: {I("05-full-optimization-stack", "full_stack_two_models.png")}
-Figure — Llama and Mistral both jump when stacked.
+IMAGE: {I("05-full-optimization-stack", "fig4.png")}
+Figure 4 — Llama and Mistral both jump when stacked.
 
-IMAGE: {I("05-full-optimization-stack", "full_stack_memory.png")}
-Figure — Both models drop to about 5 GB peak.
+IMAGE: {I("05-full-optimization-stack", "fig5.png")}
+Figure 5 — Both models drop to about 5 GB peak.
 
 ---
 
 M5 Max: The 16-Config Matrix
 
-IMAGE: {I("05-full-optimization-stack", "m5_config_matrix.png")}
-Figure — Llama 8B full config matrix on M5 Max.
+IMAGE: {I("05-full-optimization-stack", "fig6.png")}
+Figure 6 — Llama 8B full config matrix on M5 Max.
 
-IMAGE: {I("05-full-optimization-stack", "m3_m5_full_stack.png")}
-Figure — Same stack on M3 versus M5 Max.
+IMAGE: {I("05-full-optimization-stack", "fig7.png")}
+Figure 7 — Same stack on M3 versus M5 Max.
 
-IMAGE: {I("05-full-optimization-stack", "roofline.png")}
-Figure — Original Roofline redraw: stacking works because decode is bandwidth-bound.
+IMAGE: {I("05-full-optimization-stack", "fig8.png")}
+Figure 8 — Original Roofline redraw: stacking works because decode is bandwidth-bound.
 
 ---
 
@@ -1381,14 +1381,14 @@ The large target verifies them in one parallel pass.
 
 When the draft is right, you emit multiple tokens per expensive step — without retraining.
 
-IMAGE: {I("06-speculative-decoding", "speculative_redraw.png")}
-Figure — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
+IMAGE: {I("06-speculative-decoding", "fig1.png")}
+Figure 1 — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
 
-IMAGE: {I("06-speculative-decoding", "accept_reject.png")}
-Figure — Accept the matching prefix; reject and resample at the first mismatch.
+IMAGE: {I("06-speculative-decoding", "fig2.png")}
+Figure 2 — Accept the matching prefix; reject and resample at the first mismatch.
 
-IMAGE: {I("06-speculative-decoding", "medusa.png")}
-Figure — Original redraw of a Medusa-style variant (Cai et al., 2024).
+IMAGE: {I("06-speculative-decoding", "fig3.png")}
+Figure 3 — Original redraw of a Medusa-style variant (Cai et al., 2024).
 
 ---
 
@@ -1398,11 +1398,11 @@ The Clean Win: Qwen-7B on Mac M3
 • Speculative (Qwen 0.5B draft) — 28.3 tok/s
 • Acceptance rate — 74.2%
 
-IMAGE: {I("06-speculative-decoding", "speculative_qwen.png")}
-Figure — About 1.78× throughput at 74% acceptance.
+IMAGE: {I("06-speculative-decoding", "fig4.png")}
+Figure 4 — About 1.78× throughput at 74% acceptance.
 
-IMAGE: {I("06-speculative-decoding", "speculative_speed_memory.png")}
-Figure — Big speed gain for roughly 0.3 GB extra RAM.
+IMAGE: {I("06-speculative-decoding", "fig5.png")}
+Figure 5 — Big speed gain for roughly 0.3 GB extra RAM.
 
 ---
 
@@ -1414,11 +1414,11 @@ On M5 Max, Qwen still wins: 122 → 170 tok/s.
 
 Llama speculative was slightly slower: 113 → 110 tok/s at 59% acceptance.
 
-IMAGE: {I("06-speculative-decoding", "spec_m3_m5_qwen.png")}
-Figure — Qwen speculative on M3 versus M5 Max.
+IMAGE: {I("06-speculative-decoding", "fig6.png")}
+Figure 6 — Qwen speculative on M3 versus M5 Max.
 
-IMAGE: {I("06-speculative-decoding", "spec_speedup_vs_accept.png")}
-Figure — Speedup versus acceptance. Low acceptance can erase the win.
+IMAGE: {I("06-speculative-decoding", "fig7.png")}
+Figure 7 — Speedup versus acceptance. Low acceptance can erase the win.
 
 Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure acceptance rate. Don't assume.
 
@@ -1483,11 +1483,11 @@ Paste a PDF into a local RAG app and three forces collide:
 2. KV memory grows linearly
 3. Decode tokens/sec falls as attention spans more tokens
 
-IMAGE: {I("07-context-and-cache", "rag_wall.png")}
-Figure — Retrieve → stuff context → expensive prefill → multi-second TTFT.
+IMAGE: {I("07-context-and-cache", "fig1.png")}
+Figure 1 — Retrieve → stuff context → expensive prefill → multi-second TTFT.
 
-IMAGE: {I("07-context-and-cache", "kv_scaling.png")}
-Figure — Original redraw: KV grows until it rivals weights.
+IMAGE: {I("07-context-and-cache", "fig2.png")}
+Figure 2 — Original redraw: KV grows until it rivals weights.
 
 ---
 
@@ -1500,34 +1500,34 @@ Llama 3.1 8B on Mac M3:
 • 1024 — 6.5 s
 • 2048 — 15.4 s
 
-IMAGE: {I("07-context-and-cache", "context_ttft.png")}
-Figure — TTFT crosses 15 seconds at 2048 tokens on M3.
+IMAGE: {I("07-context-and-cache", "fig3.png")}
+Figure 3 — TTFT crosses 15 seconds at 2048 tokens on M3.
 
-IMAGE: {I("07-context-and-cache", "context_dual_axis.png")}
-Figure — TTFT explodes while decode tok/s decays.
+IMAGE: {I("07-context-and-cache", "fig4.png")}
+Figure 4 — TTFT explodes while decode tok/s decays.
 
-IMAGE: {I("07-context-and-cache", "context_m3_m5_panels.png")}
-Figure — M5 Max lowers the wall. It does not remove the shape of the curve.
+IMAGE: {I("07-context-and-cache", "fig5.png")}
+Figure 5 — M5 Max lowers the wall. It does not remove the shape of the curve.
 
 ---
 
 Prefix Cache: Cold vs. Warm
 
-IMAGE: {I("07-context-and-cache", "prefix_cache_workflow.png")}
-Figure — Skip re-prefilling a stable system prompt.
+IMAGE: {I("07-context-and-cache", "fig6.png")}
+Figure 6 — Skip re-prefilling a stable system prompt.
 
-IMAGE: {I("07-context-and-cache", "prefix_cache.png")}
-Figure — Cold 3,180 ms → warm 1,547 ms — about 51% faster.
+IMAGE: {I("07-context-and-cache", "fig7.png")}
+Figure 7 — Cold 3,180 ms → warm 1,547 ms — about 51% faster.
 
 ---
 
 Workload Stress
 
-IMAGE: {I("07-context-and-cache", "workload_panels.png")}
-Figure — Latency, throughput, and memory across workloads.
+IMAGE: {I("07-context-and-cache", "fig8.png")}
+Figure 8 — Latency, throughput, and memory across workloads.
 
-IMAGE: {I("07-context-and-cache", "workload_ttft.png")}
-Figure — rag_agent is about 31 seconds TTFT on M3.
+IMAGE: {I("07-context-and-cache", "fig9.png")}
+Figure 9 — rag_agent is about 31 seconds TTFT on M3.
 
 If your local RAG demo feels broken, it's probably prefill — not "tok/s."
 
@@ -1587,7 +1587,7 @@ FEATURED IMAGE + CAPTION
 Short paragraphs
 Section headers
 IMAGE: path
-Figure — caption
+Figure 10 — caption
 Bullets
 ---
 ```

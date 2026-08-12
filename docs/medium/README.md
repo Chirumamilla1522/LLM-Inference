@@ -41,6 +41,8 @@ Publish figures live under [`images/<article-slug>/`](images/):
 | 06 Speculative | [`images/06-speculative-decoding/`](images/06-speculative-decoding/) | `thumb.png` |
 | 07 Context / RAG | [`images/07-context-and-cache/`](images/07-context-and-cache/) | `thumb.png` |
 
+In-article figures are named `fig1.png`, `fig2.png`, … in story order (cover stays `thumb.png`). Each folder’s `README.md` lists **Fig N** with a short hint.
+
 Shared concepts (roofline, heatmaps, …) are **copied into each article folder that uses them**, so publishing never depends on a sibling directory. Regenerator cache: [`images/_source/`](images/_source/).
 
 On Medium: upload from that article’s folder; set `thumb.png` as the story cover.

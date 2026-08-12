@@ -15,11 +15,11 @@ Blog posts love clean A/B tests.
 
 Real local inference turns several knobs at once.
 
-IMAGE: docs/medium/images/05-full-optimization-stack/optimization_funnel.png
-Figure — Stacking funnel: FP16 → W4 → +KV → +prefill.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig1.png
+Figure 1 — Stacking funnel: FP16 → W4 → +KV → +prefill.
 
-IMAGE: docs/medium/images/05-full-optimization-stack/decision_tree.png
-Figure — Pick the lever that matches your pain.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig2.png
+Figure 2 — Pick the lever that matches your pain.
 
 ---
 
@@ -28,27 +28,27 @@ Headline Result — Mac M3, Llama 8B
 • FP16 — 16.3 GB · 5.6 tok/s
 • W4+KV+prefill — 5.1 GB · 19.9 tok/s (~3.5×)
 
-IMAGE: docs/medium/images/05-full-optimization-stack/full_stack.png
-Figure — FP16 versus optimized.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig3.png
+Figure 3 — FP16 versus optimized.
 
-IMAGE: docs/medium/images/05-full-optimization-stack/full_stack_two_models.png
-Figure — Llama and Mistral both jump when stacked.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig4.png
+Figure 4 — Llama and Mistral both jump when stacked.
 
-IMAGE: docs/medium/images/05-full-optimization-stack/full_stack_memory.png
-Figure — Both models drop to about 5 GB peak.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig5.png
+Figure 5 — Both models drop to about 5 GB peak.
 
 ---
 
 M5 Max: The 16-Config Matrix
 
-IMAGE: docs/medium/images/05-full-optimization-stack/m5_config_matrix.png
-Figure — Llama 8B full config matrix on M5 Max.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig6.png
+Figure 6 — Llama 8B full config matrix on M5 Max.
 
-IMAGE: docs/medium/images/05-full-optimization-stack/m3_m5_full_stack.png
-Figure — Same stack on M3 versus M5 Max.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig7.png
+Figure 7 — Same stack on M3 versus M5 Max.
 
-IMAGE: docs/medium/images/05-full-optimization-stack/roofline.png
-Figure — Original Roofline redraw: stacking works because decode is bandwidth-bound.
+IMAGE: docs/medium/images/05-full-optimization-stack/fig8.png
+Figure 8 — Original Roofline redraw: stacking works because decode is bandwidth-bound.
 
 ---
 

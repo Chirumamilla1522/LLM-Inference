@@ -38,11 +38,11 @@ Local RAG on laptops is where this mismatch becomes existential. Retrievers chee
 
 ## The RAG wall (workflow)
 
-![RAG wall](images/07-context-and-cache/rag_wall.png)
+![RAG wall](images/07-context-and-cache/fig1.png)
 
 *Figure 1 — Workflow: retrieve → stuff 2K+ tokens → O(T²) prefill → multi-second TTFT.*
 
-![Pope KV scaling](images/07-context-and-cache/kv_scaling.png)
+![Pope KV scaling](images/07-context-and-cache/fig2.png)
 
 *Figure — **Original redraw** inspired by Pope et al. (2022): fixed weight footprint vs KV that grows with context — the RAG memory story.*
 
@@ -76,11 +76,11 @@ Config: **`w4+prefill`**, Llama 3.1 8B, varying prompt length.
 | 1024 | **6.50 s** | 14.9 | 5.24 |
 | 2048 | **15.36 s** | 11.9 | 5.35 |
 
-![Context TTFT bars](images/07-context-and-cache/context_ttft.png)
+![Context TTFT bars](images/07-context-and-cache/fig3.png)
 
 *Figure 2 — Results (Mac M3): TTFT climbs from ~1.4 s at 256 tokens to **~15.4 s at 2048** — the interactive cliff for stuffed prompts.*
 
-![Dual axis](images/07-context-and-cache/context_dual_axis.png)
+![Dual axis](images/07-context-and-cache/fig4.png)
 
 *Figure 3 — Results (Mac M3): dual-axis view — TTFT explodes while decode tok/s slowly decays as context grows.*
 
@@ -105,7 +105,7 @@ Split the prompt:
 - **Prefix** — stable system / tool text → build KV once, **save**  
 - **Suffix** — user turn / retrieved chunks → prefill only what is new (plus continue decoding)
 
-![Prefix cache workflow](images/07-context-and-cache/prefix_cache_workflow.png)
+![Prefix cache workflow](images/07-context-and-cache/fig6.png)
 
 *Figure 4 — Workflow: cold path prefills the full prompt every turn; warm path loads a cached KV for the system prefix and only processes the variable suffix.*
 
@@ -118,7 +118,7 @@ Split the prompt:
 
 Warm is ~**51% faster** (~**2.06×** improvement on TTFT for this harness shape).
 
-![Prefix cache bars](images/07-context-and-cache/prefix_cache.png)
+![Prefix cache bars](images/07-context-and-cache/fig7.png)
 
 *Figure 5 — Results (Mac M3): cold vs warm prefix-cache TTFT — reusing system-prompt KV cuts first-token latency roughly in half in this test.*
 
@@ -145,7 +145,7 @@ Config baseline for workloads: **`w4+kv_cache+prefill`** (the Part 6 product pre
 | summarize_long | prefill | 2048 | 128 | **15.90 s** | 10.2 | 5.35 |
 | **rag_agent** | memory / prefill | **4096** | 256 | **31.12 s** | 11.3 | 6.10 |
 
-![Workload TTFT](images/07-context-and-cache/workload_ttft.png)
+![Workload TTFT](images/07-context-and-cache/fig9.png)
 
 *Figure 6 — Results (Mac M3): workload TTFT panel — `rag_agent` (~31 s) and `summarize_long` (~16 s) dominate; light chat stays near ~1.5 s.*
 
@@ -179,7 +179,7 @@ Takeaway: **long answers matter**, especially without KV quant and at much large
 
 ## M3 vs M5 Max: same walls, different heights
 
-![Context M3 M5 panels](images/07-context-and-cache/context_m3_m5_panels.png)
+![Context M3 M5 panels](images/07-context-and-cache/fig5.png)
 
 *Figure 8 — Results: context-length panels on Mac M3 vs Mac M5 Max — both show rising TTFT with *T*, but M5 Max keeps even 2048-token prefills in the sub-second to ~0.6 s regime.*
 
@@ -194,7 +194,7 @@ Takeaway: **long answers matter**, especially without KV quant and at much large
 
 ### Workload TTFT comparison
 
-![Workload panels](images/07-context-and-cache/workload_panels.png)
+![Workload panels](images/07-context-and-cache/fig8.png)
 
 *Figure 9 — Results: workload TTFT panels across Mac M3 and Mac M5 Max — `rag_agent` drops from ~31 s to ~1.5 s; relative ranking of workloads stays similar.*
 

@@ -12,8 +12,10 @@ can write/copy a produced PNG into those folders.
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 from pathlib import Path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 IMG = ROOT / "docs" / "medium" / "images"
@@ -23,100 +25,100 @@ SOURCE = IMG / "_source"
 MANIFEST: dict[str, list[tuple[str, str]]] = {
     "00-introduction": [
         ("thumbnails/thumb_00_introduction.png", "thumb.png"),
-        ("workflows/00_unified_memory.png", "unified_memory.png"),
-        ("workflows/00_inference_pipeline.png", "inference_pipeline.png"),
-        ("papers/williams_roofline_redraw.png", "roofline.png"),
-        ("papers/vaswani_attention_redraw.png", "attention.png"),
-        ("00_intro_hardware_compare.png", "hardware_compare.png"),
-        ("01_heatmap_tps.png", "heatmap_tps.png"),
-        ("01_heatmap_memory.png", "heatmap_memory.png"),
-        ("01_speedup_all_models.png", "speedup_all_models.png"),
-        ("01_efficiency_tps_per_gb.png", "efficiency_tps_per_gb.png"),
-        ("01_m3_vs_m5_w4.png", "m3_vs_m5_w4.png"),
-        ("01_llama_m3_m5_all_bits.png", "llama_m3_m5_all_bits.png"),
-        ("04_model_size_ladder.png", "model_size_ladder.png"),
-        ("04_m5_extended_ladder.png", "m5_extended_ladder.png"),
-        ("07_context_m3_m5_panels.png", "context_m3_m5_panels.png"),
-        ("05_m3_m5_full_stack.png", "full_stack_m3_m5.png"),
-        ("06_spec_m3_m5_qwen.png", "spec_m3_m5_qwen.png"),
+        ("workflows/00_unified_memory.png", "fig1.png"),
+        ("workflows/00_inference_pipeline.png", "fig2.png"),
+        ("papers/williams_roofline_redraw.png", "fig3.png"),
+        ("papers/vaswani_attention_redraw.png", "fig4.png"),
+        ("00_intro_hardware_compare.png", "fig5.png"),
+        ("01_heatmap_tps.png", "fig6.png"),
+        ("01_heatmap_memory.png", "fig7.png"),
+        ("01_speedup_all_models.png", "fig8.png"),
+        ("01_efficiency_tps_per_gb.png", "fig9.png"),
+        ("01_m3_vs_m5_w4.png", "fig10.png"),
+        ("01_llama_m3_m5_all_bits.png", "fig11.png"),
+        ("04_model_size_ladder.png", "fig12.png"),
+        ("04_m5_extended_ladder.png", "fig13.png"),
+        ("07_context_m3_m5_panels.png", "fig14.png"),
+        ("05_m3_m5_full_stack.png", "fig15.png"),
+        ("06_spec_m3_m5_qwen.png", "fig16.png"),
     ],
     "01-weight-quantization": [
         ("thumbnails/thumb_01_weight_quantization.png", "thumb.png"),
-        ("papers/jacob_affine_quant_redraw.png", "affine_quant.png"),
-        ("papers/frantar_gptq_redraw.png", "gptq.png"),
-        ("papers/lin_awq_redraw.png", "awq.png"),
-        ("papers/williams_roofline_redraw.png", "roofline.png"),
-        ("01_weight_quant_llama3-8b.png", "llama_weight_quant.png"),
-        ("01_pareto_memory_speed.png", "pareto_memory_speed.png"),
-        ("01_speedup_vs_fp16.png", "speedup_vs_fp16.png"),
-        ("01_heatmap_tps.png", "heatmap_tps.png"),
-        ("01_heatmap_memory.png", "heatmap_memory.png"),
-        ("01_speedup_all_models.png", "speedup_all_models.png"),
-        ("01_family_panels.png", "family_panels.png"),
-        ("01_m3_vs_m5_w4.png", "m3_vs_m5_w4.png"),
-        ("01_llama_m3_m5_all_bits.png", "llama_m3_m5_all_bits.png"),
+        ("papers/jacob_affine_quant_redraw.png", "fig1.png"),
+        ("papers/frantar_gptq_redraw.png", "fig2.png"),
+        ("papers/lin_awq_redraw.png", "fig3.png"),
+        ("papers/williams_roofline_redraw.png", "fig4.png"),
+        ("01_weight_quant_llama3-8b.png", "fig5.png"),
+        ("01_pareto_memory_speed.png", "fig6.png"),
+        ("01_speedup_vs_fp16.png", "fig7.png"),
+        ("01_heatmap_tps.png", "fig8.png"),
+        ("01_heatmap_memory.png", "fig9.png"),
+        ("01_speedup_all_models.png", "fig10.png"),
+        ("01_family_panels.png", "fig11.png"),
+        ("01_m3_vs_m5_w4.png", "fig12.png"),
+        ("01_llama_m3_m5_all_bits.png", "fig13.png"),
     ],
     "02-kv-cache-quantization": [
         ("thumbnails/thumb_02_kv_cache.png", "thumb.png"),
-        ("workflows/02_kv_cache_workflow.png", "kv_cache_workflow.png"),
-        ("papers/vaswani_attention_redraw.png", "attention.png"),
-        ("papers/pope_kv_scaling_redraw.png", "kv_scaling.png"),
-        ("papers/ainslie_gqa_redraw.png", "gqa.png"),
-        ("02_kv_cache_compare.png", "kv_cache_compare.png"),
-        ("02_kv_long_generation.png", "kv_long_generation.png"),
-        ("07_context_dual_axis.png", "context_dual_axis.png"),
-        ("papers/kwon_paged_attention_redraw.png", "paged_attention.png"),
+        ("workflows/02_kv_cache_workflow.png", "fig1.png"),
+        ("papers/vaswani_attention_redraw.png", "fig2.png"),
+        ("papers/pope_kv_scaling_redraw.png", "fig3.png"),
+        ("papers/ainslie_gqa_redraw.png", "fig4.png"),
+        ("02_kv_cache_compare.png", "fig5.png"),
+        ("02_kv_long_generation.png", "fig6.png"),
+        ("07_context_dual_axis.png", "fig7.png"),
+        ("papers/kwon_paged_attention_redraw.png", "fig8.png"),
     ],
     "03-prefill-and-ttft": [
         ("thumbnails/thumb_03_prefill_ttft.png", "thumb.png"),
-        ("workflows/03_prefill_vs_decode.png", "prefill_vs_decode.png"),
-        ("papers/dao_flashattention_redraw.png", "flashattention.png"),
-        ("papers/milakov_online_softmax_redraw.png", "online_softmax.png"),
-        ("03_prefill_ttft.png", "prefill_ttft.png"),
-        ("03_ttft_vs_prompt_curve.png", "ttft_vs_prompt_curve.png"),
-        ("07_workload_ttft.png", "workload_ttft.png"),
+        ("workflows/03_prefill_vs_decode.png", "fig1.png"),
+        ("papers/dao_flashattention_redraw.png", "fig2.png"),
+        ("papers/milakov_online_softmax_redraw.png", "fig3.png"),
+        ("03_prefill_ttft.png", "fig4.png"),
+        ("03_ttft_vs_prompt_curve.png", "fig5.png"),
+        ("07_workload_ttft.png", "fig6.png"),
     ],
     "04-model-size-ladder": [
         ("thumbnails/thumb_04_model_ladder.png", "thumb.png"),
-        ("workflows/04_fit_ladder.png", "fit_ladder.png"),
-        ("04_model_size_ladder.png", "model_size_ladder.png"),
-        ("04_ladder_scatter.png", "ladder_scatter.png"),
-        ("01_efficiency_tps_per_gb.png", "efficiency_tps_per_gb.png"),
-        ("04_m5_extended_ladder.png", "m5_extended_ladder.png"),
-        ("01_m3_vs_m5_w4.png", "m3_vs_m5_w4.png"),
+        ("workflows/04_fit_ladder.png", "fig1.png"),
+        ("04_model_size_ladder.png", "fig2.png"),
+        ("04_ladder_scatter.png", "fig3.png"),
+        ("01_efficiency_tps_per_gb.png", "fig4.png"),
+        ("04_m5_extended_ladder.png", "fig5.png"),
+        ("01_m3_vs_m5_w4.png", "fig6.png"),
     ],
     "05-full-optimization-stack": [
         ("thumbnails/thumb_05_full_stack.png", "thumb.png"),
-        ("workflows/05_optimization_funnel.png", "optimization_funnel.png"),
-        ("workflows/05_decision_tree.png", "decision_tree.png"),
-        ("05_full_stack.png", "full_stack.png"),
-        ("05_full_stack_two_models.png", "full_stack_two_models.png"),
-        ("05_full_stack_memory.png", "full_stack_memory.png"),
-        ("05_m5_config_matrix.png", "m5_config_matrix.png"),
-        ("05_m3_m5_full_stack.png", "m3_m5_full_stack.png"),
-        ("papers/williams_roofline_redraw.png", "roofline.png"),
+        ("workflows/05_optimization_funnel.png", "fig1.png"),
+        ("workflows/05_decision_tree.png", "fig2.png"),
+        ("05_full_stack.png", "fig3.png"),
+        ("05_full_stack_two_models.png", "fig4.png"),
+        ("05_full_stack_memory.png", "fig5.png"),
+        ("05_m5_config_matrix.png", "fig6.png"),
+        ("05_m3_m5_full_stack.png", "fig7.png"),
+        ("papers/williams_roofline_redraw.png", "fig8.png"),
     ],
     "06-speculative-decoding": [
         ("thumbnails/thumb_06_speculative.png", "thumb.png"),
-        ("papers/leviathan_speculative_redraw.png", "speculative_redraw.png"),
-        ("workflows/06_accept_reject.png", "accept_reject.png"),
-        ("papers/cai_medusa_redraw.png", "medusa.png"),
-        ("06_speculative_qwen-7b.png", "speculative_qwen.png"),
-        ("06_speculative_speed_memory.png", "speculative_speed_memory.png"),
-        ("06_spec_m3_m5_qwen.png", "spec_m3_m5_qwen.png"),
-        ("06_spec_speedup_vs_accept.png", "spec_speedup_vs_accept.png"),
+        ("papers/leviathan_speculative_redraw.png", "fig1.png"),
+        ("workflows/06_accept_reject.png", "fig2.png"),
+        ("papers/cai_medusa_redraw.png", "fig3.png"),
+        ("06_speculative_qwen-7b.png", "fig4.png"),
+        ("06_speculative_speed_memory.png", "fig5.png"),
+        ("06_spec_m3_m5_qwen.png", "fig6.png"),
+        ("06_spec_speedup_vs_accept.png", "fig7.png"),
     ],
     "07-context-and-cache": [
         ("thumbnails/thumb_07_rag_context.png", "thumb.png"),
-        ("workflows/07_rag_wall.png", "rag_wall.png"),
-        ("papers/pope_kv_scaling_redraw.png", "kv_scaling.png"),
-        ("07_context_ttft.png", "context_ttft.png"),
-        ("07_context_dual_axis.png", "context_dual_axis.png"),
-        ("07_context_m3_m5_panels.png", "context_m3_m5_panels.png"),
-        ("workflows/07_prefix_cache_workflow.png", "prefix_cache_workflow.png"),
-        ("07_prefix_cache.png", "prefix_cache.png"),
-        ("07_workload_panels.png", "workload_panels.png"),
-        ("07_workload_ttft.png", "workload_ttft.png"),
+        ("workflows/07_rag_wall.png", "fig1.png"),
+        ("papers/pope_kv_scaling_redraw.png", "fig2.png"),
+        ("07_context_ttft.png", "fig3.png"),
+        ("07_context_dual_axis.png", "fig4.png"),
+        ("07_context_m3_m5_panels.png", "fig5.png"),
+        ("workflows/07_prefix_cache_workflow.png", "fig6.png"),
+        ("07_prefix_cache.png", "fig7.png"),
+        ("07_workload_panels.png", "fig8.png"),
+        ("07_workload_ttft.png", "fig9.png"),
     ],
 }
 
@@ -256,18 +258,22 @@ def migrate_legacy_into_source() -> None:
 def write_article_readmes(article: str | None = None) -> None:
     slugs = [article] if article else ARTICLES
     for slug in slugs:
-        files = [dest for _, dest in MANIFEST[slug]]
         lines = [
             f"# Images for `{slug}`",
             "",
-            "All figures for this Medium article live in this folder.",
-            "Featured cover: `thumb.png`",
+            "Featured cover: `thumb.png` (not numbered).",
             "",
-            "## Files",
+            "## Figures",
             "",
         ]
-        for f in files:
-            lines.append(f"- `{f}`")
+        for src, dest in MANIFEST[slug]:
+            if dest == "thumb.png":
+                continue
+            m = re.match(r"fig(\d+)\.png$", dest)
+            label = f"Fig {m.group(1)}" if m else dest
+            hint = Path(src).stem.replace("_", " ").replace(" redraw", "").strip()
+            lines.append(f"- **{label}** — `{dest}` ({hint})")
+        lines.append("")
         (article_dir(slug) / "README.md").write_text("\n".join(lines) + "\n")
 
     index = [

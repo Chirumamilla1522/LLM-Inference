@@ -1,14 +1,13 @@
 # Images for `03-prefill-and-ttft`
 
-All figures for this Medium article live in this folder.
-Featured cover: `thumb.png`
+Featured cover: `thumb.png` (not numbered).
 
-## Files
+## Figures
 
-- `thumb.png`
-- `prefill_vs_decode.png`
-- `flashattention.png`
-- `online_softmax.png`
-- `prefill_ttft.png`
-- `ttft_vs_prompt_curve.png`
-- `workload_ttft.png`
+- **Fig 1** — `fig1.png` (03 prefill vs decode)
+- **Fig 2** — `fig2.png` (dao flashattention)
+- **Fig 3** — `fig3.png` (milakov online softmax)
+- **Fig 4** — `fig4.png` (03 prefill ttft)
+- **Fig 5** — `fig5.png` (03 ttft vs prompt curve)
+- **Fig 6** — `fig6.png` (07 workload ttft)
+

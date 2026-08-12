@@ -1,16 +1,15 @@
 # Images for `05-full-optimization-stack`
 
-All figures for this Medium article live in this folder.
-Featured cover: `thumb.png`
+Featured cover: `thumb.png` (not numbered).
 
-## Files
+## Figures
 
-- `thumb.png`
-- `optimization_funnel.png`
-- `decision_tree.png`
-- `full_stack.png`
-- `full_stack_two_models.png`
-- `full_stack_memory.png`
-- `m5_config_matrix.png`
-- `m3_m5_full_stack.png`
-- `roofline.png`
+- **Fig 1** — `fig1.png` (05 optimization funnel)
+- **Fig 2** — `fig2.png` (05 decision tree)
+- **Fig 3** — `fig3.png` (05 full stack)
+- **Fig 4** — `fig4.png` (05 full stack two models)
+- **Fig 5** — `fig5.png` (05 full stack memory)
+- **Fig 6** — `fig6.png` (05 m5 config matrix)
+- **Fig 7** — `fig7.png` (05 m3 m5 full stack)
+- **Fig 8** — `fig8.png` (williams roofline)
+

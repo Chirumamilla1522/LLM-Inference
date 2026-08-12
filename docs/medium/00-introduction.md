@@ -45,7 +45,7 @@ This series is written for people who want numbers they can reproduce, not vibes
 
 On a classic gaming PC, GPU VRAM is a separate pool from system RAM. Weights live on the GPU; the CPU shovels tensors over PCIe. On Apple Silicon, **CPU and GPU share one unified memory pool**. There is no host↔device copy in the discrete-GPU sense. Metal kernels read the same DRAM the OS uses for Safari.
 
-![Unified memory architecture](images/00-introduction/unified_memory.png)
+![Unified memory architecture](images/00-introduction/fig1.png)
 
 *Figure 1 — Workflow: CPU, GPU, and Neural Engine share one DRAM pool. Weights, KV cache, macOS, and apps all compete for the same ceiling.*
 
@@ -65,7 +65,7 @@ For \(N = 8 \times 10^9\) and \(b = 16\): \(\approx 16\) GB. At \(b = 4\): \(\ap
 
 Every chat reply has two phases with different bottlenecks. Confusing them is the fastest way to optimize the wrong thing.
 
-![Inference pipeline](images/00-introduction/inference_pipeline.png)
+![Inference pipeline](images/00-introduction/fig2.png)
 
 *Figure 2 — Workflow: load weights → prefill the prompt → emit first token (TTFT) → autoregressive decode loop (tok/s).*
 
@@ -79,11 +79,11 @@ Every chat reply has two phases with different bottlenecks. Confusing them is th
 
 The [Roofline model](https://people.csail.mit.edu/stajich/publications/cacm09.pdf) (Williams et al., 2009) is the right mental picture: when arithmetic intensity is low, **memory bandwidth caps throughput**, not peak FLOPS. LLM decode on a laptop is textbook low intensity — giant weight read, tiny compute per token.
 
-![Roofline original redraw](images/00-introduction/roofline.png)
+![Roofline original redraw](images/00-introduction/fig3.png)
 
 *Figure — **Original redraw** of the Roofline idea (Williams et al., 2009). LLM decode sits on the bandwidth slope — which is why fewer weight bytes (w4) can raise tok/s.*
 
-![Attention original redraw](images/00-introduction/attention.png)
+![Attention original redraw](images/00-introduction/fig4.png)
 
 *Figure — **Original redraw** of scaled dot-product attention (Vaswani et al., 2017). Decode caches K/V so each new token mainly builds a new Q.*
 
@@ -110,7 +110,7 @@ Read that slowly. Sixteen gigabytes for a single chat model. Two and a half seco
 
 On the **Mac M5 Max**, the same demo (`demo_fp16`) lands at **16.46 GB** peak, **193 ms** TTFT, and **34.4 tok/s**. Memory barely moves (same weights). Latency and throughput jump hard — roughly **14×** faster TTFT and **~6.5×** decode versus the M3 demo. Silicon matters. Software still matters more for fitting.
 
-![Hardware compare M3 vs M5](images/00-introduction/hardware_compare.png)
+![Hardware compare M3 vs M5](images/00-introduction/fig5.png)
 
 *Figure 3 — Results: same Llama 3.1 8B family, different precision and hardware. On M3, dropping to 4-bit cuts memory ~3× and lifts decode ~3.5×; M5 Max raises the absolute ceiling.*
 
@@ -198,31 +198,31 @@ This is not a one-model blog series. The harness already produced **hundreds of 
 
 ### Every model × every bit-width (Mac M3)
 
-![Throughput heatmap](images/00-introduction/heatmap_tps.png)
+![Throughput heatmap](images/00-introduction/fig6.png)
 
 *Figure 4 — Results: decode tok/s heatmap for all Article 1 models × fp16/w8/w4/w2. Bright cells = fast. Notice how w4 lights up the board versus fp16.*
 
-![Memory heatmap](images/00-introduction/heatmap_memory.png)
+![Memory heatmap](images/00-introduction/fig7.png)
 
 *Figure 5 — Results: peak memory (GB) for the same matrix. fp16 columns are the red zone on a 24 GB machine.*
 
 ### Speedup and efficiency
 
-![Speedup all models](images/00-introduction/speedup_all_models.png)
+![Speedup all models](images/00-introduction/fig8.png)
 
 *Figure 6 — Results: fp16→w4 decode speedup and memory-reduction factor for every model that has both checkpoints.*
 
-![Efficiency tok/s per GB](images/00-introduction/efficiency_tps_per_gb.png)
+![Efficiency tok/s per GB](images/00-introduction/fig9.png)
 
 *Figure 7 — Results: efficiency = tok/s per GB at w4. Tiny Qwen models dominate; 8–9B models buy quality with lower efficiency.*
 
 ### Silicon generation gap
 
-![M3 vs M5 w4](images/00-introduction/m3_vs_m5_w4.png)
+![M3 vs M5 w4](images/00-introduction/fig10.png)
 
 *Figure 8 — Results: same w4 checkpoints on M3 vs M5 Max. Annotations show the speedup factor (often ~5× on 7–8B models).*
 
-![Llama all bits M3 vs M5](images/00-introduction/llama_m3_m5_all_bits.png)
+![Llama all bits M3 vs M5](images/00-introduction/fig11.png)
 
 *Figure 9 — Results: Llama 3.1 8B across fp16/w8/w4/w2 on both chips. M5 Max w4 alone (~112 tok/s) beats M3 w2 (~36 tok/s).*
 
@@ -232,25 +232,25 @@ This is not a one-model blog series. The harness already produced **hundreds of 
 
 *Figure 10 — Results: Qwen / Llama / Phi / Gemma / Mistral–DeepSeek panels, fp16 vs w4.*
 
-![Model ladder](images/00-introduction/model_size_ladder.png)
+![Model ladder](images/00-introduction/fig12.png)
 
 *Figure 11 — Preview of Part 5: model-size ladder at w4 on Mac M3 — from 238 tok/s (0.5B) down to ~15 tok/s (9B).*
 
-![M5 extended ladder](images/00-introduction/m5_extended_ladder.png)
+![M5 extended ladder](images/00-introduction/fig13.png)
 
 *Figure 12 — Preview: M5 Max extends the ladder through 12B–27B class models that simply do not fit as daily drivers on 24 GB.*
 
 ### Why later posts exist (context + stack + speculation)
 
-![Context panels](images/00-introduction/context_m3_m5_panels.png)
+![Context panels](images/00-introduction/fig14.png)
 
 *Figure 13 — Preview of the RAG problem: as prompt length grows, TTFT explodes and tok/s falls (M3 vs M5 Max).*
 
-![Full stack M3 M5](images/00-introduction/full_stack_m3_m5.png)
+![Full stack M3 M5](images/00-introduction/fig15.png)
 
 *Figure 14 — Preview of Part 6: fp16 vs optimized stack on both machines.*
 
-![Speculative Qwen](images/00-introduction/spec_m3_m5_qwen.png)
+![Speculative Qwen](images/00-introduction/fig16.png)
 
 *Figure 15 — Preview of Part 7: speculative decoding on Qwen-7B (M3 ~16→28 tok/s; M5 ~122→170 tok/s at 74% accept).*
 

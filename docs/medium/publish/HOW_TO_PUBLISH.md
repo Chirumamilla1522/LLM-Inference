@@ -12,7 +12,7 @@ FEATURED IMAGE + CAPTION
 Short paragraphs
 Section headers
 IMAGE: path
-Figure — caption
+Figure 10 — caption
 Bullets
 ---
 ```

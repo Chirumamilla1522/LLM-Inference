@@ -19,8 +19,8 @@ Often the real pain is earlier: time-to-first-token — the pause before the fir
 
 Prefill vs. Decode
 
-IMAGE: docs/medium/images/03-prefill-and-ttft/prefill_vs_decode.png
-Figure — Two phases, two bottlenecks.
+IMAGE: docs/medium/images/03-prefill-and-ttft/fig1.png
+Figure 1 — Two phases, two bottlenecks.
 
 • Prefill → TTFT
 • Decode → tok/s
@@ -31,11 +31,11 @@ Optimize the wrong one and your "faster model" still feels broken.
 
 FlashAttention — Exact, Not Approximate
 
-IMAGE: docs/medium/images/03-prefill-and-ttft/flashattention.png
-Figure — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
+IMAGE: docs/medium/images/03-prefill-and-ttft/fig2.png
+Figure 2 — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
 
-IMAGE: docs/medium/images/03-prefill-and-ttft/online_softmax.png
-Figure — Original redraw of online softmax (Milakov & Gimelshein, 2018).
+IMAGE: docs/medium/images/03-prefill-and-ttft/fig3.png
+Figure 3 — Original redraw of online softmax (Milakov & Gimelshein, 2018).
 
 Fun fact: FlashAttention computes the same math as naive attention. It just refuses to materialize the giant score matrix in slow memory.
 
@@ -50,14 +50,14 @@ Llama 3.1 8B, W4, Mac M3:
 • p=1024 → ~5.8 s
 • p=2048 → ~15.4 s
 
-IMAGE: docs/medium/images/03-prefill-and-ttft/prefill_ttft.png
-Figure — TTFT versus prompt shape.
+IMAGE: docs/medium/images/03-prefill-and-ttft/fig4.png
+Figure 4 — TTFT versus prompt shape.
 
-IMAGE: docs/medium/images/03-prefill-and-ttft/ttft_vs_prompt_curve.png
-Figure — Measured TTFT versus a roughly quadratic reference.
+IMAGE: docs/medium/images/03-prefill-and-ttft/fig5.png
+Figure 5 — Measured TTFT versus a roughly quadratic reference.
 
-IMAGE: docs/medium/images/03-prefill-and-ttft/workload_ttft.png
-Figure — The rag_agent workload hits about 31 seconds TTFT on M3.
+IMAGE: docs/medium/images/03-prefill-and-ttft/fig6.png
+Figure 6 — The rag_agent workload hits about 31 seconds TTFT on M3.
 
 That is why pasting a PDF into a local RAG demo often feels broken.
 

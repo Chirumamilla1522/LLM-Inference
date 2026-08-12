@@ -1,14 +1,13 @@
 # Images for `04-model-size-ladder`
 
-All figures for this Medium article live in this folder.
-Featured cover: `thumb.png`
+Featured cover: `thumb.png` (not numbered).
 
-## Files
+## Figures
 
-- `thumb.png`
-- `fit_ladder.png`
-- `model_size_ladder.png`
-- `ladder_scatter.png`
-- `efficiency_tps_per_gb.png`
-- `m5_extended_ladder.png`
-- `m3_vs_m5_w4.png`
+- **Fig 1** — `fig1.png` (04 fit ladder)
+- **Fig 2** — `fig2.png` (04 model size ladder)
+- **Fig 3** — `fig3.png` (04 ladder scatter)
+- **Fig 4** — `fig4.png` (01 efficiency tps per gb)
+- **Fig 5** — `fig5.png` (04 m5 extended ladder)
+- **Fig 6** — `fig6.png` (01 m3 vs m5 w4)
+

@@ -54,7 +54,7 @@ That curve — not the tok/s column — is why local RAG demos die in the first 
 
 Every completion has two regimes with different physics.
 
-![Prefill vs decode](images/03-prefill-and-ttft/prefill_vs_decode.png)
+![Prefill vs decode](images/03-prefill-and-ttft/fig1.png)
 
 *Figure 1 — Workflow: prefill consumes the full prompt and owns TTFT; decode emits tokens one-by-one and owns sustained tok/s. Optimizations do not transfer 1:1 between phases.*
 
@@ -106,11 +106,11 @@ Naive attention materializes an \(N \times N\) score matrix in high-bandwidth-bu
 
 *Figure 2 — Workflow: naive attention materializes huge \(N\times N\) intermediates; FlashAttention-style tiling streams blocks through fast memory and keeps exact softmax semantics.*
 
-![FlashAttention paper redraw](images/03-prefill-and-ttft/flashattention.png)
+![FlashAttention paper redraw](images/03-prefill-and-ttft/fig2.png)
 
 *Figure — **Original redraw** of the FlashAttention IO pattern (Dao et al., 2022/23): keep tiles in fast SRAM; avoid writing the full score matrix to slow HBM. Exact attention, better IO.*
 
-![Online softmax redraw](images/03-prefill-and-ttft/online_softmax.png)
+![Online softmax redraw](images/03-prefill-and-ttft/fig3.png)
 
 *Figure — **Original redraw** of streaming / online softmax (Milakov & Gimelshein, 2018) — the numerics trick FlashAttention relies on.*
 
@@ -131,7 +131,7 @@ All medians from 1 warmup + 3 trials.
 | p256 | w4+prefill | **256** | 128 | 4.92 | **2,357 ms** | 13.7 | 109 |
 | p1024 | w4+prefill | **1024** | 128 | 5.24 | **5,782 ms** | 20.1 | 177 |
 
-![Prefill TTFT bars](images/03-prefill-and-ttft/prefill_ttft.png)
+![Prefill TTFT bars](images/03-prefill-and-ttft/fig4.png)
 
 *Figure 3 — Results (Mac M3, Llama 8B w4): TTFT by prompt configuration. Shorter prompts win decisively; at 512 tokens prefill tuning is subtle; at 1024 tokens latency roughly doubles vs the 512 baseline.*
 
@@ -141,7 +141,7 @@ All medians from 1 warmup + 3 trials.
 - **prefill ON at 512 is within ~3% of baseline TTFT.** Chunked prefill is not a magic accelerator at moderate \(T\); it is a **memory-stability** feature.
 - **p1024 TTFT ≈ 5.8 s** already feels sluggish for interactive chat.
 
-![TTFT vs prompt curve](images/03-prefill-and-ttft/ttft_vs_prompt_curve.png)
+![TTFT vs prompt curve](images/03-prefill-and-ttft/fig5.png)
 
 *Figure 4 — Results: measured TTFT versus prompt length with a \(\propto T^2\) reference sketch. This is the RAG danger zone visual — beyond ~1K tokens, first-token latency becomes the product.*
 
@@ -171,7 +171,7 @@ Prefill cost also scales with model width/depth. At a fixed prompt length, large
 
 Article 3’s 512/1024 prompts are only the beginning. Article 7 pushes to 2048 tokens and realistic workloads:
 
-![TTFT vs prompt curve](images/03-prefill-and-ttft/ttft_vs_prompt_curve.png)
+![TTFT vs prompt curve](images/03-prefill-and-ttft/fig5.png)
 
 *Figure — Results: measured TTFT vs a ∝ T² reference — the curve that makes RAG feel broken.*
 
@@ -183,7 +183,7 @@ Article 3’s 512/1024 prompts are only the beginning. Article 7 pushes to 2048 
 
 *Figure — Results: M5 Max flattens absolute latency but the quadratic shape remains.*
 
-![Workload TTFT](images/03-prefill-and-ttft/workload_ttft.png)
+![Workload TTFT](images/03-prefill-and-ttft/fig6.png)
 
 *Figure — Results: `rag_agent` hits ~31 s TTFT on M3 — prefill dominates the user experience.*
 

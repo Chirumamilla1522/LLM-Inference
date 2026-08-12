@@ -46,15 +46,15 @@ Part 6 freed ~11 GB by leaving fp16. That headroom is exactly what makes draft+t
 
 *Figure 1 — Workflow: baseline = 1 target forward per token; speculative = draft proposes \(k\), target verifies once.*
 
-![Leviathan speculative redraw](images/06-speculative-decoding/speculative_redraw.png)
+![Leviathan speculative redraw](images/06-speculative-decoding/fig1.png)
 
 *Figure — **Original redraw** of draft/verify speculative decoding (Leviathan et al., 2023; Chen et al., 2023). Not a copy of their paper figures.*
 
-![Accept / reject](images/06-speculative-decoding/accept_reject.png)
+![Accept / reject](images/06-speculative-decoding/fig2.png)
 
 *Figure 2 — Workflow: accept matching prefixes; reject at first mismatch and resample from the target (exact sampling semantics under the paper’s rule).*
 
-![Medusa idea redraw](images/06-speculative-decoding/medusa.png)
+![Medusa idea redraw](images/06-speculative-decoding/fig3.png)
 
 *Figure — **Original redraw** of a Medusa-style variant (Cai et al., 2024): extra heads draft future tokens; still verify with the base model.*
 
@@ -119,11 +119,11 @@ Speculation spends the RAM you freed in Part 6. If you are still at fp16 8B on a
 | Baseline w4 | — | **4.72** | 3,613 | **15.9** | — |
 | Speculative w4 | Qwen 0.5B @ 4-bit | **5.00** | 2,856 | **28.3** | **74.2%** |
 
-![Speculative tok/s](images/06-speculative-decoding/speculative_qwen.png)
+![Speculative tok/s](images/06-speculative-decoding/fig4.png)
 
 *Figure 3 — Results (Mac M3, Qwen 2.5 7B): speculative decoding reaches **28.3 tok/s** vs **15.9** baseline — **1.78×** — at **74.2%** draft acceptance.*
 
-![Speed + memory](images/06-speculative-decoding/speculative_speed_memory.png)
+![Speed + memory](images/06-speculative-decoding/fig5.png)
 
 *Figure 4 — Results (Mac M3, Qwen 7B): large throughput gain for roughly **+0.28 GB** peak (draft weights resident with the target).*
 
@@ -150,7 +150,7 @@ On the M3 article sweep, the harness’s default draft wiring pointed at a **Qwe
 
 ## M3 vs M5 Max: when speculation scales — and when it backfires
 
-![M3 vs M5 Qwen speculative](images/06-speculative-decoding/spec_m3_m5_qwen.png)
+![M3 vs M5 Qwen speculative](images/06-speculative-decoding/fig6.png)
 
 *Figure 5 — Results: Qwen-7B baseline vs speculative on Mac M3 and Mac M5 Max — both chips see a clear win at α≈74%; absolute rates differ by nearly an order of magnitude.*
 
@@ -173,7 +173,7 @@ Why that can happen even with “working” speculation:
 3. **Draft is 1B, not 0.5B.** Llama’s paired draft is heavier than Qwen’s 0.5B buddy — more proposal cost per round.  
 4. **Memory rose** from **5.11 → 5.98 GB** — expected, but a reminder you are paying RAM either way.
 
-![Speedup vs acceptance](images/06-speculative-decoding/spec_speedup_vs_accept.png)
+![Speedup vs acceptance](images/06-speculative-decoding/fig7.png)
 
 *Figure 6 — Results: speculative speedup versus draft acceptance — Qwen’s ~74% acceptance correlates with clear wins; Llama’s ~59% acceptance on M5 lands near break-even / slight regression.*
 

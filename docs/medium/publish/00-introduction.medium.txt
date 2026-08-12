@@ -95,7 +95,7 @@ CPU and GPU share a unified memory pool.
 
 That means model weights, KV cache, macOS, Safari, your IDE, and other applications all consume the same physical memory.
 
-IMAGE: docs/medium/images/00-introduction/unified_memory.png
+IMAGE: docs/medium/images/00-introduction/fig1.png
 Figure 1 — CPU and GPU share unified memory. Model weights, KV cache, macOS, and applications all compete for the same memory ceiling.
 
 This is why a 24 GB Mac can be both surprisingly capable and surprisingly easy to overwhelm.
@@ -137,7 +137,7 @@ Every chat response has two major phases, and they have different bottlenecks.
 
 Confusing them is one of the easiest ways to optimize the wrong thing.
 
-IMAGE: docs/medium/images/00-introduction/inference_pipeline.png
+IMAGE: docs/medium/images/00-introduction/fig2.png
 Figure 2 — Load weights → prefill the prompt → generate the first token → autoregressive decode.
 
 The three metrics I care about most are:
@@ -168,13 +168,13 @@ This is why reducing the number of bytes required per parameter can improve thro
 
 The Roofline model provides a useful mental model here: when arithmetic intensity is low, memory bandwidth rather than peak compute becomes the limiting factor.
 
-IMAGE: docs/medium/images/00-introduction/roofline.png
-Figure — Redraw of the Roofline model. LLM decode often operates in a bandwidth-limited regime.
+IMAGE: docs/medium/images/00-introduction/fig3.png
+Figure 3 — Redraw of the Roofline model. LLM decode often operates in a bandwidth-limited regime.
 
 And attention introduces another important concept: the KV cache.
 
-IMAGE: docs/medium/images/00-introduction/attention.png
-Figure — Scaled dot-product attention and the role of cached keys and values during autoregressive decoding.
+IMAGE: docs/medium/images/00-introduction/fig4.png
+Figure 4 — Scaled dot-product attention and the role of cached keys and values during autoregressive decoding.
 
 The rest of this series therefore attacks the system one bottleneck at a time:
 
@@ -256,8 +256,8 @@ Performance is a silicon problem.
 
 Quantization attacks both.
 
-IMAGE: docs/medium/images/00-introduction/hardware_compare.png
-Figure 3 — Hardware and precision comparison. Quantization dramatically reduces memory requirements while newer Apple Silicon raises the absolute performance ceiling.
+IMAGE: docs/medium/images/00-introduction/fig5.png
+Figure 5 — Hardware and precision comparison. Quantization dramatically reduces memory requirements while newer Apple Silicon raises the absolute performance ceiling.
 
 ---
 
@@ -422,17 +422,17 @@ The next articles will turn those runs into:
 • Full-stack optimization results
 • Speculative decoding experiments
 
-IMAGE: docs/medium/images/00-introduction/heatmap_tps.png
-Figure 4 — Decode throughput across models and bit-widths.
+IMAGE: docs/medium/images/00-introduction/fig6.png
+Figure 6 — Decode throughput across models and bit-widths.
 
-IMAGE: docs/medium/images/00-introduction/heatmap_memory.png
-Figure 5 — Peak memory across the same model/precision matrix.
+IMAGE: docs/medium/images/00-introduction/fig7.png
+Figure 7 — Peak memory across the same model/precision matrix.
 
-IMAGE: docs/medium/images/00-introduction/speedup_all_models.png
-Figure 6 — FP16 → W4 decode speedup and memory reduction.
+IMAGE: docs/medium/images/00-introduction/fig8.png
+Figure 8 — FP16 → W4 decode speedup and memory reduction.
 
-IMAGE: docs/medium/images/00-introduction/efficiency_tps_per_gb.png
-Figure 7 — Decode efficiency measured as tokens/sec per GB.
+IMAGE: docs/medium/images/00-introduction/fig9.png
+Figure 9 — Decode efficiency measured as tokens/sec per GB.
 
 ---
 
@@ -440,13 +440,13 @@ The Silicon Gap
 
 The same quantized model can behave very differently across Apple Silicon generations.
 
-IMAGE: docs/medium/images/00-introduction/m3_vs_m5_w4.png
-Figure 8 — W4 performance comparison between M3 and M5 Max.
+IMAGE: docs/medium/images/00-introduction/fig10.png
+Figure 10 — W4 performance comparison between M3 and M5 Max.
 
 For Llama 3.1 8B, the difference becomes particularly interesting when looking across multiple precisions.
 
-IMAGE: docs/medium/images/00-introduction/llama_m3_m5_all_bits.png
-Figure 9 — Llama 3.1 8B across FP16, W8, W4, and W2 on M3 and M5 Max.
+IMAGE: docs/medium/images/00-introduction/fig11.png
+Figure 11 — Llama 3.1 8B across FP16, W8, W4, and W2 on M3 and M5 Max.
 
 One result from the broader sweep is particularly striking:
 
@@ -462,15 +462,15 @@ Model Size Changes the Game
 
 Smaller models are dramatically easier to run.
 
-IMAGE: docs/medium/images/00-introduction/model_size_ladder.png
-Figure 10 — W4 model-size ladder on Mac M3.
+IMAGE: docs/medium/images/00-introduction/fig12.png
+Figure 12 — W4 model-size ladder on Mac M3.
 
 The M3 benchmark spans models from roughly 0.5B to 9B, with performance dropping as model size increases.
 
 On the M5 Max, the usable model range extends considerably further.
 
-IMAGE: docs/medium/images/00-introduction/m5_extended_ladder.png
-Figure 11 — M5 Max extends the practical model-size range into larger models.
+IMAGE: docs/medium/images/00-introduction/fig13.png
+Figure 13 — M5 Max extends the practical model-size range into larger models.
 
 This leads to another important principle:
 
@@ -501,8 +501,8 @@ Real applications increasingly involve long prompts:
 
 As context grows, the KV cache becomes increasingly important.
 
-IMAGE: docs/medium/images/00-introduction/context_m3_m5_panels.png
-Figure 12 — Context-length experiments showing the impact of longer prompts on TTFT and throughput.
+IMAGE: docs/medium/images/00-introduction/fig14.png
+Figure 14 — Context-length experiments showing the impact of longer prompts on TTFT and throughput.
 
 This is why KV-cache optimization is Part 3 of the series.
 
@@ -514,8 +514,8 @@ The Full Optimization Stack
 
 Eventually, these optimizations need to work together.
 
-IMAGE: docs/medium/images/00-introduction/full_stack_m3_m5.png
-Figure 13 — Preview of the optimized inference stack across M3 and M5 Max.
+IMAGE: docs/medium/images/00-introduction/fig15.png
+Figure 15 — Preview of the optimized inference stack across M3 and M5 Max.
 
 The goal isn't to maximize one benchmark metric.
 
@@ -529,8 +529,8 @@ The final part of the series explores speculative decoding.
 
 Instead of relying entirely on a large model to generate every token sequentially, a smaller draft model proposes multiple tokens that the larger model can verify.
 
-IMAGE: docs/medium/images/00-introduction/spec_m3_m5_qwen.png
-Figure 14 — Speculative decoding preview using Qwen-7B.
+IMAGE: docs/medium/images/00-introduction/fig16.png
+Figure 16 — Speculative decoding preview using Qwen-7B.
 
 The preliminary measurements show approximately:
 

@@ -19,11 +19,11 @@ Paste a PDF into a local RAG app and three forces collide:
 2. KV memory grows linearly
 3. Decode tokens/sec falls as attention spans more tokens
 
-IMAGE: docs/medium/images/07-context-and-cache/rag_wall.png
-Figure — Retrieve → stuff context → expensive prefill → multi-second TTFT.
+IMAGE: docs/medium/images/07-context-and-cache/fig1.png
+Figure 1 — Retrieve → stuff context → expensive prefill → multi-second TTFT.
 
-IMAGE: docs/medium/images/07-context-and-cache/kv_scaling.png
-Figure — Original redraw: KV grows until it rivals weights.
+IMAGE: docs/medium/images/07-context-and-cache/fig2.png
+Figure 2 — Original redraw: KV grows until it rivals weights.
 
 ---
 
@@ -36,34 +36,34 @@ Llama 3.1 8B on Mac M3:
 • 1024 — 6.5 s
 • 2048 — 15.4 s
 
-IMAGE: docs/medium/images/07-context-and-cache/context_ttft.png
-Figure — TTFT crosses 15 seconds at 2048 tokens on M3.
+IMAGE: docs/medium/images/07-context-and-cache/fig3.png
+Figure 3 — TTFT crosses 15 seconds at 2048 tokens on M3.
 
-IMAGE: docs/medium/images/07-context-and-cache/context_dual_axis.png
-Figure — TTFT explodes while decode tok/s decays.
+IMAGE: docs/medium/images/07-context-and-cache/fig4.png
+Figure 4 — TTFT explodes while decode tok/s decays.
 
-IMAGE: docs/medium/images/07-context-and-cache/context_m3_m5_panels.png
-Figure — M5 Max lowers the wall. It does not remove the shape of the curve.
+IMAGE: docs/medium/images/07-context-and-cache/fig5.png
+Figure 5 — M5 Max lowers the wall. It does not remove the shape of the curve.
 
 ---
 
 Prefix Cache: Cold vs. Warm
 
-IMAGE: docs/medium/images/07-context-and-cache/prefix_cache_workflow.png
-Figure — Skip re-prefilling a stable system prompt.
+IMAGE: docs/medium/images/07-context-and-cache/fig6.png
+Figure 6 — Skip re-prefilling a stable system prompt.
 
-IMAGE: docs/medium/images/07-context-and-cache/prefix_cache.png
-Figure — Cold 3,180 ms → warm 1,547 ms — about 51% faster.
+IMAGE: docs/medium/images/07-context-and-cache/fig7.png
+Figure 7 — Cold 3,180 ms → warm 1,547 ms — about 51% faster.
 
 ---
 
 Workload Stress
 
-IMAGE: docs/medium/images/07-context-and-cache/workload_panels.png
-Figure — Latency, throughput, and memory across workloads.
+IMAGE: docs/medium/images/07-context-and-cache/fig8.png
+Figure 8 — Latency, throughput, and memory across workloads.
 
-IMAGE: docs/medium/images/07-context-and-cache/workload_ttft.png
-Figure — rag_agent is about 31 seconds TTFT on M3.
+IMAGE: docs/medium/images/07-context-and-cache/fig9.png
+Figure 9 — rag_agent is about 31 seconds TTFT on M3.
 
 If your local RAG demo feels broken, it's probably prefill — not "tok/s."
 

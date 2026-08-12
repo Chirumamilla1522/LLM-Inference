@@ -1,17 +1,16 @@
 # Images for `07-context-and-cache`
 
-All figures for this Medium article live in this folder.
-Featured cover: `thumb.png`
+Featured cover: `thumb.png` (not numbered).
 
-## Files
+## Figures
 
-- `thumb.png`
-- `rag_wall.png`
-- `kv_scaling.png`
-- `context_ttft.png`
-- `context_dual_axis.png`
-- `context_m3_m5_panels.png`
-- `prefix_cache_workflow.png`
-- `prefix_cache.png`
-- `workload_panels.png`
-- `workload_ttft.png`
+- **Fig 1** — `fig1.png` (07 rag wall)
+- **Fig 2** — `fig2.png` (pope kv scaling)
+- **Fig 3** — `fig3.png` (07 context ttft)
+- **Fig 4** — `fig4.png` (07 context dual axis)
+- **Fig 5** — `fig5.png` (07 context m3 m5 panels)
+- **Fig 6** — `fig6.png` (07 prefix cache workflow)
+- **Fig 7** — `fig7.png` (07 prefix cache)
+- **Fig 8** — `fig8.png` (07 workload panels)
+- **Fig 9** — `fig9.png` (07 workload ttft)
+
