@@ -5,10 +5,10 @@ tags: LLM, Model Size, Apple Silicon, Benchmark, Qwen, Llama, Memory, MLX
 series: 5 of 7
 read_time: 22 min
 figures: 6
-thumbnail: images/thumbnails/thumb_04_model_ladder.png
+thumbnail: images/04-model-size-ladder/thumb.png
 ---
 
-![Cover — Model Size Ladder](images/thumbnails/thumb_04_model_ladder.png)
+![Cover — Model Size Ladder](images/04-model-size-ladder/thumb.png)
 
 # From 0.5B to 70B: What Fits on Apple Silicon
 
@@ -41,15 +41,15 @@ If you pick models by Twitter vibes alone, you will either (a) run a 70B that sw
 
 ## Decision ladder (before the numbers)
 
-![Fit ladder](images/workflows/04_fit_ladder.png)
+![Fit ladder](images/04-model-size-ladder/fit_ladder.png)
 
 *Figure 1 — Workflow: Tier A (instant) → Tier B (daily driver) → Tier C (pushing it) → skip fp16 8B as daily.*
 
-![Roofline for size choice](images/papers/williams_roofline_redraw.png)
+![Roofline for size choice](images/_source/papers/williams_roofline_redraw.png)
 
 *Figure — **Original redraw** of Roofline (Williams et al., 2009): smaller models move less weight per token — that is why 0.5B @ w4 can hit 200+ tok/s on the same chip where 8B @ fp16 crawls.*
 
-![Attention reminder](images/papers/vaswani_attention_redraw.png)
+![Attention reminder](images/_source/papers/vaswani_attention_redraw.png)
 
 *Figure — **Original redraw** of attention (Vaswani et al., 2017): every size still pays the same algorithmic tax — capacity and bandwidth decide who feels interactive.*
 
@@ -83,7 +83,7 @@ Harness: MLX, mlx-community Instruct 4-bit checkpoints where available, **1 warm
 | Llama 3.1 8B | 8B | 5.06 | 2,817 | **20.6** |
 | Gemma 2 9B | 9B | 5.88 | 3,852 | **15.4** |
 
-![Model size bars](images/04_model_size_ladder.png)
+![Model size bars](images/04-model-size-ladder/model_size_ladder.png)
 
 *Figure 2 — Results (Mac M3, w4): absolute decode throughput collapses as model size grows while peak memory climbs. The “best” model depends on whether you optimize tok/s, TTFT, or quality.*
 
@@ -106,7 +106,7 @@ Harness: MLX, mlx-community Instruct 4-bit checkpoints where available, **1 warm
 | DeepSeek R1 (Llama 8B) | 5.06 | 3,069 | 19.4 | Reasoning-tuned |
 | Gemma 2 9B | 5.88 | 3,852 | 15.4 | Top of M3 comfort |
 
-![Ladder scatter](images/04_ladder_scatter.png)
+![Ladder scatter](images/04-model-size-ladder/ladder_scatter.png)
 
 *Figure 3 — Results: memory vs speed scatter for the ladder. Pick a point on the frontier — nothing is free; moving up in quality usually means sliding down-right in this plot.*
 
@@ -118,7 +118,7 @@ Harness: MLX, mlx-community Instruct 4-bit checkpoints where available, **1 warm
 
 Raw tok/s favors tiny models. A fairer laptop metric is **throughput per gigabyte of peak memory** — how hard each resident GB works.
 
-![Efficiency tok/s per GB](images/01_efficiency_tps_per_gb.png)
+![Efficiency tok/s per GB](images/04-model-size-ladder/efficiency_tps_per_gb.png)
 
 *Figure 4 — Results: efficiency view (tok/s per GB). Small models look even stronger; huge models must justify themselves with quality, not with bandwidth thrift.*
 
@@ -157,7 +157,7 @@ M5 Max changes two things at once: **memory headroom** and **bandwidth**. The sa
 | Llama 3.1 8B | ~5.1 | **~112** | Daily driver, fast |
 | Gemma 2 27B | ~16.1 | **~32.9** (suite median ~31.1) | Heavy local quality |
 
-![M5 extended ladder](images/04_m5_extended_ladder.png)
+![M5 extended ladder](images/04-model-size-ladder/m5_extended_ladder.png)
 
 *Figure 5 — Results (Mac M5 Max): extended ladder up through ~27B-class w4 models. The qualitative shape matches M3 — bigger is slower — but the absolute speeds stay interactive much longer.*
 
@@ -187,7 +187,7 @@ M5 Max changes two things at once: **memory headroom** and **bandwidth**. The sa
 
 *(Larger 70B-class entries in the tree include failed/empty runs at fp16 or unsupported configs — treat “fits on paper” separately from “passes the harness.”)*
 
-![M3 vs M5 w4](images/01_m3_vs_m5_w4.png)
+![M3 vs M5 w4](images/04-model-size-ladder/m3_vs_m5_w4.png)
 
 *Figure 6 — Results: M3 vs M5 Max at w4 for overlapping models. Hardware multiplies tok/s; it does not invent VRAM — unified memory size still caps the tier you can live in.*
 

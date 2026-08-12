@@ -6,7 +6,7 @@ Affine quantization from the papers — then Pareto charts, heatmaps, and M3 vs.
 
 Part 2 of 7 — Local LLMs on Apple Silicon
 
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_01_weight_quantization.png
+FEATURED IMAGE: docs/medium/images/01-weight-quantization/thumb.png
 CAPTION: Weight quantization — Part 2
 
 ---
@@ -39,15 +39,15 @@ How Quantization Works
 
 We map each high-precision weight to a smaller integer code, plus a scale.
 
-IMAGE: docs/medium/images/papers/jacob_affine_quant_redraw.png
+IMAGE: docs/medium/images/01-weight-quantization/affine_quant.png
 Figure — Original redraw of affine quantization (Jacob et al., 2018).
 
 In practice, LLM checkpoints use recipes like GPTQ and AWQ.
 
-IMAGE: docs/medium/images/papers/frantar_gptq_redraw.png
+IMAGE: docs/medium/images/01-weight-quantization/gptq.png
 Figure — Original redraw of the GPTQ idea (Frantar et al., 2022).
 
-IMAGE: docs/medium/images/papers/lin_awq_redraw.png
+IMAGE: docs/medium/images/01-weight-quantization/awq.png
 Figure — Original redraw of the AWQ idea (Lin et al., 2023).
 
 Fun fact: GPTQ was built for 175B-class models that couldn't fit on one GPU at FP16. The same math now makes 8B models comfortable on a laptop.
@@ -60,7 +60,7 @@ Each decode step often reads nearly all weights from memory.
 
 Fewer bytes per weight means less memory traffic.
 
-IMAGE: docs/medium/images/papers/williams_roofline_redraw.png
+IMAGE: docs/medium/images/01-weight-quantization/roofline.png
 Figure — Original redraw of the Roofline idea. LLM decode often sits on the bandwidth slope.
 
 ---
@@ -72,13 +72,13 @@ Llama 3.1 8B on Mac M3
 • W4 — 5.1 GB · 20.5 tok/s (~3.5×)
 • W2 — 3.1 GB · 35.8 tok/s (~6×)
 
-IMAGE: docs/medium/images/01_weight_quant_llama3-8b.png
+IMAGE: docs/medium/images/01-weight-quantization/llama_weight_quant.png
 Figure — Memory and throughput as bit-width drops.
 
-IMAGE: docs/medium/images/01_pareto_memory_speed.png
+IMAGE: docs/medium/images/01-weight-quantization/pareto_memory_speed.png
 Figure — Pareto frontier. W4 is the practical sweet spot on 24 GB.
 
-IMAGE: docs/medium/images/01_speedup_vs_fp16.png
+IMAGE: docs/medium/images/01-weight-quantization/speedup_vs_fp16.png
 Figure — Explicit speedup versus FP16.
 
 ---
@@ -89,16 +89,16 @@ The surprising part isn't one lucky Llama run.
 
 It's that the pattern holds across the board.
 
-IMAGE: docs/medium/images/01_heatmap_tps.png
+IMAGE: docs/medium/images/01-weight-quantization/heatmap_tps.png
 Figure — Decode tok/s across models and bit-widths on Mac M3.
 
-IMAGE: docs/medium/images/01_heatmap_memory.png
+IMAGE: docs/medium/images/01-weight-quantization/heatmap_memory.png
 Figure — Peak memory for the same matrix. FP16 is the danger zone on 24 GB.
 
-IMAGE: docs/medium/images/01_speedup_all_models.png
+IMAGE: docs/medium/images/01-weight-quantization/speedup_all_models.png
 Figure — FP16 → W4 speedup and memory reduction across models.
 
-IMAGE: docs/medium/images/01_family_panels.png
+IMAGE: docs/medium/images/01-weight-quantization/family_panels.png
 Figure — Family zoom-ins: Qwen, Llama, Phi, Gemma, Mistral/DeepSeek.
 
 ---
@@ -110,10 +110,10 @@ Same W4 checkpoints. Different silicon.
 • Llama 8B W4 — 20.5 → 112 tok/s
 • Qwen 0.5B W4 — 215 → 581 tok/s
 
-IMAGE: docs/medium/images/01_m3_vs_m5_w4.png
+IMAGE: docs/medium/images/01-weight-quantization/m3_vs_m5_w4.png
 Figure — M3 vs. M5 Max at W4.
 
-IMAGE: docs/medium/images/01_llama_m3_m5_all_bits.png
+IMAGE: docs/medium/images/01-weight-quantization/llama_m3_m5_all_bits.png
 Figure — Llama 8B across every bit-width on both chips.
 
 Hardware generation and quantization stack. They are not competing explanations.

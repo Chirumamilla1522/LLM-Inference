@@ -6,7 +6,7 @@ Draft Models: Free Speed Without Retraining
 
 Part 7 of 7 — Local LLMs on Apple Silicon
 
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_06_speculative.png
+FEATURED IMAGE: docs/medium/images/06-speculative-decoding/thumb.png
 CAPTION: Speculative decoding — Part 7
 
 ---
@@ -17,13 +17,13 @@ The large target verifies them in one parallel pass.
 
 When the draft is right, you emit multiple tokens per expensive step — without retraining.
 
-IMAGE: docs/medium/images/papers/leviathan_speculative_redraw.png
+IMAGE: docs/medium/images/06-speculative-decoding/speculative_redraw.png
 Figure — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
 
-IMAGE: docs/medium/images/workflows/06_accept_reject.png
+IMAGE: docs/medium/images/06-speculative-decoding/accept_reject.png
 Figure — Accept the matching prefix; reject and resample at the first mismatch.
 
-IMAGE: docs/medium/images/papers/cai_medusa_redraw.png
+IMAGE: docs/medium/images/06-speculative-decoding/medusa.png
 Figure — Original redraw of a Medusa-style variant (Cai et al., 2024).
 
 ---
@@ -34,10 +34,10 @@ The Clean Win: Qwen-7B on Mac M3
 • Speculative (Qwen 0.5B draft) — 28.3 tok/s
 • Acceptance rate — 74.2%
 
-IMAGE: docs/medium/images/06_speculative_qwen-7b.png
+IMAGE: docs/medium/images/06-speculative-decoding/speculative_qwen.png
 Figure — About 1.78× throughput at 74% acceptance.
 
-IMAGE: docs/medium/images/06_speculative_speed_memory.png
+IMAGE: docs/medium/images/06-speculative-decoding/speculative_speed_memory.png
 Figure — Big speed gain for roughly 0.3 GB extra RAM.
 
 ---
@@ -50,10 +50,10 @@ On M5 Max, Qwen still wins: 122 → 170 tok/s.
 
 Llama speculative was slightly slower: 113 → 110 tok/s at 59% acceptance.
 
-IMAGE: docs/medium/images/06_spec_m3_m5_qwen.png
+IMAGE: docs/medium/images/06-speculative-decoding/spec_m3_m5_qwen.png
 Figure — Qwen speculative on M3 versus M5 Max.
 
-IMAGE: docs/medium/images/06_spec_speedup_vs_accept.png
+IMAGE: docs/medium/images/06-speculative-decoding/spec_speedup_vs_accept.png
 Figure — Speedup versus acceptance. Low acceptance can erase the win.
 
 Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure acceptance rate. Don't assume.

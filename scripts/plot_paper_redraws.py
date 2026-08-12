@@ -17,7 +17,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "docs" / "medium" / "images" / "papers"
+import sys
+sys.path.insert(0, str(ROOT / "scripts"))
+from medium_image_layout import SOURCE, add_article_arg, emit_file, resolve_article, source_keys_for_article  # noqa: E402
+
+OUT_DIR = SOURCE / "papers"
+_ARTICLE: str | None = None
 
 
 def _save(fig, output: Path) -> None:
@@ -26,7 +31,11 @@ def _save(fig, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, dpi=160, bbox_inches="tight", facecolor="white")
     plt.close(fig)
-    print(f"Wrote {output}")
+    src_key = f"papers/{output.name}"
+    if _ARTICLE and src_key not in source_keys_for_article(_ARTICLE):
+        print(f"skip {src_key} (not used by {_ARTICLE})")
+        return
+    emit_file(src_key, output, article=_ARTICLE)
 
 
 def _box(ax, xy, w, h, text, *, fc="#E8F1FA", ec="#2C5F8A", fontsize=8.5, lw=1.4):
@@ -489,9 +498,12 @@ def redraw_medusa_idea(out: Path) -> None:
 
 
 def main() -> int:
+    global _ARTICLE
     parser = argparse.ArgumentParser(description="Original paper-idea redraws for Medium")
     parser.add_argument("-o", "--output-dir", type=Path, default=OUT_DIR)
+    add_article_arg(parser)
     args = parser.parse_args()
+    _ARTICLE = resolve_article(args.article)
 
     try:
         import matplotlib  # noqa: F401
@@ -500,18 +512,21 @@ def main() -> int:
         return 1
 
     out = args.output_dir
-    redraw_transformer_attention(out)
-    redraw_roofline(out)
-    redraw_affine_quant_detail(out)
-    redraw_gptq_idea(out)
-    redraw_awq_idea(out)
-    redraw_flashattention(out)
-    redraw_online_softmax(out)
-    redraw_leviathan_speculative(out)
-    redraw_gqa(out)
-    redraw_paged_attention(out)
-    redraw_pope_kv_scaling(out)
-    redraw_medusa_idea(out)
+    for job in (
+        redraw_transformer_attention,
+        redraw_roofline,
+        redraw_affine_quant_detail,
+        redraw_gptq_idea,
+        redraw_awq_idea,
+        redraw_flashattention,
+        redraw_online_softmax,
+        redraw_leviathan_speculative,
+        redraw_gqa,
+        redraw_paged_attention,
+        redraw_pope_kv_scaling,
+        redraw_medusa_idea,
+    ):
+        job(out)
     return 0
 
 

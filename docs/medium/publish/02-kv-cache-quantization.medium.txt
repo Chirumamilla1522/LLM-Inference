@@ -6,7 +6,7 @@ How attention caching works, why GQA helps, and when 4-bit KV pays off on Apple 
 
 Part 3 of 7 — Local LLMs on Apple Silicon
 
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_02_kv_cache.png
+FEATURED IMAGE: docs/medium/images/02-kv-cache-quantization/thumb.png
 CAPTION: KV cache quantization — Part 3
 
 ---
@@ -27,13 +27,13 @@ During decode, each new token attends to all previous tokens.
 
 Recomputing keys and values every step would be wasteful, so transformers cache them.
 
-IMAGE: docs/medium/images/workflows/02_kv_cache_workflow.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/kv_cache_workflow.png
 Figure — KV grows linearly with sequence length. 4-bit KV is roughly one-fourth the footprint.
 
-IMAGE: docs/medium/images/papers/vaswani_attention_redraw.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/attention.png
 Figure — Original redraw of attention (Vaswani et al., 2017).
 
-IMAGE: docs/medium/images/papers/pope_kv_scaling_redraw.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/kv_scaling.png
 Figure — Original redraw inspired by Pope et al. (2022): weights stay flat while KV grows with T.
 
 ---
@@ -44,7 +44,7 @@ Llama 3, Mistral, and Qwen use Grouped-Query Attention.
 
 Many query heads share fewer KV heads.
 
-IMAGE: docs/medium/images/papers/ainslie_gqa_redraw.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/gqa.png
 Figure — Original redraw of GQA vs. multi-head attention (Ainslie et al., 2023).
 
 That shrinks the cache before you even touch bit width.
@@ -59,18 +59,18 @@ At 512 prompt + 128 generation tokens on Mac M3:
 • Mistral 7B — 21.6 → 21.2
 • Qwen 7B — 21.8 → 21.4
 
-IMAGE: docs/medium/images/02_kv_cache_compare.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/kv_cache_compare.png
 Figure — Short context: throughput almost unchanged.
 
-IMAGE: docs/medium/images/02_kv_long_generation.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/kv_long_generation.png
 Figure — Longer generation: still mostly weight-bound at laptop batch size 1.
 
 The win appears at long context, multi-session serving, or tight RAM — not in a 640-token microbench.
 
-IMAGE: docs/medium/images/07_context_dual_axis.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/context_dual_axis.png
 Figure — Where pressure shows up: TTFT explodes as prompts grow.
 
-IMAGE: docs/medium/images/papers/kwon_paged_attention_redraw.png
+IMAGE: docs/medium/images/02-kv-cache-quantization/paged_attention.png
 Figure — Original redraw of paged KV (Kwon et al., 2023). Serving systems page the cache; local MLX is the single-user cousin of the same memory problem.
 
 ---

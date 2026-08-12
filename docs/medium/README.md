@@ -26,74 +26,46 @@ open docs/medium/publish/00-introduction.medium.txt
 
 See [`publish/HOW_TO_PUBLISH.md`](publish/HOW_TO_PUBLISH.md).
 
-## Cover thumbnails (Medium story images)
+## Images (one folder per article)
 
-All 16:9 covers live in [`images/thumbnails/`](images/thumbnails/):
+Publish figures live under [`images/<article-slug>/`](images/):
 
-| Article | Thumbnail |
-|---------|-----------|
-| 00 Introduction | `thumb_00_introduction.png` |
-| 01 Weight quantization | `thumb_01_weight_quantization.png` |
-| 02 KV cache | `thumb_02_kv_cache.png` |
-| 03 Prefill / TTFT | `thumb_03_prefill_ttft.png` |
-| 04 Model ladder | `thumb_04_model_ladder.png` |
-| 05 Full stack | `thumb_05_full_stack.png` |
-| 06 Speculative | `thumb_06_speculative.png` |
-| 07 Context / RAG | `thumb_07_rag_context.png` |
+| Article | Folder | Cover |
+|---------|--------|-------|
+| 00 Introduction | [`images/00-introduction/`](images/00-introduction/) | `thumb.png` |
+| 01 Weight quantization | [`images/01-weight-quantization/`](images/01-weight-quantization/) | `thumb.png` |
+| 02 KV cache | [`images/02-kv-cache-quantization/`](images/02-kv-cache-quantization/) | `thumb.png` |
+| 03 Prefill / TTFT | [`images/03-prefill-and-ttft/`](images/03-prefill-and-ttft/) | `thumb.png` |
+| 04 Model ladder | [`images/04-model-size-ladder/`](images/04-model-size-ladder/) | `thumb.png` |
+| 05 Full stack | [`images/05-full-optimization-stack/`](images/05-full-optimization-stack/) | `thumb.png` |
+| 06 Speculative | [`images/06-speculative-decoding/`](images/06-speculative-decoding/) | `thumb.png` |
+| 07 Context / RAG | [`images/07-context-and-cache/`](images/07-context-and-cache/) | `thumb.png` |
 
-On Medium: set each file as the **story cover / preview image** when publishing.
+Shared concepts (roofline, heatmaps, …) are **copied into each article folder that uses them**, so publishing never depends on a sibling directory. Regenerator cache: [`images/_source/`](images/_source/).
 
-## Paper-idea redraws (preferred over copying paper figures)
+On Medium: upload from that article’s folder; set `thumb.png` as the story cover.
 
-Original diagrams in [`images/papers/`](images/papers/) — **not** copied from PDFs. Each image credits the paper whose *idea* it teaches:
-
-| File | Inspired by |
-|------|-------------|
-| `vaswani_attention_redraw.png` | Vaswani et al. 2017 |
-| `williams_roofline_redraw.png` | Williams et al. 2009 |
-| `jacob_affine_quant_redraw.png` | Jacob et al. 2018 |
-| `frantar_gptq_redraw.png` | Frantar et al. 2022 (GPTQ) |
-| `lin_awq_redraw.png` | Lin et al. 2023 (AWQ) |
-| `dao_flashattention_redraw.png` | Dao et al. 2022/23 |
-| `milakov_online_softmax_redraw.png` | Milakov & Gimelshein 2018 |
-| `leviathan_speculative_redraw.png` | Leviathan / Chen 2023 |
-| `cai_medusa_redraw.png` | Cai et al. 2024 (Medusa) |
-| `ainslie_gqa_redraw.png` | Ainslie et al. 2023 |
-| `kwon_paged_attention_redraw.png` | Kwon et al. 2023 |
-| `pope_kv_scaling_redraw.png` | Pope et al. 2022 |
-
-Regenerate: `python scripts/plot_paper_redraws.py`
-
-## Stats (current)
-
-| Article | ~Words | Figures |
-|---------|-------:|--------:|
-| 00 Introduction | ~3,500+ | 15 |
-| 01 Weight quantization | ~3,300 | 14 |
-| 02 KV cache | ~3,200 | 8+ |
-| 03 Prefill / TTFT | ~3,000 | 8+ |
-| 04 Model ladder | ~3,000 | 6 |
-| 05 Full stack | ~3,100 | 7 |
-| 06 Speculative | ~2,800 | 6 |
-| 07 Context / RAG | ~2,600 | 9 |
-
-**Images:** 50+ PNGs under `images/` (result plots) and `images/workflows/` (paper-style diagrams).
-
-## Regenerate all figures
+## Regenerate figures
 
 ```bash
+# all articles
 ./scripts/regenerate_medium_images.sh "Mac M3"
-# or:
-python scripts/plot_medium_diagrams.py
-python scripts/plot_medium_charts.py --hardware "Mac M3"
-python scripts/plot_medium_deep.py
+
+# one article only (e.g. Part 1)
+./scripts/regenerate_medium_images.sh "Mac M3" 00
+./scripts/regenerate_medium_images.sh "Mac M3" 01-weight-quantization
 ```
 
 | Script | What it makes |
 |--------|----------------|
-| `plot_medium_diagrams.py` | How-it-works workflows (quant, KV, FlashAttention, speculative, …) |
+| `plot_medium_diagrams.py` | How-it-works workflows |
 | `plot_medium_charts.py` | Per-article result bars/scatters |
-| `plot_medium_deep.py` | Heatmaps, M3 vs M5, family panels, config matrices, workloads |
+| `plot_medium_deep.py` | Heatmaps, M3 vs M5, matrices, workloads |
+| `plot_paper_redraws.py` | Original paper-idea redraws (not PDF copies) |
+| `organize_medium_images.py` | Sync `_source` → per-article folders |
+| `medium_image_layout.py` | Manifest of which image belongs to which article |
+
+All plot scripts accept `--article 00` (or a full slug).
 
 ## Article structure (every post)
 
@@ -114,8 +86,8 @@ See [SCHEDULE.md](SCHEDULE.md) — Mon/Wed/Fri for 2 weeks (+ bonus).
 
 ## Publish on Medium
 
-1. Copy markdown body (skip YAML header)  
-2. Upload each referenced PNG from `images/` and `images/workflows/`  
+1. Open `publish/<slug>.medium.txt`  
+2. Upload each referenced PNG from `images/<slug>/`  
 3. Add tags from the footer  
 4. Link as a Series  
 

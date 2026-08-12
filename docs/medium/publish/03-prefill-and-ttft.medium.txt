@@ -6,7 +6,7 @@ Prefill vs. decode, FlashAttention intuition, and TTFT curves that go quadratic 
 
 Part 4 of 7 — Local LLMs on Apple Silicon
 
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_03_prefill_ttft.png
+FEATURED IMAGE: docs/medium/images/03-prefill-and-ttft/thumb.png
 CAPTION: Prefill & TTFT — Part 4
 
 ---
@@ -19,7 +19,7 @@ Often the real pain is earlier: time-to-first-token — the pause before the fir
 
 Prefill vs. Decode
 
-IMAGE: docs/medium/images/workflows/03_prefill_vs_decode.png
+IMAGE: docs/medium/images/03-prefill-and-ttft/prefill_vs_decode.png
 Figure — Two phases, two bottlenecks.
 
 • Prefill → TTFT
@@ -31,10 +31,10 @@ Optimize the wrong one and your "faster model" still feels broken.
 
 FlashAttention — Exact, Not Approximate
 
-IMAGE: docs/medium/images/papers/dao_flashattention_redraw.png
+IMAGE: docs/medium/images/03-prefill-and-ttft/flashattention.png
 Figure — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
 
-IMAGE: docs/medium/images/papers/milakov_online_softmax_redraw.png
+IMAGE: docs/medium/images/03-prefill-and-ttft/online_softmax.png
 Figure — Original redraw of online softmax (Milakov & Gimelshein, 2018).
 
 Fun fact: FlashAttention computes the same math as naive attention. It just refuses to materialize the giant score matrix in slow memory.
@@ -50,13 +50,13 @@ Llama 3.1 8B, W4, Mac M3:
 • p=1024 → ~5.8 s
 • p=2048 → ~15.4 s
 
-IMAGE: docs/medium/images/03_prefill_ttft.png
+IMAGE: docs/medium/images/03-prefill-and-ttft/prefill_ttft.png
 Figure — TTFT versus prompt shape.
 
-IMAGE: docs/medium/images/03_ttft_vs_prompt_curve.png
+IMAGE: docs/medium/images/03-prefill-and-ttft/ttft_vs_prompt_curve.png
 Figure — Measured TTFT versus a roughly quadratic reference.
 
-IMAGE: docs/medium/images/07_workload_ttft.png
+IMAGE: docs/medium/images/03-prefill-and-ttft/workload_ttft.png
 Figure — The rag_agent workload hits about 31 seconds TTFT on M3.
 
 That is why pasting a PDF into a local RAG demo often feels broken.

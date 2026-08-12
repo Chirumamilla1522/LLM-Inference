@@ -9,8 +9,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT / "scripts"))
+from medium_image_layout import SOURCE, add_article_arg, emit_file, resolve_article, source_keys_for_article  # noqa: E402
+
 RESULTS = ROOT / "results"
-OUT = ROOT / "docs" / "medium" / "images"
+OUT = SOURCE
+_ARTICLE: str | None = None
 
 
 def _safe(hw: str) -> str:
@@ -36,7 +41,11 @@ def _save(fig, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, dpi=150, bbox_inches="tight", facecolor="white")
     plt.close(fig)
-    print(f"Wrote {path}")
+    src_key = path.name
+    if _ARTICLE and src_key not in source_keys_for_article(_ARTICLE):
+        print(f"skip {src_key} (not used by {_ARTICLE})")
+        return
+    emit_file(src_key, path, article=_ARTICLE)
 
 
 def _style():
@@ -618,9 +627,12 @@ def plot_efficiency(m3: Path, out: Path) -> None:
 
 
 def main() -> int:
+    global _ARTICLE
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--output-dir", type=Path, default=OUT)
+    add_article_arg(parser)
     args = parser.parse_args()
+    _ARTICLE = resolve_article(args.article)
     try:
         import matplotlib  # noqa
     except ImportError:
@@ -630,20 +642,30 @@ def main() -> int:
     m3 = RESULTS / "Mac_M3"
     m5 = RESULTS / "Mac_M5_Max"
     out = args.output_dir
-    plot_heatmap_quant(m3, out)
-    plot_speedup_family(m3, out)
-    plot_m3_vs_m5_quant(m3, m5, out)
-    plot_ttft_heatmap_models(m3, out)
-    plot_full_stack_m5_matrix(m5, out)
-    plot_m3_m5_full_stack(m3, m5, out)
-    plot_speculative_m3_m5(m3, m5, out)
-    plot_model_ladder_m3_m5(m3, m5, out)
-    plot_context_deep(m3, m5, out)
-    plot_workloads_deep(m3, out)
-    plot_kv_long_gen(m3, out)
-    plot_runtime_compare(m3, m5, out)
-    plot_family_groups(m3, out)
-    plot_efficiency(m3, out)
+    for job in (
+        plot_heatmap_quant,
+        plot_speedup_family,
+        plot_m3_vs_m5_quant,
+        plot_ttft_heatmap_models,
+        plot_full_stack_m5_matrix,
+        plot_m3_m5_full_stack,
+        plot_speculative_m3_m5,
+        plot_model_ladder_m3_m5,
+        plot_context_deep,
+        plot_workloads_deep,
+        plot_kv_long_gen,
+        plot_runtime_compare,
+        plot_family_groups,
+        plot_efficiency,
+    ):
+        # Jobs that need (m3, m5, out) vs (m3, out) / (m5, out)
+        name = job.__name__
+        if name in {"plot_m3_vs_m5_quant", "plot_m3_m5_full_stack", "plot_speculative_m3_m5", "plot_model_ladder_m3_m5", "plot_context_deep", "plot_runtime_compare"}:
+            job(m3, m5, out)
+        elif name == "plot_full_stack_m5_matrix":
+            job(m5, out)
+        else:
+            job(m3, out)
     return 0
 
 

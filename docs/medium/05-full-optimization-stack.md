@@ -5,10 +5,10 @@ tags: LLM, Optimization, Performance, MLX, Apple Silicon, Engineering, Quantizat
 series: 6 of 7
 read_time: 20 min
 figures: 7
-thumbnail: images/thumbnails/thumb_05_full_stack.png
+thumbnail: images/05-full-optimization-stack/thumb.png
 ---
 
-![Cover — Full Optimization Stack](images/thumbnails/thumb_05_full_stack.png)
+![Cover — Full Optimization Stack](images/05-full-optimization-stack/thumb.png)
 
 # Stacking Optimizations: 3.5× Faster Than FP16 on a 24 GB Mac
 
@@ -49,7 +49,7 @@ Parts 5 (model ladder) answered *which* model to load. This part answers *which 
 
 Think of the stack as a funnel that narrows memory pressure while opening decode bandwidth:
 
-![Optimization funnel](images/workflows/05_optimization_funnel.png)
+![Optimization funnel](images/05-full-optimization-stack/optimization_funnel.png)
 
 *Figure 1 — Workflow: each layer adds a lever — weight bits shrink the model footprint, KV quant insures long-context growth, prefill tunes time-to-first-token, and the daily recipe is the combination that survives on your RAM budget.*
 
@@ -62,15 +62,15 @@ Order matters for *debugging*, even if the final config string is just `w4+kv_ca
 
 The decision tree below is the practical companion to the funnel — start from the symptom, not from the paper.
 
-![Decision tree](images/workflows/05_decision_tree.png)
+![Decision tree](images/05-full-optimization-stack/decision_tree.png)
 
 *Figure 2 — Workflow: pick the lever that matches your pain (RAM / TTFT / long generation).*
 
-![Roofline redraw](images/papers/williams_roofline_redraw.png)
+![Roofline redraw](images/05-full-optimization-stack/roofline.png)
 
 *Figure — **Original redraw** of Roofline (Williams et al., 2009): stacking works because decode is bandwidth-bound — cut bytes (w4), then insure KV, then tame prefill.*
 
-![PagedAttention for serving context](images/papers/kwon_paged_attention_redraw.png)
+![PagedAttention for serving context](images/_source/papers/kwon_paged_attention_redraw.png)
 
 *Figure — **Original redraw** of paged KV (Kwon et al., 2023): multi-user serving pages the cache; your laptop stack is the single-user cousin of the same memory problem.*
 
@@ -95,7 +95,7 @@ Default harness shape unless noted: **512 prompt tokens**, **128 generation toke
 | **fp16** | **16.33** | 2,689 | **5.6** | 1.00× |
 | **w4 + kv_cache + prefill** | **5.06** | 2,746 | **19.9** | **3.55×** |
 
-![Full stack llama](images/05_full_stack.png)
+![Full stack llama](images/05-full-optimization-stack/full_stack.png)
 
 *Figure 3 — Results (Mac M3, Llama 3.1 8B): fully optimized stack delivers ~31% of fp16 peak memory and **3.55×** decode throughput.*
 
@@ -111,11 +111,11 @@ Two observations jump out:
 | **fp16** | **14.77** | 4,350 | **3.6** | 1.00× |
 | **w4 + kv_cache + prefill** | **4.62** | 3,954 | **16.0** | **4.40×** |
 
-![Two models speed](images/05_full_stack_two_models.png)
+![Two models speed](images/05-full-optimization-stack/full_stack_two_models.png)
 
 *Figure 4 — Results (Mac M3): Llama 8B and Mistral 7B both jump hard when moved from fp16 to the optimized stack — Llama **5.6 → 19.9** tok/s, Mistral **3.6 → 16.0** tok/s.*
 
-![Two models memory](images/05_full_stack_memory.png)
+![Two models memory](images/05-full-optimization-stack/full_stack_memory.png)
 
 *Figure 5 — Results (Mac M3): both models drop from the mid-teens GB peak into the ~4.6–5.1 GB band — roughly a second small model’s worth of headroom.*
 
@@ -167,7 +167,7 @@ Numbers below are decode **tok/s** / **peak GB** (rounded). TTFT is ~150–190 m
 | w2 + kv | 162.3 | 3.26 | 157 |
 | w2 + kv + prefill | 161.5 | 3.26 | 157 |
 
-![M5 config matrix](images/05_m5_config_matrix.png)
+![M5 config matrix](images/05-full-optimization-stack/m5_config_matrix.png)
 
 *Figure 6 — Results (Mac M5 Max, Llama 3.1 8B): the 16-config sweep — weight bits dominate the tok/s ladder; KV/prefill flags barely change short-prompt decode and slightly tax it when enabled.*
 
@@ -184,7 +184,7 @@ Mistral 7B on the same M5 Max machine echoes the headline: fp16 ~**37** tok/s at
 
 ## M3 vs M5 Max: same stack, different planet
 
-![M3 vs M5 full stack](images/05_m3_m5_full_stack.png)
+![M3 vs M5 full stack](images/05-full-optimization-stack/m3_m5_full_stack.png)
 
 *Figure 7 — Results: Mac M3 vs Mac M5 Max on the full-stack contrast — absolute tok/s jumps by nearly an order of magnitude on M5, while the *relative* value of leaving fp16 stays huge on both.*
 

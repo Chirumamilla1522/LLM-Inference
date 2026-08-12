@@ -1,6 +1,6 @@
 TITLE: From 0.5B to 70B: What Fits on Apple Silicon
 SUBTITLE: A practical size ladder with M3 and M5 Max numbers
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_04_model_ladder.png
+FEATURED IMAGE: docs/medium/images/04-model-size-ladder/thumb.png
 FEATURED CAPTION: Model size ladder — Part 5
 SERIES: Local LLMs on Apple Silicon — Part 5 of 7
 TAGS: Machine Learning, LLM, Apple, Artificial Intelligence, Benchmark

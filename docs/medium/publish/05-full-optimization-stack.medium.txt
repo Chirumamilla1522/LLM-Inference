@@ -6,7 +6,7 @@ The daily-driver recipe on a 24 GB Mac — and the full M5 Max matrix
 
 Part 6 of 7 — Local LLMs on Apple Silicon
 
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_05_full_stack.png
+FEATURED IMAGE: docs/medium/images/05-full-optimization-stack/thumb.png
 CAPTION: Full optimization stack — Part 6
 
 ---
@@ -15,10 +15,10 @@ Blog posts love clean A/B tests.
 
 Real local inference turns several knobs at once.
 
-IMAGE: docs/medium/images/workflows/05_optimization_funnel.png
+IMAGE: docs/medium/images/05-full-optimization-stack/optimization_funnel.png
 Figure — Stacking funnel: FP16 → W4 → +KV → +prefill.
 
-IMAGE: docs/medium/images/workflows/05_decision_tree.png
+IMAGE: docs/medium/images/05-full-optimization-stack/decision_tree.png
 Figure — Pick the lever that matches your pain.
 
 ---
@@ -28,26 +28,26 @@ Headline Result — Mac M3, Llama 8B
 • FP16 — 16.3 GB · 5.6 tok/s
 • W4+KV+prefill — 5.1 GB · 19.9 tok/s (~3.5×)
 
-IMAGE: docs/medium/images/05_full_stack.png
+IMAGE: docs/medium/images/05-full-optimization-stack/full_stack.png
 Figure — FP16 versus optimized.
 
-IMAGE: docs/medium/images/05_full_stack_two_models.png
+IMAGE: docs/medium/images/05-full-optimization-stack/full_stack_two_models.png
 Figure — Llama and Mistral both jump when stacked.
 
-IMAGE: docs/medium/images/05_full_stack_memory.png
+IMAGE: docs/medium/images/05-full-optimization-stack/full_stack_memory.png
 Figure — Both models drop to about 5 GB peak.
 
 ---
 
 M5 Max: The 16-Config Matrix
 
-IMAGE: docs/medium/images/05_m5_config_matrix.png
+IMAGE: docs/medium/images/05-full-optimization-stack/m5_config_matrix.png
 Figure — Llama 8B full config matrix on M5 Max.
 
-IMAGE: docs/medium/images/05_m3_m5_full_stack.png
+IMAGE: docs/medium/images/05-full-optimization-stack/m3_m5_full_stack.png
 Figure — Same stack on M3 versus M5 Max.
 
-IMAGE: docs/medium/images/papers/williams_roofline_redraw.png
+IMAGE: docs/medium/images/05-full-optimization-stack/roofline.png
 Figure — Original Roofline redraw: stacking works because decode is bandwidth-bound.
 
 ---

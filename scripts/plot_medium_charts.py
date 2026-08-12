@@ -9,8 +9,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT / "scripts"))
+from medium_image_layout import SOURCE, add_article_arg, emit_file, resolve_article, source_keys_for_article  # noqa: E402
+
 RESULTS_DIR = ROOT / "results"
-OUT_DIR = ROOT / "docs" / "medium" / "images"
+OUT_DIR = SOURCE
+_ARTICLE: str | None = None
+
+
+def _emit(output: Path) -> None:
+    src_key = output.name  # flat chart assets
+    if _ARTICLE and src_key not in source_keys_for_article(_ARTICLE):
+        print(f"skip {src_key} (not used by {_ARTICLE})")
+        return
+    emit_file(src_key, output, article=_ARTICLE)
 
 
 def _safe_hw(hardware: str) -> str:
@@ -61,7 +74,7 @@ def _bar_chart(
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print(f"Wrote {output}")
+    _emit(output)
 
 
 def _grouped_bars(
@@ -91,7 +104,7 @@ def _grouped_bars(
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print(f"Wrote {output}")
+    _emit(output)
 
 
 def plot_article_0(hw: str, hw_dir: Path, out: Path) -> None:
@@ -338,7 +351,7 @@ def plot_extra_results(hw_dir: Path, out: Path) -> None:
         out.mkdir(parents=True, exist_ok=True)
         fig.savefig(out / "01_pareto_memory_speed.png", dpi=150, bbox_inches="tight")
         plt.close(fig)
-        print(f"Wrote {out / '01_pareto_memory_speed.png'}")
+        _emit(out / "01_pareto_memory_speed.png")
 
     # Speedup vs fp16
     base = _load(hw_dir / "article_01_weight-quantization" / "llama3-8b" / "fp16.json")
@@ -384,7 +397,7 @@ def plot_extra_results(hw_dir: Path, out: Path) -> None:
         fig.tight_layout()
         fig.savefig(out / "07_context_dual_axis.png", dpi=150, bbox_inches="tight")
         plt.close(fig)
-        print(f"Wrote {out / '07_context_dual_axis.png'}")
+        _emit(out / "07_context_dual_axis.png")
 
     # Workload bar chart
     workloads = [
@@ -492,7 +505,7 @@ def plot_extra_results(hw_dir: Path, out: Path) -> None:
         fig.tight_layout()
         fig.savefig(out / "04_ladder_scatter.png", dpi=150, bbox_inches="tight")
         plt.close(fig)
-        print(f"Wrote {out / '04_ladder_scatter.png'}")
+        _emit(out / "04_ladder_scatter.png")
 
     # Prefill: TTFT vs prompt as line + quadratic reference
     base3 = hw_dir / "article_03_prefill-ttft" / "llama3-8b"
@@ -524,7 +537,7 @@ def plot_extra_results(hw_dir: Path, out: Path) -> None:
         fig.tight_layout()
         fig.savefig(out / "03_ttft_vs_prompt_curve.png", dpi=150, bbox_inches="tight")
         plt.close(fig)
-        print(f"Wrote {out / '03_ttft_vs_prompt_curve.png'}")
+        _emit(out / "03_ttft_vs_prompt_curve.png")
 
     # Speculative: memory + speed for qwen
     preset = "qwen-7b"
@@ -544,10 +557,13 @@ def plot_extra_results(hw_dir: Path, out: Path) -> None:
 
 
 def main() -> int:
+    global _ARTICLE
     parser = argparse.ArgumentParser()
     parser.add_argument("--hardware", default="Mac M3")
     parser.add_argument("-o", "--output-dir", type=Path, default=OUT_DIR)
+    add_article_arg(parser)
     args = parser.parse_args()
+    _ARTICLE = resolve_article(args.article)
 
     try:
         import matplotlib  # noqa: F401
@@ -557,15 +573,35 @@ def main() -> int:
 
     hw_dir = RESULTS_DIR / _safe_hw(args.hardware)
     out = args.output_dir
-    plot_article_0(args.hardware, hw_dir, out)
-    plot_article_1(hw_dir, out)
-    plot_article_2(hw_dir, out)
-    plot_article_3(hw_dir, out)
-    plot_article_4(hw_dir, out)
-    plot_article_5(hw_dir, out)
-    plot_article_6(hw_dir, out)
-    plot_article_7(hw_dir, out)
-    plot_extra_results(hw_dir, out)
+    jobs = [
+        ("00-introduction", plot_article_0, True),  # needs hw string
+        ("01-weight-quantization", plot_article_1, False),
+        ("02-kv-cache-quantization", plot_article_2, False),
+        ("03-prefill-and-ttft", plot_article_3, False),
+        ("04-model-size-ladder", plot_article_4, False),
+        ("05-full-optimization-stack", plot_article_5, False),
+        ("06-speculative-decoding", plot_article_6, False),
+        ("07-context-and-cache", plot_article_7, False),
+    ]
+    for slug, fn, needs_hw in jobs:
+        if _ARTICLE and slug != _ARTICLE:
+            continue
+        if needs_hw:
+            fn(args.hardware, hw_dir, out)
+        else:
+            fn(hw_dir, out)
+    # extras may feed multiple articles — always run unless filtered emit skips
+    if not _ARTICLE or _ARTICLE in {
+        "00-introduction",
+        "01-weight-quantization",
+        "02-kv-cache-quantization",
+        "03-prefill-and-ttft",
+        "04-model-size-ladder",
+        "05-full-optimization-stack",
+        "06-speculative-decoding",
+        "07-context-and-cache",
+    }:
+        plot_extra_results(hw_dir, out)
     return 0
 
 

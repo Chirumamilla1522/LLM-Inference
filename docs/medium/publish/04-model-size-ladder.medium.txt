@@ -6,7 +6,7 @@ A practical size ladder with M3 and M5 Max numbers
 
 Part 5 of 7 — Local LLMs on Apple Silicon
 
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_04_model_ladder.png
+FEATURED IMAGE: docs/medium/images/04-model-size-ladder/thumb.png
 CAPTION: Model size ladder — Part 5
 
 ---
@@ -16,7 +16,7 @@ CAPTION: Model size ladder — Part 5
 1. Will it fit?
 2. Will it be fast enough?
 
-IMAGE: docs/medium/images/workflows/04_fit_ladder.png
+IMAGE: docs/medium/images/04-model-size-ladder/fit_ladder.png
 Figure — Decision ladder for 24 GB unified memory.
 
 ---
@@ -29,13 +29,13 @@ The W4 Ladder on Mac M3
 • Llama 8B — 21 tok/s · 5.1 GB
 • Gemma 9B — 15 tok/s · 5.9 GB
 
-IMAGE: docs/medium/images/04_model_size_ladder.png
+IMAGE: docs/medium/images/04-model-size-ladder/model_size_ladder.png
 Figure — Tokens/sec and memory across sizes at W4.
 
-IMAGE: docs/medium/images/04_ladder_scatter.png
+IMAGE: docs/medium/images/04-model-size-ladder/ladder_scatter.png
 Figure — Memory versus speed scatter.
 
-IMAGE: docs/medium/images/01_efficiency_tps_per_gb.png
+IMAGE: docs/medium/images/04-model-size-ladder/efficiency_tps_per_gb.png
 Figure — Efficiency = tok/s per GB at W4.
 
 Fun fact: Qwen 0.5B at W4 exceeds 238 tok/s on M3 — faster than most people type.
@@ -44,10 +44,10 @@ Fun fact: Qwen 0.5B at W4 exceeds 238 tok/s on M3 — faster than most people ty
 
 M5 Max Extends the Ladder
 
-IMAGE: docs/medium/images/04_m5_extended_ladder.png
+IMAGE: docs/medium/images/04-model-size-ladder/m5_extended_ladder.png
 Figure — M5 Max W4 ladder through larger models.
 
-IMAGE: docs/medium/images/01_m3_vs_m5_w4.png
+IMAGE: docs/medium/images/04-model-size-ladder/m3_vs_m5_w4.png
 Figure — Same checkpoints, different silicon.
 
 ---

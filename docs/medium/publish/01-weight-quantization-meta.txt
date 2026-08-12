@@ -1,6 +1,6 @@
 TITLE: 4-Bit Weights Changed Everything on My M3 Mac
 SUBTITLE: Affine quantization from the papers — then Pareto charts, heatmaps, and M3 vs. M5 Max numbers across 14 models
-FEATURED IMAGE: docs/medium/images/thumbnails/thumb_01_weight_quantization.png
+FEATURED IMAGE: docs/medium/images/01-weight-quantization/thumb.png
 FEATURED CAPTION: Weight quantization — Part 2
 SERIES: Local LLMs on Apple Silicon — Part 2 of 7
 TAGS: Machine Learning, Quantization, LLM, Apple, Artificial Intelligence

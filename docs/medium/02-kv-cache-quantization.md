@@ -5,10 +5,10 @@ tags: LLM, KV Cache, Memory, Apple Silicon, GQA, Inference, Transformers, MLX
 series: 3 of 7
 read_time: 20 min
 figures: 5
-thumbnail: images/thumbnails/thumb_02_kv_cache.png
+thumbnail: images/02-kv-cache-quantization/thumb.png
 ---
 
-![Cover — KV Cache Quantization](images/thumbnails/thumb_02_kv_cache.png)
+![Cover — KV Cache Quantization](images/02-kv-cache-quantization/thumb.png)
 
 # The Hidden Memory Hog: KV Cache Quantization
 
@@ -52,7 +52,7 @@ K_{1:t},\quad V_{1:t}
 
 and only appends the newest row each decode step.
 
-![KV cache workflow](images/workflows/02_kv_cache_workflow.png)
+![KV cache workflow](images/02-kv-cache-quantization/kv_cache_workflow.png)
 
 *Figure 1 — Workflow: after prefill, each decode step appends one K/V row per layer; cache size grows linearly with sequence length \(T\). Quantizing KV from 16-bit to 4-bit shrinks that footprint by roughly 4×.*
 
@@ -96,7 +96,7 @@ At \(T=32{,}768\) (a realistic long RAG / agent trace), FP16 KV is on the order 
 
 Understanding *when* KV bits matter requires seeing one decode step clearly.
 
-![Attention + KV](images/workflows/02_attention_with_cache.png)
+![Attention + KV](images/_source/workflows/02_attention_with_cache.png)
 
 *Figure 2 — Workflow: new token → project Q/K/V → append K/V to cache → softmax attention over the full history → output projection. Prefill builds the initial cache; decode only extends it.*
 
@@ -114,19 +114,19 @@ Before you touch bit-width, architecture already decided how fat the cache is.
 
 Classic **Multi-Head Attention (MHA)** uses one KV head per query head. Llama 3, Mistral, and Qwen 2.5 use **Grouped Query Attention (GQA)** (Ainslie et al., 2023): many query heads share a smaller set of KV heads. That directly shrinks \(H_{\text{kv}}\) in the formula above.
 
-![GQA vs MHA](images/workflows/02_gqa_vs_mha.png)
+![GQA vs MHA](images/_source/workflows/02_gqa_vs_mha.png)
 
 *Figure 3 — Workflow: MHA keeps a 1:1 Q/KV head ratio; GQA maps many Q heads onto fewer KV heads, cutting cache size before quantization.*
 
-![GQA paper redraw](images/papers/ainslie_gqa_redraw.png)
+![GQA paper redraw](images/02-kv-cache-quantization/gqa.png)
 
 *Figure — **Original redraw** of GQA vs MHA (idea from Ainslie et al., 2023). Llama 3 / Mistral / Qwen ship with fewer KV heads by design.*
 
-![Pope KV scaling redraw](images/papers/pope_kv_scaling_redraw.png)
+![Pope KV scaling redraw](images/02-kv-cache-quantization/kv_scaling.png)
 
 *Figure — **Original redraw** inspired by KV-scaling discussion in Pope et al. (2022): weights stay flat; KV grows with \(T\) until it matters.*
 
-![PagedAttention redraw](images/papers/kwon_paged_attention_redraw.png)
+![PagedAttention redraw](images/02-kv-cache-quantization/paged_attention.png)
 
 *Figure — **Original redraw** of the paged-KV idea (Kwon et al., 2023). Serving systems page KV into blocks; local MLX is simpler, but the fragmentation problem is the same math.*
 
@@ -158,7 +158,7 @@ Harness: MLX / mlx-lm, mlx-community 4-bit Instruct checkpoints, **1 warmup + 3 
 | Mistral 7B | 4.62 | **21.6** | **21.2** | 2,693 ms | 2,807 ms |
 | Qwen 2.5 7B | 4.72 | **21.8** | **21.4** | 2,560 ms | 2,632 ms |
 
-![KV compare bars](images/02_kv_cache_compare.png)
+![KV compare bars](images/02-kv-cache-quantization/kv_cache_compare.png)
 
 *Figure 4 — Results (Mac M3): short-context decode throughput for w4 vs w4+KV across three 7–8B models. Bars are nearly identical — the win is not in tok/s at \(T\approx 640\).*
 
@@ -182,7 +182,7 @@ We also ran Llama 3.1 8B **w4+KV** with **512 prompt + 512 generation** on M3:
 | w4+KV short | 512 | 128 | 5.06 | 2,773 ms | 20.4 |
 | w4+KV long-g | 512 | **512** | 5.06 | 3,054 ms | **~19.8** |
 
-![KV long generation](images/02_kv_long_generation.png)
+![KV long generation](images/02-kv-cache-quantization/kv_long_generation.png)
 
 *Figure — Results: short vs long generation with KV quant on Llama 8B (Mac M3).*
 
@@ -190,15 +190,15 @@ We also ran Llama 3.1 8B **w4+KV** with **512 prompt + 512 generation** on M3:
 
 Short-context Article 2 benches barely move tok/s. The pain shows up when prompts grow — exactly what Article 7 measures.
 
-![Context dual axis](images/07_context_dual_axis.png)
+![Context dual axis](images/02-kv-cache-quantization/context_dual_axis.png)
 
 *Figure — Results: as prompt length grows, TTFT explodes and decode tok/s decays (Mac M3). That is KV + attention pressure in the wild.*
 
-![Workload panels](images/07_workload_panels.png)
+![Workload panels](images/_source/07_workload_panels.png)
 
 *Figure — Results: workload stress matrix — `rag_agent` is the memory/latency villain; light chat is not.*
 
-![Context M3 M5](images/07_context_m3_m5_panels.png)
+![Context M3 M5](images/_source/07_context_m3_m5_panels.png)
 
 *Figure — Results: same context sweep on M3 vs M5 Max. Bigger silicon shrinks TTFT but does not erase the shape of the curve.*
 

@@ -5,10 +5,10 @@ tags: Quantization, LLM, Apple Silicon, MLX, GPTQ, AWQ, Performance
 series: 2 of 7
 read_time: 22 min
 figures: 13
-thumbnail: images/thumbnails/thumb_01_weight_quantization.png
+thumbnail: images/01-weight-quantization/thumb.png
 ---
 
-![Cover — 4-Bit Weights](images/thumbnails/thumb_01_weight_quantization.png)
+![Cover — 4-Bit Weights](images/01-weight-quantization/thumb.png)
 
 # 4-Bit Weights Changed Everything on My M3 Mac
 
@@ -51,19 +51,19 @@ q = \mathrm{clip}\left(\mathrm{round}\left(\frac{w}{s} + z\right),\ 0,\ 2^{b}-1\
 
 Group-wise scales keep dynamic range honest when a tensor has outliers. At inference time, kernels dequantize on the fly (or operate in low precision end-to-end) so you never materialize a full FP16 copy of the model if you do not need to.
 
-![Affine quantization workflow](images/workflows/01_affine_quantization.png)
+![Affine quantization workflow](images/_source/workflows/01_affine_quantization.png)
 
 *Figure 1 — Workflow: FP16/BF16 matrix → group-wise \((s, z)\) → packed INT\(b\) codes → dequantized matmul (Jacob et al.; GPTQ / AWQ family practice).*
 
-![Affine quant paper redraw](images/papers/jacob_affine_quant_redraw.png)
+![Affine quant paper redraw](images/01-weight-quantization/affine_quant.png)
 
 *Figure — **Original redraw** of affine quantization (Jacob et al., 2018): continuous weights → discrete levels via scale \(s\) and zero-point \(z\).*
 
-![GPTQ idea redraw](images/papers/frantar_gptq_redraw.png)
+![GPTQ idea redraw](images/01-weight-quantization/gptq.png)
 
 *Figure — **Original redraw** of the GPTQ idea (Frantar et al., 2022): quantize a column, compensate remaining weights (Hessian-aware). Not a copy of their paper figure.*
 
-![AWQ idea redraw](images/papers/lin_awq_redraw.png)
+![AWQ idea redraw](images/01-weight-quantization/awq.png)
 
 *Figure — **Original redraw** of the AWQ idea (Lin et al., 2023): protect activation-salient channels; quantize the rest more aggressively.*
 
@@ -85,7 +85,7 @@ In this harness we load **pre-quantized mlx-community checkpoints** (`*4bit`, `*
 
 Quantization is not only about fitting. During decode, each step often reads nearly **all weights** from DRAM. Roofline intuition: LLM decode is frequently **memory-bandwidth limited**, not FLOPS-limited. Fewer bytes per weight → more tokens per second on the same bus.
 
-![Bandwidth-bound intuition](images/workflows/01_bandwidth_bound.png)
+![Bandwidth-bound intuition](images/_source/workflows/01_bandwidth_bound.png)
 
 *Figure 2 — Workflow: Roofline sketch — when arithmetic intensity is low, bandwidth caps tok/s; shrinking weight bytes moves you rightward in effective throughput.*
 
@@ -110,15 +110,15 @@ Weights-only sweep (`article_01`), prompt 512 / gen 128, medians of 3 trials aft
 | **w4** | 5.06 GB | 2,738 ms | **20.5** | **3.5×** |
 | **w2** | 3.11 GB | 2,826 ms | **35.8** | **6.2×** |
 
-![Llama weight quant bars](images/01_weight_quant_llama3-8b.png)
+![Llama weight quant bars](images/01-weight-quantization/llama_weight_quant.png)
 
 *Figure 3 — Results: Llama 3.1 8B on Mac M3 — memory roughly halves each major bit-width step while decode throughput climbs.*
 
-![Speedup vs fp16](images/01_speedup_vs_fp16.png)
+![Speedup vs fp16](images/01-weight-quantization/speedup_vs_fp16.png)
 
 *Figure 4 — Results: explicit speedup factors for w8 / w4 / w2 versus FP16 on Llama 3.1 8B (M3).*
 
-![Pareto memory vs speed](images/01_pareto_memory_speed.png)
+![Pareto memory vs speed](images/01-weight-quantization/pareto_memory_speed.png)
 
 *Figure 5 — Results: memory–speed Pareto frontier. **w4** is the practical knee on 24 GB; w2 is faster still but quality risk rises.*
 
@@ -170,27 +170,27 @@ These are the M3-friendly presets from the Article 1 sweep (smallest → largest
 | DeepSeek-R1 Llama 8B | 16.33 | 8.96 | **5.06** | — |
 | Gemma 2 9B | 10.51 | 10.51 | **5.88** | — |
 
-![Multi-model quant throughput](images/01_multi_model_quant_tps.png)
+![Multi-model quant throughput](images/_source/01_multi_model_quant_tps.png)
 
 *Figure 6 — Results: fp16 vs w8 vs w4 decode throughput across the multi-model sweep. Smaller models win absolute tok/s; nearly everyone gains from w4.*
 
-![Heatmap tok/s](images/01_heatmap_tps.png)
+![Heatmap tok/s](images/01-weight-quantization/heatmap_tps.png)
 
 *Figure 7 — Results: decode tok/s heatmap — all models × weight configs (Mac M3). Brighter = faster.*
 
-![Heatmap memory](images/01_heatmap_memory.png)
+![Heatmap memory](images/01-weight-quantization/heatmap_memory.png)
 
 *Figure 8 — Results: peak memory heatmap — all models × weight configs (Mac M3). Darker low-memory cells cluster at w4/w2.*
 
-![Speedup all models](images/01_speedup_all_models.png)
+![Speedup all models](images/01-weight-quantization/speedup_all_models.png)
 
 *Figure 9 — Results: w4 speedup versus fp16 across models. Most land near ~3–3.6×; Gemma/Phi packaging quirks show lower ratios when “fp16” was already an 8-bit checkpoint.*
 
-![TTFT all models](images/01_ttft_all_models.png)
+![TTFT all models](images/_source/01_ttft_all_models.png)
 
 *Figure 10 — Results: TTFT across models/configs. Bit-width is not the main TTFT story — model size and prefill dominate.*
 
-![Efficiency tok/s per GB](images/01_efficiency_tps_per_gb.png)
+![Efficiency tok/s per GB](images/_source/01_efficiency_tps_per_gb.png)
 
 *Figure 11 — Results: efficiency view (tok/s per GB peak). Tiny Qwen/Llama models look absurdly good; 7–9B w4 is the practical efficiency band for quality.*
 
@@ -228,7 +228,7 @@ Same weights-only methodology on **Mac M5 Max**. Absolute speed jumps; memory fo
 | w4 | 20.5 | **112.1** | **5.5×** |
 | w2 | 35.8 | **176.3** | 4.9× |
 
-![Llama M3 vs M5 all bits](images/01_llama_m3_m5_all_bits.png)
+![Llama M3 vs M5 all bits](images/01-weight-quantization/llama_m3_m5_all_bits.png)
 
 *Figure 12 — Results: Llama 3.1 8B decode across fp16/w8/w4/w2 on M3 vs M5 Max. The shape of the curve is similar; the y-axis just got taller.*
 
@@ -241,7 +241,7 @@ Same weights-only methodology on **Mac M5 Max**. Absolute speed jumps; memory fo
 | Qwen2.5 7B | 21.8 | **121.4** | 5.6× |
 | Llama 3.1 8B | 20.5 | **112.1** | 5.5× |
 
-![M3 vs M5 w4](images/01_m3_vs_m5_w4.png)
+![M3 vs M5 w4](images/01-weight-quantization/m3_vs_m5_w4.png)
 
 *Figure 13 — Results: w4 decode throughput on M3 vs M5 Max for representative presets. Mid-size models see ~5–5.6×; the tiniest models show smaller ratios (already less bandwidth-starved on M3).*
 
@@ -257,7 +257,7 @@ M5 Max also unlocks larger presets in the same article folder (12B–70B-class) 
 
 ## Family-by-family analysis
 
-![Family panels](images/01_family_panels.png)
+![Family panels](images/01-weight-quantization/family_panels.png)
 
 *Figure 14 — Results: family panels — Qwen / Llama / Mistral / Phi / Gemma / DeepSeek distill behavior under weight quantization on M3.*
 
@@ -368,7 +368,7 @@ Primary artifacts:
 
 - `results/Mac_M3/article_01_weight-quantization/<preset>/{fp16,w8,w4,w2}.json`  
 - `results/Mac_M5_Max/article_01_weight-quantization/...`  
-- Figures under `docs/medium/images/01_*.png` and `docs/medium/images/workflows/01_*.png`
+- Figures under `docs/medium/images/01_*.png` and `docs/medium/images/_source/workflows/01_*.png`
 
 ---
 
