@@ -1,78 +1,78 @@
 ---
 title: "Stacking Optimizations: 3.5× Faster Than FP16"
-subtitle: "Combining weight quant, KV cache, and prefill on Llama 3.1 8B"
+subtitle: "The funnel from fp16 → w4+kv+prefill, plus a decision tree for when to enable what"
 tags: LLM, Optimization, Performance, MLX, Apple Silicon, Engineering
 series: 6 of 7
-read_time: 8 min
+read_time: 11 min
+figures: 6
 ---
 
 # Stacking Optimizations: 3.5× Faster Than FP16
 
 *Part 6 of 7 — Local LLMs on Apple Silicon*
 
-Individual optimizations are easy to understand in isolation. Production local inference uses **all of them together**:
-
-```
-fp16 baseline  →  w4 weights  →  + KV quant  →  + prefill tuning
-     5 tok/s         20 tok/s        ~same           better TTFT at long ctx
-```
-
-This post is the **capstone** of the benchmark series: one table that shows the combined effect on Llama 3.1 8B and Mistral 7B.
+Individual optimizations are easy in isolation. Production local inference uses **all of them together**.
 
 ---
 
-## Llama 3.1 8B: fp16 vs fully optimized
+## The funnel (how stacking works)
 
-| Config | Label | Peak GB | TTFT | tok/s |
-|--------|-------|---------|------|-------|
-| fp16 | baseline | **16.33** | 2,689 ms | **5.6** |
-| w4 + kv_cache + prefill | optimized | **5.06** | 2,746 ms | **19.9** |
+![Optimization funnel](images/workflows/05_optimization_funnel.png)
 
-![Full stack comparison](images/05_full_stack.png)
+*Figure 1 — Workflow: each layer adds a lever — weights → KV → prefill → daily recipe.*
 
-*Figure 1: Optimized stack uses ~31% of fp16 memory and delivers 3.5× decode throughput.*
+![Decision tree](images/workflows/05_decision_tree.png)
 
-**Memory saved:** 11.3 GB — enough to run a second small model or a large KV cache for RAG.
-
-**Speed gained:** 19.9 / 5.6 = **3.55×** decode throughput.
-
-TTFT is similar at 512-token prompts because prefill and decode trade off differently at this length — the win is sustained generation speed and RAM headroom.
+*Figure 2 — Workflow: pick the lever that matches your pain (RAM / TTFT / long generation).*
 
 ---
 
-## Mistral 7B: same story
+## Results: Llama 3.1 8B — fp16 vs fully optimized
 
 | Config | Peak GB | TTFT | tok/s |
 |--------|---------|------|-------|
-| fp16 | 14.77 | 4,350 ms | 3.6 |
-| w4 + kv + prefill | 4.62 | 3,954 ms | **16.0** |
+| fp16 | **16.33** | 2,689 ms | **5.6** |
+| w4 + kv_cache + prefill | **5.06** | 2,746 ms | **19.9** |
 
-Mistral’s fp16 decode was slower in our run (3.6 tok/s) — possibly thermal or scheduling variance — but the **optimized stack still delivers 4.4×** improvement.
+![Full stack llama](images/05_full_stack.png)
+
+*Figure 3 — Results: ~31% of fp16 memory, **3.55×** decode throughput.*
+
+![Two models speed](images/05_full_stack_two_models.png)
+
+*Figure 4 — Results: Llama 8B and Mistral 7B both jump hard when optimized.*
+
+![Two models memory](images/05_full_stack_memory.png)
+
+*Figure 5 — Results: both models drop from ~15–16 GB → ~5 GB peak.*
+
+**Memory saved:** ~11 GB — enough for a second small model or a fat RAG KV cache.  
+**Speed gained:** 19.9 / 5.6 ≈ **3.55×**.
 
 ---
 
 ## The 16-config matrix
 
-Our repo sweeps **all combinations** of:
+We sweep:
 
 | Axis | Options |
 |------|---------|
 | Weight bits | fp16, w8, w4, w2 |
-| KV cache quant | on / off |
-| Prefill tuning | on / off |
+| KV quant | on / off |
+| Prefill | on / off |
 
-That is \(4 \times 2 \times 2 = 16\) configs per model. Article 5 runs this full matrix across 14+ presets on M3 and M5 Max — hundreds of JSON files you can diff in Git.
+→ \(4 × 2 × 2 = 16\) configs per model across 14+ presets on M3 and M5 Max.
 
-> **Fun fact:** The full M3 sweep (articles 0–7) can take **2–8 hours** depending on thermals and HF cache state. Each config runs in an isolated subprocess so one Metal OOM does not kill the batch — learned the hard way.
+> **Fun fact:** A full M3 article sweep can take **2–8 hours**. Each config runs in an isolated subprocess so one Metal OOM does not kill the batch.
 
 ---
 
-## Recommended “optimized” recipe for 24 GB Mac
+## Recommended daily recipe (24 GB Mac)
 
 ```text
-Config label: w4+kv_cache+prefill
-Model: llama3-8b (or mistral-7b, qwen-7b)
-Expected: ~5 GB peak, ~18–21 tok/s decode
+Config: w4+kv_cache+prefill
+Model:  llama3-8b / mistral-7b / qwen-7b
+Expect: ~5 GB peak, ~18–21 tok/s
 ```
 
 ```bash
@@ -82,22 +82,18 @@ python scripts/run_benchmark.py \
   --hardware "Mac M3"
 ```
 
----
-
-## When *not* to stack everything
-
 | Situation | Skip | Why |
 |-----------|------|-----|
-| Short prompts only | KV quant | Negligible cache size |
-| Max quality eval | fp16 or w8 | Quant affects benchmarks |
+| Short prompts only | KV quant | Tiny cache |
+| Max quality eval | fp16 / w8 | Quant affects scores |
 | Tiny models (<3B) | prefill | Already fast TTFT |
-| 16 GB RAM Mac | fp16 anything 8B+ | Will swap |
+| 16 GB Mac | fp16 8B+ | Will swap |
 
 ---
 
-## What comes next
+## Next lever
 
-Individual levers are covered. Part 7 explores **speculative decoding** — a different axis that can boost tok/s **without** changing weight precision, by drafting tokens with a small model and verifying with the large one.
+Part 7 adds **speculative decoding** — a draft model that boosts tok/s **without** changing weight precision.
 
 ---
 
@@ -106,11 +102,10 @@ Individual levers are covered. Part 7 explores **speculative decoding** — a di
 1. Frantar et al., *GPTQ* (2022) — [arXiv:2210.17323](https://arxiv.org/abs/2210.17323)  
 2. Kwon et al., *PagedAttention* (2023) — [arXiv:2309.06180](https://arxiv.org/abs/2309.06180)  
 3. Dao et al., *FlashAttention* (2022) — [arXiv:2205.14135](https://arxiv.org/abs/2205.14135)  
-4. LLM-Inference repo — [github.com/Chirumamilla1522/LLM-Inference](https://github.com/Chirumamilla1522/LLM-Inference)  
+4. LLM-Inference — [github.com/Chirumamilla1522/LLM-Inference](https://github.com/Chirumamilla1522/LLM-Inference)  
 
 ---
 
-**← Previous:** [Part 5: Model Size Ladder](04-model-size-ladder.md)  
-**Next →** [Part 7: Speculative Decoding](06-speculative-decoding.md)
+**← Previous:** [Part 5](04-model-size-ladder.md) · **Next →** [Part 7: Speculative Decoding](06-speculative-decoding.md)
 
-**Tags:** `LLM` `Optimization` `Performance` `MLX` `Apple Silicon` `Engineering`
+**Tags:** `LLM` `Optimization` `Performance` `MLX` `Apple Silicon`

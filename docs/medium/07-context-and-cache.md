@@ -1,102 +1,106 @@
 ---
 title: "The RAG Wall: Context Length, KV Growth, and Prefix Caching"
-subtitle: "Why long prompts hurt — and how to skip re-processing system instructions"
-tags: LLM, RAG, Context Window, KV Cache, Caching, Apple Silicon
+subtitle: "Quadratic TTFT, workload stress tests, and cold vs warm system-prompt caching"
+tags: LLM, RAG, Context Window, KV Cache, Caching, Apple Silicon, Latency
 series: Bonus (Week 3)
-read_time: 10 min
+read_time: 13 min
+figures: 7
 ---
 
 # The RAG Wall: Context Length, KV Growth, and Prefix Caching
 
 *Bonus — Local LLMs on Apple Silicon*
 
-Short prompts hide a lot of sins. The moment you paste a PDF into a local RAG app, three forces collide:
+Short prompts hide a lot of sins. Paste a PDF into a local RAG app and three forces collide:
 
-1. **Prefill cost** grows ~quadratically with context  
-2. **KV cache memory** grows linearly — and adds up  
-3. **Decode throughput** drops as attention spans more tokens  
-
-This post covers Article 7 benchmarks: prompt-length sweeps, generation-length stress tests, **prefix KV caching**, and realistic workloads from light chat to heavy RAG.
+1. **Prefill** grows ~quadratically with context  
+2. **KV memory** grows linearly  
+3. **Decode tok/s** falls as attention spans more tokens  
 
 ---
 
-## Prompt length vs TTFT (Llama 3.1 8B, w4+prefill)
+## The RAG wall (workflow)
 
-| Prompt tokens | TTFT | Decode tok/s | Peak GB |
-|---------------|------|--------------|---------|
+![RAG wall](images/workflows/07_rag_wall.png)
+
+*Figure 1 — Workflow: retrieve → stuff 2K+ tokens → O(T²) prefill → 15–30s TTFT.*
+
+---
+
+## Results: prompt length vs TTFT
+
+| Prompt | TTFT | tok/s | Peak GB |
+|--------|------|-------|---------|
 | 256 | 1,406 ms | 20.3 | 4.92 |
 | 512 | 2,839 ms | 20.5 | 5.06 |
 | 1024 | 6,503 ms | 14.9 | 5.24 |
 | 2048 | **15,355 ms** | 11.9 | 5.35 |
 
-![Context length vs TTFT](images/07_context_ttft.png)
+![Context TTFT bars](images/07_context_ttft.png)
 
-*Figure 1: TTFT crosses 15 seconds at 2048 tokens — the “RAG wall” on local 8B models.*
+*Figure 2 — Results: TTFT crosses 15 seconds at 2048 tokens.*
 
-> **Fun fact:** GPT-4’s API charges more for long contexts partly because **prefill FLOPs scale super-linearly** — you are paying for attention over every token in your retrieved chunks, every request, unless you cache.
+![Dual axis](images/07_context_dual_axis.png)
+
+*Figure 3 — Results: TTFT explodes while decode tok/s slowly decays.*
+
+> **Fun fact:** API pricing for long context partly reflects **super-linear prefill cost** — you pay for attention over every retrieved chunk unless something is cached.
 
 ---
 
 ## Prefix KV cache: cold vs warm
 
-Split your prompt into a **fixed system prefix** (instructions, tool schemas) and a **variable user suffix**.
+Split the prompt into a **fixed system prefix** and a **variable user suffix**.
 
-| Mode | TTFT | What happened |
-|------|------|---------------|
-| Cold (full prefill) | **3,180 ms** | Process 256 system + user tokens |
-| Warm (cached prefix) | **1,547 ms** | Load cached KV for 256 system tokens; prefill user only |
+![Prefix cache workflow](images/workflows/07_prefix_cache_workflow.png)
 
-![Prefix cache cold vs warm](images/07_prefix_cache.png)
+*Figure 4 — Workflow: cold = full prefill every turn; warm = load cached KV for system prefix.*
 
-*Figure 2: ~51% TTFT reduction by reusing system-prompt KV across turns.*
+| Mode | TTFT |
+|------|------|
+| Cold | **3,180 ms** |
+| Warm | **1,547 ms** (~51% faster) |
 
-MLX exposes this via `save_prompt_cache` / `load_prompt_cache` in mlx-lm — our harness runs it with `--prefix-cache`.
+![Prefix cache bars](images/07_prefix_cache.png)
 
-**When it helps:** Multi-turn chat with a fat system prompt, agent tool definitions, or repeated RAG templates where only the user query changes.
+*Figure 5 — Results: ~2× TTFT win by reusing system-prompt KV across turns.*
+
+MLX APIs: `save_prompt_cache` / `load_prompt_cache` (mlx-lm). Harness flag: `--prefix-cache`.
 
 ---
 
 ## Workload stress matrix
 
-Beyond synthetic `-p` / `-g` flags, we run **realistic workload profiles**:
+| Workload | Pressure | TTFT | tok/s |
+|----------|----------|------|-------|
+| chat_light | decode | 1.5 s | 13.5 |
+| chat_standard | balanced | 4.0 s | 13.4 |
+| complete_code | balanced | 2.1 s | 17.3 |
+| summarize_long | prefill | 15.9 s | 10.2 |
+| **rag_agent** | memory | **31.1 s** | 11.3 |
 
-| Workload | Pressure | TTFT | tok/s | Notes |
-|----------|----------|------|-------|-------|
-| chat_light | decode | 1,518 ms | 13.5 | Short turns |
-| chat_standard | balanced | 4,031 ms | 13.4 | Typical chat |
-| complete_code | balanced | 2,071 ms | 17.3 | Code completion shape |
-| summarize_long | prefill | 15,897 ms | 10.2 | Long input doc |
-| **rag_agent** | memory | **31,118 ms** | 11.3 | Heavy retrieval context |
+![Workload TTFT](images/07_workload_ttft.png)
 
-The **rag_agent** workload is the stress test: 31-second TTFT before the first token. That is unusable for interactive UX without caching, chunking, or a smaller model.
+*Figure 6 — Results: rag_agent is unusable for interactive UX without caching/chunking.*
+
+![Generation length](images/07_generation_length.png)
+
+*Figure 7 — Results: longer generations slightly slow decode as KV grows (w4+kv_cache).*
 
 ---
 
-## Three levers (same math, different code)
+## Mitigation checklist
 
-| Lever | Flag / API | Fixes |
-|-------|------------|-------|
-| Shorter context | `-p`, better chunking | TTFT |
-| KV quant | `w4+kv_cache` | Memory at long T |
+| Lever | How | Fixes |
+|-------|-----|-------|
+| Retrieve less | top-3 not top-20 | TTFT |
 | Prefix cache | `--prefix-cache` | Repeat system prompt |
-| Smaller model | `--preset qwen-1.5b` | Everything (quality tradeoff) |
-
----
-
-## Practical RAG on 24 GB Mac
-
-1. **Retrieve less** — top-3 chunks, not top-20  
-2. **Cache system + tool prefix** — prefix KV cache  
-3. **Use w4 + kv_cache** — headroom for long KV  
-4. **Consider 3B–7B router + 8B generator** — route easy queries to fast model  
-
----
-
-## Reproduce
+| KV quant | `w4+kv_cache` | Long-T memory |
+| Smaller router | 0.5B–1.5B | Easy queries |
+| Speculative decode | draft model | Long answers |
 
 ```bash
 ./scripts/run_article.sh 7 "Mac M3"
-
 python scripts/run_benchmark.py --preset llama3-8b --config w4 \
   --prefix-cache --hardware "Mac M3"
 ```
@@ -113,7 +117,6 @@ python scripts/run_benchmark.py --preset llama3-8b --config w4 \
 
 ---
 
-**← Series start:** [Part 1: Introduction](00-introduction.md)  
-**← Previous:** [Part 7: Speculative Decoding](06-speculative-decoding.md)
+**← Series start:** [Part 1](00-introduction.md) · **← Previous:** [Part 7](06-speculative-decoding.md)
 
 **Tags:** `LLM` `RAG` `Context Window` `KV Cache` `Caching` `Apple Silicon`
