@@ -1,0 +1,7 @@
+TITLE: Stacking Optimizations: 3.5× Faster Than FP16
+SUBTITLE: The daily-driver recipe on a 24 GB Mac — and the full M5 Max matrix
+SERIES: Local LLMs on Apple Silicon — Part 6 of 7
+COVER: ../images/thumbnails/thumb_05_full_stack.png
+TAGS: Machine Learning, Optimization, LLM, Apple, Artificial Intelligence
+READ_TIME_TARGET: 8–12 min
+NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).

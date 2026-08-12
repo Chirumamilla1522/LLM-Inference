@@ -1,0 +1,7 @@
+TITLE: Draft Models: Free Speed Without Retraining
+SUBTITLE: 74% acceptance and 1.8× on Qwen — plus the case where speculation got slower
+SERIES: Local LLMs on Apple Silicon — Part 7 of 7
+COVER: ../images/thumbnails/thumb_06_speculative.png
+TAGS: Machine Learning, LLM, Optimization, Apple, Artificial Intelligence
+READ_TIME_TARGET: 8–12 min
+NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).

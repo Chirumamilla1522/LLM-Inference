@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Running 8B LLMs on a MacBook: What Actually Matters</title>
+  <meta name="description" content="Unified memory, the metrics that matter, and a brutal FP16 baseline on Apple Silicon" />
+  <style>
+    /* Preview only — Medium strips CSS on paste. Keep structure semantic. */
+    body { font-family: Georgia, 'Times New Roman', serif; max-width: 740px;
+           margin: 2rem auto; padding: 0 1.25rem; line-height: 1.7; color: #242424; }
+    h1 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         font-size: 2.4rem; line-height: 1.15; margin-bottom: 0.4rem; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-size: 1.25rem; color: #6b6b6b; margin-bottom: 1.5rem; }
+    .series { font-style: italic; color: #6b6b6b; margin-bottom: 2rem; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         font-size: 1.55rem; margin-top: 2.4rem; line-height: 1.25; }
+    p { font-size: 1.2rem; margin: 1.1rem 0; }
+    blockquote { border-left: 3px solid #242424; margin: 1.8rem 0; padding: 0.2rem 0 0.2rem 1.2rem;
+                 font-style: italic; font-size: 1.35rem; }
+    figure { margin: 2rem 0; }
+    figcaption { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                 font-size: 0.95rem; color: #6b6b6b; margin-top: 0.6rem; text-align: center; }
+    img { max-width: 100%; height: auto; }
+    ul, ol { font-size: 1.15rem; }
+    li { margin: 0.4rem 0; }
+    .img-slot { background: #f2f2f2; border: 1px dashed #bbb; padding: 1.2rem; text-align: center;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.9rem; color: #666; }
+    .cta { background: #fafafa; padding: 1.2rem 1.4rem; margin: 2.5rem 0; border-radius: 4px; }
+    .tags { color: #6b6b6b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+<article>
+  <p class="series">Local LLMs on Apple Silicon — Part 1 of 7</p>
+  <h1>Running 8B LLMs on a MacBook: What Actually Matters</h1>
+  <p class="subtitle">Unified memory, the metrics that matter, and a brutal FP16 baseline on Apple Silicon</p>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/thumbnails/thumb_00_introduction.png</code></div>
+    <img src="../images/thumbnails/thumb_00_introduction.png" alt="Wide cover — use as Medium story header" />
+    <figcaption>Wide cover — use as Medium story header</figcaption>
+  </figure>
+
+  <p>I loaded Meta’s Llama 3.1 8B on a MacBook Pro and watched Activity Monitor go red.</p>
+  <p>No cloud bill. No NVIDIA card. The model ran.</p>
+  <p>It also felt like dial-up: about <strong>5 tokens per second</strong>, with a multi-second freeze before the first word.</p>
+  <p>That gap — between “it runs” and “I’d use this every day” — is this series.</p>
+
+  <h2>Why Apple Silicon changes the rules</h2>
+  <p>On a gaming PC, GPU VRAM is a separate pool. On Apple Silicon, CPU and GPU share <strong>one unified memory pool</strong>.</p>
+  <p>Your browser tabs and your 8B weights fight for the same bytes.</p>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/workflows/00_unified_memory.png</code></div>
+    <img src="../images/workflows/00_unified_memory.png" alt="Unified memory — weights, KV cache, OS, and apps share one DRAM pool" />
+    <figcaption>Unified memory — weights, KV cache, OS, and apps share one DRAM pool</figcaption>
+  </figure>
+
+  <blockquote>Fun fact: Local LLMs on Mac only became practical once consumer unified memory crossed roughly 16–24 GB.</blockquote>
+
+  <h2>The only three metrics that matter</h2>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/workflows/00_inference_pipeline.png</code></div>
+    <img src="../images/workflows/00_inference_pipeline.png" alt="Load → prefill → first token (TTFT) → decode (tok/s)" />
+    <figcaption>Load → prefill → first token (TTFT) → decode (tok/s)</figcaption>
+  </figure>
+
+  <ul>
+    <li><strong>Peak memory (GB)</strong> — will it fit without swap?</li>
+    <li><strong>TTFT (ms)</strong> — how long you stare at a blank cursor</li>
+    <li><strong>Decode tok/s</strong> — how fast the answer streams</li>
+  </ul>
+  <p>Optimize the wrong one and your “faster model” still feels broken.</p>
+
+  <h2>The brutal FP16 baseline</h2>
+  <p>Llama 3.1 8B, FP16, Mac M3 (24 GB), 512-token prompt, 128-token generation:</p>
+  <ul>
+    <li><strong>16.33 GB</strong> peak memory</li>
+    <li><strong>2,651 ms</strong> to first token</li>
+    <li><strong>5.3 tok/s</strong> decode</li>
+  </ul>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/00_intro_hardware_compare.png</code></div>
+    <img src="../images/00_intro_hardware_compare.png" alt="Same model family — precision and silicon change everything" />
+    <figcaption>Same model family — precision and silicon change everything</figcaption>
+  </figure>
+
+  <p>On Mac M5 Max, the same FP16 demo jumps to roughly <strong>34 tok/s</strong> with far lower TTFT. Silicon matters. Software still matters more for fitting.</p>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/papers/williams_roofline_redraw.png</code></div>
+    <img src="../images/papers/williams_roofline_redraw.png" alt="Original redraw — Roofline idea (Williams et al., 2009). Decode is often bandwid" />
+    <figcaption>Original redraw — Roofline idea (Williams et al., 2009). Decode is often bandwidth-bound.</figcaption>
+  </figure>
+
+  <h2>What this series will do</h2>
+  <ol>
+    <li>Weight quantization</li>
+    <li>KV cache quantization</li>
+    <li>Prefill &amp; TTFT</li>
+    <li>Model size ladder</li>
+    <li>Full optimization stack</li>
+    <li>Speculative decoding</li>
+    <li>Bonus: context, RAG, prefix cache</li>
+  </ol>
+  <p>Every number comes from reproducible JSON in an open harness on <a href="https://github.com/ml-explore/mlx">MLX</a>.</p>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/01_heatmap_tps.png</code></div>
+    <img src="../images/01_heatmap_tps.png" alt="Sneak peek — tok/s heatmap across models and bit-widths on Mac M3" />
+    <figcaption>Sneak peek — tok/s heatmap across models and bit-widths on Mac M3</figcaption>
+  </figure>
+
+  <h2>A 10-minute sanity check</h2>
+  <p>Before you trust any blog number — including mine:</p>
+  <ol>
+    <li>Pick one model you care about.</li>
+    <li>Run FP16 and 4-bit only.</li>
+    <li>Confirm memory drops ~2–3× and decode rises ~3× on an M3-class chip.</li>
+    <li>Measure TTFT with <em>your</em> prompt length.</li>
+  </ol>
+
+  <div class="cta">
+    <p><strong>Reproduce:</strong> <a href="https://github.com/Chirumamilla1522/LLM-Inference">github.com/Chirumamilla1522/LLM-Inference</a></p>
+    <p><code>./scripts/run_article.sh 0 "Mac M3"</code></p>
+  </div>
+
+  <p><em>Next → Part 2: 4-Bit Weights Changed Everything</em></p>
+  <p class="tags">Tags: Machine Learning · Apple · LLM · MLX · Local AI · Apple Silicon</p>
+
+</article>
+</body>
+</html>

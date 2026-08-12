@@ -1,0 +1,7 @@
+TITLE: Running 8B LLMs on a MacBook: What Actually Matters
+SUBTITLE: Unified memory, the metrics that matter, and a brutal FP16 baseline on Apple Silicon
+SERIES: Local LLMs on Apple Silicon — Part 1 of 7
+COVER: ../images/thumbnails/thumb_00_introduction.png
+TAGS: Machine Learning, Apple, LLM, Artificial Intelligence, Programming
+READ_TIME_TARGET: 8–12 min
+NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).

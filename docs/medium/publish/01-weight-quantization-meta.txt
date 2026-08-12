@@ -1,0 +1,7 @@
+TITLE: 4-Bit Weights Changed Everything on My M3 Mac
+SUBTITLE: Affine quantization, GPTQ/AWQ ideas redrawn, and 14-model heatmaps on Apple Silicon
+SERIES: Local LLMs on Apple Silicon — Part 2 of 7
+COVER: ../images/thumbnails/thumb_01_weight_quantization.png
+TAGS: Machine Learning, Quantization, LLM, Apple, Artificial Intelligence
+READ_TIME_TARGET: 8–12 min
+NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).

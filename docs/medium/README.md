@@ -1,6 +1,33 @@
-# Medium publishing package (long-form)
+# Medium publishing package (long-form research + Medium-ready publish)
 
-Data-heavy Medium drafts for **Local LLMs on Apple Silicon**.
+## Publish on Medium (start here)
+
+**Use the Medium-format files** (not the long `.md` research drafts):
+
+→ **[`publish/HOW_TO_PUBLISH.md`](publish/HOW_TO_PUBLISH.md)**  
+→ **[`publish/*.html`](publish/)** — open in browser → copy → paste into Medium  
+→ **[`publish/*-meta.txt`](publish/)** — title, subtitle, tags, cover path  
+→ **[`publish/DISTRIBUTION.md`](publish/DISTRIBUTION.md)** — where to share after publish
+
+These HTML posts follow Medium best practices:
+
+1. Wide 16:9 cover thumbnails  
+2. Short paragraphs + H2 breaks  
+3. Images every few screens  
+4. Pull quotes for fun facts  
+5. Mercilessly cut (~8–12 min reads)  
+6. CTA + tags at the end  
+7. Leftovers kept out of the paste  
+
+Regenerate publish HTML:
+
+```bash
+python scripts/build_medium_publish.py
+```
+
+## Research drafts (long)
+
+The `0*.md` files are full research notebooks (~3k words). Use them as source material — **don’t paste them whole into Medium**.
 
 ## Cover thumbnails (Medium story images)
 

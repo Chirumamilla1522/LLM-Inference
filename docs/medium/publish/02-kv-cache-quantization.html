@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The Hidden Memory Hog: KV Cache Quantization</title>
+  <meta name="description" content="Why short benches look boring — and when 4-bit KV actually saves you" />
+  <style>
+    /* Preview only — Medium strips CSS on paste. Keep structure semantic. */
+    body { font-family: Georgia, 'Times New Roman', serif; max-width: 740px;
+           margin: 2rem auto; padding: 0 1.25rem; line-height: 1.7; color: #242424; }
+    h1 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         font-size: 2.4rem; line-height: 1.15; margin-bottom: 0.4rem; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-size: 1.25rem; color: #6b6b6b; margin-bottom: 1.5rem; }
+    .series { font-style: italic; color: #6b6b6b; margin-bottom: 2rem; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         font-size: 1.55rem; margin-top: 2.4rem; line-height: 1.25; }
+    p { font-size: 1.2rem; margin: 1.1rem 0; }
+    blockquote { border-left: 3px solid #242424; margin: 1.8rem 0; padding: 0.2rem 0 0.2rem 1.2rem;
+                 font-style: italic; font-size: 1.35rem; }
+    figure { margin: 2rem 0; }
+    figcaption { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                 font-size: 0.95rem; color: #6b6b6b; margin-top: 0.6rem; text-align: center; }
+    img { max-width: 100%; height: auto; }
+    ul, ol { font-size: 1.15rem; }
+    li { margin: 0.4rem 0; }
+    .img-slot { background: #f2f2f2; border: 1px dashed #bbb; padding: 1.2rem; text-align: center;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.9rem; color: #666; }
+    .cta { background: #fafafa; padding: 1.2rem 1.4rem; margin: 2.5rem 0; border-radius: 4px; }
+    .tags { color: #6b6b6b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+<article>
+  <p class="series">Local LLMs on Apple Silicon — Part 3 of 7</p>
+  <h1>The Hidden Memory Hog: KV Cache Quantization</h1>
+  <p class="subtitle">Why short benches look boring — and when 4-bit KV actually saves you</p>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/thumbnails/thumb_02_kv_cache.png</code></div>
+    <img src="../images/thumbnails/thumb_02_kv_cache.png" alt="Wide cover — Medium story header" />
+    <figcaption>Wide cover — Medium story header</figcaption>
+  </figure>
+
+  <p>Weight quantization gets the spotlight.</p>
+  <p>Once generation starts, something else grows: the <strong>KV cache</strong> — keys and values for every token in context.</p>
+  <p>For short chats it barely shows up in tok/s. For RAG, it’s the second memory bill.</p>
+
+  <h2>How the cache works</h2>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/workflows/02_kv_cache_workflow.png</code></div>
+    <img src="../images/workflows/02_kv_cache_workflow.png" alt="KV grows linearly with sequence length; 4-bit KV ≈ ¼ the footprint" />
+    <figcaption>KV grows linearly with sequence length; 4-bit KV ≈ ¼ the footprint</figcaption>
+  </figure>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/papers/vaswani_attention_redraw.png</code></div>
+    <img src="../images/papers/vaswani_attention_redraw.png" alt="Original redraw — attention (Vaswani et al., 2017); decode caches K/V" />
+    <figcaption>Original redraw — attention (Vaswani et al., 2017); decode caches K/V</figcaption>
+  </figure>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/papers/pope_kv_scaling_redraw.png</code></div>
+    <img src="../images/papers/pope_kv_scaling_redraw.png" alt="Original redraw — inspired by Pope et al. (2022): weights flat, KV grows" />
+    <figcaption>Original redraw — inspired by Pope et al. (2022): weights flat, KV grows</figcaption>
+  </figure>
+
+  <h2>GQA: shrink heads before you quantize</h2>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/papers/ainslie_gqa_redraw.png</code></div>
+    <img src="../images/papers/ainslie_gqa_redraw.png" alt="Original redraw — GQA vs MHA (Ainslie et al., 2023)" />
+    <figcaption>Original redraw — GQA vs MHA (Ainslie et al., 2023)</figcaption>
+  </figure>
+
+  <blockquote>Llama 3, Mistral, and Qwen already cut KV heads with GQA. 4-bit KV stacks on top of that.</blockquote>
+
+  <h2>Why our short-context bench “does nothing”</h2>
+  <p>At 512 prompt + 128 gen on Mac M3:</p>
+  <ul>
+    <li>Llama 8B: 20.7 → 20.4 tok/s</li>
+    <li>Mistral 7B: 21.6 → 21.2</li>
+    <li>Qwen 7B: 21.8 → 21.4</li>
+  </ul>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/02_kv_cache_compare.png</code></div>
+    <img src="../images/02_kv_cache_compare.png" alt="Short context: throughput almost unchanged" />
+    <figcaption>Short context: throughput almost unchanged</figcaption>
+  </figure>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/02_kv_long_generation.png</code></div>
+    <img src="../images/02_kv_long_generation.png" alt="Longer generation: still weight-bound at laptop batch size 1" />
+    <figcaption>Longer generation: still weight-bound at laptop batch size 1</figcaption>
+  </figure>
+
+  <p>The win appears at long context, multi-session serving, or tight RAM — not in a 640-token microbench.</p>
+
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/07_context_dual_axis.png</code></div>
+    <img src="../images/07_context_dual_axis.png" alt="Where KV pressure shows up — TTFT explodes as prompts grow" />
+    <figcaption>Where KV pressure shows up — TTFT explodes as prompts grow</figcaption>
+  </figure>
+  <figure>
+    <div class="img-slot">UPLOAD THIS IMAGE IN MEDIUM<br/><code>../images/papers/kwon_paged_attention_redraw.png</code></div>
+    <img src="../images/papers/kwon_paged_attention_redraw.png" alt="Original redraw — paged KV idea (Kwon et al., 2023) for multi-request serving" />
+    <figcaption>Original redraw — paged KV idea (Kwon et al., 2023) for multi-request serving</figcaption>
+  </figure>
+
+  <h2>When to enable it</h2>
+  <ul>
+    <li>Always quantize <strong>weights</strong> first (w4)</li>
+    <li>Turn on KV quant for &gt;2K context or RAG</li>
+    <li>Prefer GQA models</li>
+  </ul>
+
+  <div class="cta">
+    <p><code>./scripts/run_article.sh 2 "Mac M3"</code></p>
+    <p><a href="https://github.com/Chirumamilla1522/LLM-Inference">Reproduce in the repo</a></p>
+  </div>
+
+  <p><em>← Part 2 · Next → Part 4: Prefill &amp; TTFT</em></p>
+  <p class="tags">Tags: Machine Learning · LLM · Transformers · Apple · Artificial Intelligence</p>
+
+</article>
+</body>
+</html>

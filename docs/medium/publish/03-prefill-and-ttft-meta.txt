@@ -1,0 +1,7 @@
+TITLE: Why Your Chatbot Feels Slow Before the First Word
+SUBTITLE: Prefill, FlashAttention intuition, and TTFT curves that go quadratic
+SERIES: Local LLMs on Apple Silicon — Part 4 of 7
+COVER: ../images/thumbnails/thumb_03_prefill_ttft.png
+TAGS: Machine Learning, LLM, Artificial Intelligence, Apple, UX
+READ_TIME_TARGET: 8–12 min
+NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).
