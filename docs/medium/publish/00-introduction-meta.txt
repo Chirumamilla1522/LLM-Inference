@@ -1,6 +1,6 @@
-TITLE (Big T): Running 8B LLMs on a MacBook: What Actually Matters
-SUBTITLE (Little T): Unified memory, the metrics that matter, and a brutal FP16 baseline on Apple Silicon
+TITLE: Running 8B LLMs on a MacBook: What Actually Matters
+SUBTITLE: Unified memory, the inference pipeline, and reproducible benchmarks on Apple Silicon — with M3 vs. M5 Max numbers
 FEATURED IMAGE: docs/medium/images/thumbnails/thumb_00_introduction.png
 FEATURED CAPTION: Local LLMs on Apple Silicon — Part 1
 SERIES: Local LLMs on Apple Silicon — Part 1 of 7
-TAGS: Machine Learning, Apple, LLM, Artificial Intelligence, Programming
+TAGS: Machine Learning, Apple, LLM, MLX, Local AI, Apple Silicon

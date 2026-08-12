@@ -1,5 +1,5 @@
-TITLE (Big T): Draft Models: Free Speed Without Retraining
-SUBTITLE (Little T): 74% acceptance and 1.8× on Qwen — plus the case where speculation got slower
+TITLE: Draft Models: Free Speed Without Retraining
+SUBTITLE: 74% acceptance and 1.8× on Qwen — plus the case where speculation got slower
 FEATURED IMAGE: docs/medium/images/thumbnails/thumb_06_speculative.png
 FEATURED CAPTION: Speculative decoding — Part 7
 SERIES: Local LLMs on Apple Silicon — Part 7 of 7

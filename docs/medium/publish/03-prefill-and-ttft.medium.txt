@@ -1,149 +1,85 @@
-========================================================================
-MEDIUM EDITOR PASTE KIT
-File: 03-prefill-and-ttft.medium.txt
-========================================================================
+---
 
-HOW TO USE IN MEDIUM
-1. New story
-2. Click the title area → apply Big T → paste TITLE
-3. Click under title → apply Little T → paste SUBTITLE
-4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
-5. Add caption under featured image
-6. For each block below, use the matching Medium control
-7. Tags → Publish → share (see DISTRIBUTION.md)
-
-------------------------------------------------------------------------
-SERIES: Local LLMs on Apple Silicon — Part 4 of 7
-TAGS: Machine Learning · LLM · Artificial Intelligence · Apple · UX
-------------------------------------------------------------------------
-
-┌─────────────────────────────────────────────────────────────
-│ TITLE  (Medium: Big T)
-└─────────────────────────────────────────────────────────────
 Why Your Chatbot Feels Slow Before the First Word
 
-┌─────────────────────────────────────────────────────────────
-│ SUBTITLE  (Medium: Little T)
-└─────────────────────────────────────────────────────────────
-Prefill, FlashAttention intuition, and TTFT curves that go quadratic
+Prefill vs. decode, FlashAttention intuition, and TTFT curves that go quadratic on Apple Silicon
 
-┌─────────────────────────────────────────────────────────────
-│ FEATURED IMAGE  (wide horizontal cover under subtitle)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/thumbnails/thumb_03_prefill_ttft.png
+Part 4 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: docs/medium/images/thumbnails/thumb_03_prefill_ttft.png
 CAPTION: Prefill & TTFT — Part 4
 
-BODY:
-Users blame “slow AI” on streaming speed.
+---
 
-BODY:
+Users blame "slow AI" on streaming speed.
+
 Often the real pain is earlier: time-to-first-token — the pause before the first character.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Prefill vs decode
+---
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/workflows/03_prefill_vs_decode.png
-CAPTION: Two phases, two bottlenecks
+Prefill vs. Decode
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• Prefill → TTFT (attention over the whole prompt)
-• Decode → tok/s (weight bandwidth)
+IMAGE: docs/medium/images/workflows/03_prefill_vs_decode.png
+Figure — Two phases, two bottlenecks.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-FlashAttention — exact, not approximate
+• Prefill → TTFT
+• Decode → tok/s
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/dao_flashattention_redraw.png
-CAPTION: Original redraw — FlashAttention IO (Dao et al., 2022/23)
+Optimize the wrong one and your "faster model" still feels broken.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/milakov_online_softmax_redraw.png
-CAPTION: Original redraw — online softmax (Milakov & Gimelshein, 2018)
+---
 
-┌─────────────────────────────────────────────────────────────
-│ PULL QUOTE  (select text → Medium quote button)
-└─────────────────────────────────────────────────────────────
+FlashAttention — Exact, Not Approximate
+
+IMAGE: docs/medium/images/papers/dao_flashattention_redraw.png
+Figure — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
+
+IMAGE: docs/medium/images/papers/milakov_online_softmax_redraw.png
+Figure — Original redraw of online softmax (Milakov & Gimelshein, 2018).
+
 Fun fact: FlashAttention computes the same math as naive attention. It just refuses to materialize the giant score matrix in slow memory.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-The quadratic wall (real numbers)
+---
 
-BODY:
-Llama 3.1 8B, w4, Mac M3:
+The Quadratic Wall
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
+Llama 3.1 8B, W4, Mac M3:
+
 • p=256 → ~2.4 s TTFT
 • p=512 → ~3.1 s
 • p=1024 → ~5.8 s
 • p=2048 → ~15.4 s
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/03_prefill_ttft.png
-CAPTION: TTFT vs prompt shape
+IMAGE: docs/medium/images/03_prefill_ttft.png
+Figure — TTFT versus prompt shape.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/03_ttft_vs_prompt_curve.png
-CAPTION: Measured TTFT vs a ∝ T² reference
+IMAGE: docs/medium/images/03_ttft_vs_prompt_curve.png
+Figure — Measured TTFT versus a roughly quadratic reference.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_workload_ttft.png
-CAPTION: rag_agent workload ≈ 31 s TTFT on M3
+IMAGE: docs/medium/images/07_workload_ttft.png
+Figure — The rag_agent workload hits about 31 seconds TTFT on M3.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-What to do in product
+That is why pasting a PDF into a local RAG demo often feels broken.
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• Chat → shorten system prompts, enable prefill chunking
-• RAG → fewer chunks, prefix cache, don’t paste the whole PDF
-• Long writing → optimize tok/s (w4) after TTFT is acceptable
+---
 
-┌─────────────────────────────────────────────────────────────
-│ CODE BLOCK  (+ menu → Code block)
-└─────────────────────────────────────────────────────────────
+What to Do in Product
+
+• Chat — shorten system prompts; enable prefill chunking
+• RAG — fewer chunks; prefix cache; don't paste the whole document
+• Long writing — optimize tok/s after TTFT is acceptable
+
+Reproduce:
+
 ./scripts/run_article.sh 3 "Mac M3"
 
-BODY:
-← Part 3  ·  Next → Part 5: Model Size Ladder
+---
 
+Series Navigation
 
-┌─────────────────────────────────────────────────────────────
-│ END CTA
-└─────────────────────────────────────────────────────────────
+← Part 3: KV Cache
+Next → Part 5: From 0.5B to 70B
 
-BODY:
-If this was useful, clone the harness and run the same benches on your Mac:
+Local LLMs on Apple Silicon — Part 4 of 7
 
-BODY:
-https://github.com/Chirumamilla1522/LLM-Inference
-
-┌─────────────────────────────────────────────────────────────
-│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
-└─────────────────────────────────────────────────────────────
-Machine Learning, LLM, Artificial Intelligence, Apple, UX
+Tags: Machine Learning · LLM · UX · Apple · Artificial Intelligence

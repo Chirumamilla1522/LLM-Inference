@@ -1,204 +1,144 @@
-========================================================================
-MEDIUM EDITOR PASTE KIT
-File: 01-weight-quantization.medium.txt
-========================================================================
+---
 
-HOW TO USE IN MEDIUM
-1. New story
-2. Click the title area → apply Big T → paste TITLE
-3. Click under title → apply Little T → paste SUBTITLE
-4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
-5. Add caption under featured image
-6. For each block below, use the matching Medium control
-7. Tags → Publish → share (see DISTRIBUTION.md)
-
-------------------------------------------------------------------------
-SERIES: Local LLMs on Apple Silicon — Part 2 of 7
-TAGS: Machine Learning · Quantization · LLM · Apple · Artificial Intelligence
-------------------------------------------------------------------------
-
-┌─────────────────────────────────────────────────────────────
-│ TITLE  (Medium: Big T)
-└─────────────────────────────────────────────────────────────
 4-Bit Weights Changed Everything on My M3 Mac
 
-┌─────────────────────────────────────────────────────────────
-│ SUBTITLE  (Medium: Little T)
-└─────────────────────────────────────────────────────────────
-Affine quantization, GPTQ/AWQ ideas redrawn, and 14-model heatmaps on Apple Silicon
+Affine quantization from the papers — then Pareto charts, heatmaps, and M3 vs. M5 Max numbers across 14 models
 
-┌─────────────────────────────────────────────────────────────
-│ FEATURED IMAGE  (wide horizontal cover under subtitle)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/thumbnails/thumb_01_weight_quantization.png
+Part 2 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: docs/medium/images/thumbnails/thumb_01_weight_quantization.png
 CAPTION: Weight quantization — Part 2
 
-BODY:
-An 8B model in FP16 needs ~16 GB just for weights.
+---
 
-BODY:
-On a 24 GB MacBook, that leaves almost nothing for the OS, your editor, and the KV cache.
+In Part 1, I loaded Llama 3.1 8B in FP16 on a 24 GB Mac M3 and watched the machine flinch.
 
-BODY:
-Weight quantization is the highest-leverage change for local Mac inference.
+16.33 GB peak.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-How it works (redrawn from the papers — not copied)
+2.6+ seconds to first token.
 
-BODY:
-We store each weight with fewer bits — usually 8, 4, or 2 — plus a tiny scale.
+Roughly 5–6 tokens per second.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/jacob_affine_quant_redraw.png
-CAPTION: Original redraw — affine quantization (Jacob et al., 2018)
+The model worked.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/frantar_gptq_redraw.png
-CAPTION: Original redraw — GPTQ idea (Frantar et al., 2022)
+The laptop did not feel like a product anymore.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/lin_awq_redraw.png
-CAPTION: Original redraw — AWQ idea (Lin et al., 2023)
+Weight quantization is the highest-leverage fix.
 
-┌─────────────────────────────────────────────────────────────
-│ PULL QUOTE  (select text → Medium quote button)
-└─────────────────────────────────────────────────────────────
-Fun fact: GPTQ was built for 175B-class models that couldn’t fit on one GPU at FP16. The same math now makes 8B models comfortable on a laptop.
+---
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Why fewer bits also make decode faster
+The Problem in One Sentence
 
-BODY:
-Each decode step often reads nearly all weights from memory. Fewer bytes per weight → higher tok/s on a bandwidth-bound chip.
+An 8B model in FP16 needs about 16 GB just for weights.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/williams_roofline_redraw.png
-CAPTION: Original redraw — Roofline: LLM decode sits on the bandwidth slope
+On a 24 GB Mac, that leaves almost nothing for macOS, your editor, and the KV cache.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
+---
+
+How Quantization Works
+
+We map each high-precision weight to a smaller integer code, plus a scale.
+
+IMAGE: docs/medium/images/papers/jacob_affine_quant_redraw.png
+Figure — Original redraw of affine quantization (Jacob et al., 2018).
+
+In practice, LLM checkpoints use recipes like GPTQ and AWQ.
+
+IMAGE: docs/medium/images/papers/frantar_gptq_redraw.png
+Figure — Original redraw of the GPTQ idea (Frantar et al., 2022).
+
+IMAGE: docs/medium/images/papers/lin_awq_redraw.png
+Figure — Original redraw of the AWQ idea (Lin et al., 2023).
+
+Fun fact: GPTQ was built for 175B-class models that couldn't fit on one GPU at FP16. The same math now makes 8B models comfortable on a laptop.
+
+---
+
+Why Fewer Bits Also Make Decode Faster
+
+Each decode step often reads nearly all weights from memory.
+
+Fewer bytes per weight means less memory traffic.
+
+IMAGE: docs/medium/images/papers/williams_roofline_redraw.png
+Figure — Original redraw of the Roofline idea. LLM decode often sits on the bandwidth slope.
+
+---
+
 Llama 3.1 8B on Mac M3
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• fp16 — 16.3 GB · 5.8 tok/s
-• w8 — 9.0 GB · 11.3 tok/s (~1.9×)
-• w4 — 5.1 GB · 20.5 tok/s (~3.5×)
-• w2 — 3.1 GB · 35.8 tok/s (~6×)
+• FP16 — 16.3 GB · 5.8 tok/s
+• W8 — 9.0 GB · 11.3 tok/s (~1.9×)
+• W4 — 5.1 GB · 20.5 tok/s (~3.5×)
+• W2 — 3.1 GB · 35.8 tok/s (~6×)
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_weight_quant_llama3-8b.png
-CAPTION: Memory vs speed as bit-width drops
+IMAGE: docs/medium/images/01_weight_quant_llama3-8b.png
+Figure — Memory and throughput as bit-width drops.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_pareto_memory_speed.png
-CAPTION: Pareto frontier — w4 is the practical sweet spot on 24 GB
+IMAGE: docs/medium/images/01_pareto_memory_speed.png
+Figure — Pareto frontier. W4 is the practical sweet spot on 24 GB.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_speedup_vs_fp16.png
-CAPTION: Explicit speedup vs FP16
+IMAGE: docs/medium/images/01_speedup_vs_fp16.png
+Figure — Explicit speedup versus FP16.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-All 14 models (the heatmap)
+---
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_heatmap_tps.png
-CAPTION: Decode tok/s — every model × bit-width on Mac M3
+All 14 Models
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_heatmap_memory.png
-CAPTION: Peak memory — FP16 is the red zone on 24 GB
+The surprising part isn't one lucky Llama run.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_speedup_all_models.png
-CAPTION: fp16→w4 speedup and memory shrink across the board
+It's that the pattern holds across the board.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-M3 vs M5 Max
+IMAGE: docs/medium/images/01_heatmap_tps.png
+Figure — Decode tok/s across models and bit-widths on Mac M3.
 
-BODY:
-Same w4 checkpoints. Different silicon.
+IMAGE: docs/medium/images/01_heatmap_memory.png
+Figure — Peak memory for the same matrix. FP16 is the danger zone on 24 GB.
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• Llama 8B w4: 20.5 → 112 tok/s
-• Qwen 0.5B w4: 215 → 581 tok/s
+IMAGE: docs/medium/images/01_speedup_all_models.png
+Figure — FP16 → W4 speedup and memory reduction across models.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_m3_vs_m5_w4.png
-CAPTION: M3 vs M5 Max at w4
+IMAGE: docs/medium/images/01_family_panels.png
+Figure — Family zoom-ins: Qwen, Llama, Phi, Gemma, Mistral/DeepSeek.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/01_llama_m3_m5_all_bits.png
-CAPTION: Llama 8B across every bit-width on both chips
+---
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-What you should actually run
+M3 vs. M5 Max
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• 16 GB Mac — 3B–7B @ w4
-• 24 GB Mac — 8B @ w4 as daily driver
+Same W4 checkpoints. Different silicon.
+
+• Llama 8B W4 — 20.5 → 112 tok/s
+• Qwen 0.5B W4 — 215 → 581 tok/s
+
+IMAGE: docs/medium/images/01_m3_vs_m5_w4.png
+Figure — M3 vs. M5 Max at W4.
+
+IMAGE: docs/medium/images/01_llama_m3_m5_all_bits.png
+Figure — Llama 8B across every bit-width on both chips.
+
+Hardware generation and quantization stack. They are not competing explanations.
+
+---
+
+What You Should Actually Run
+
+• 16 GB Mac — 3B–7B at W4
+• 24 GB Mac — 8B at W4 as the daily driver
 • Skip FP16 8B as your everyday chat config
 
-┌─────────────────────────────────────────────────────────────
-│ CODE BLOCK  (+ menu → Code block)
-└─────────────────────────────────────────────────────────────
+Reproduce:
+
 ./scripts/run_article.sh 1 "Mac M3"
 
-BODY:
-← Part 1  ·  Next → Part 3: KV Cache
+Repo: https://github.com/Chirumamilla1522/LLM-Inference
 
+---
 
-┌─────────────────────────────────────────────────────────────
-│ END CTA
-└─────────────────────────────────────────────────────────────
+Series Navigation
 
-BODY:
-If this was useful, clone the harness and run the same benches on your Mac:
+← Part 1: Introduction
+Next → Part 3: The Hidden Memory Hog — KV Cache Quantization
 
-BODY:
-https://github.com/Chirumamilla1522/LLM-Inference
+Local LLMs on Apple Silicon — Part 2 of 7
 
-┌─────────────────────────────────────────────────────────────
-│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
-└─────────────────────────────────────────────────────────────
-Machine Learning, Quantization, LLM, Apple, Artificial Intelligence
+Tags: Machine Learning · Quantization · LLM · Apple · Artificial Intelligence

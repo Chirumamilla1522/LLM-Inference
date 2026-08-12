@@ -1,147 +1,83 @@
-========================================================================
-MEDIUM EDITOR PASTE KIT
-File: 06-speculative-decoding.medium.txt
-========================================================================
+---
 
-HOW TO USE IN MEDIUM
-1. New story
-2. Click the title area → apply Big T → paste TITLE
-3. Click under title → apply Little T → paste SUBTITLE
-4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
-5. Add caption under featured image
-6. For each block below, use the matching Medium control
-7. Tags → Publish → share (see DISTRIBUTION.md)
-
-------------------------------------------------------------------------
-SERIES: Local LLMs on Apple Silicon — Part 7 of 7
-TAGS: Machine Learning · LLM · Optimization · Apple · Artificial Intelligence
-------------------------------------------------------------------------
-
-┌─────────────────────────────────────────────────────────────
-│ TITLE  (Medium: Big T)
-└─────────────────────────────────────────────────────────────
 Draft Models: Free Speed Without Retraining
 
-┌─────────────────────────────────────────────────────────────
-│ SUBTITLE  (Medium: Little T)
-└─────────────────────────────────────────────────────────────
 74% acceptance and 1.8× on Qwen — plus the case where speculation got slower
 
-┌─────────────────────────────────────────────────────────────
-│ FEATURED IMAGE  (wide horizontal cover under subtitle)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/thumbnails/thumb_06_speculative.png
+Part 7 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: docs/medium/images/thumbnails/thumb_06_speculative.png
 CAPTION: Speculative decoding — Part 7
 
-BODY:
-A small draft model proposes tokens. The large target verifies them in one parallel pass.
+---
 
-BODY:
+A small draft model proposes tokens.
+
+The large target verifies them in one parallel pass.
+
 When the draft is right, you emit multiple tokens per expensive step — without retraining.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/leviathan_speculative_redraw.png
-CAPTION: Original redraw — draft/verify (Leviathan / Chen, 2023)
+IMAGE: docs/medium/images/papers/leviathan_speculative_redraw.png
+Figure — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/workflows/06_accept_reject.png
-CAPTION: Accept matching prefix; reject and resample at first mismatch
+IMAGE: docs/medium/images/workflows/06_accept_reject.png
+Figure — Accept the matching prefix; reject and resample at the first mismatch.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/cai_medusa_redraw.png
-CAPTION: Original redraw — Medusa-style drafting (Cai et al., 2024)
+IMAGE: docs/medium/images/papers/cai_medusa_redraw.png
+Figure — Original redraw of a Medusa-style variant (Cai et al., 2024).
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-The clean win: Qwen-7B on Mac M3
+---
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• Baseline w4 — 15.9 tok/s
+The Clean Win: Qwen-7B on Mac M3
+
+• Baseline W4 — 15.9 tok/s
 • Speculative (Qwen 0.5B draft) — 28.3 tok/s
-• Acceptance α — 74.2%
+• Acceptance rate — 74.2%
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/06_speculative_qwen-7b.png
-CAPTION: 1.78× throughput at 74% acceptance
+IMAGE: docs/medium/images/06_speculative_qwen-7b.png
+Figure — About 1.78× throughput at 74% acceptance.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/06_speculative_speed_memory.png
-CAPTION: Big speed gain for ~0.3 GB extra RAM
+IMAGE: docs/medium/images/06_speculative_speed_memory.png
+Figure — Big speed gain for roughly 0.3 GB extra RAM.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Honest failures
+---
 
-BODY:
-On M3, Llama and Mistral speculative runs errored (draft/tokenizer pairing / memory).
+Honest Failures
 
-BODY:
-On M5 Max, Qwen still wins (122 → 170 tok/s). Llama speculative was slightly slower (113 → 110) at 59% acceptance.
+On M3, Llama and Mistral speculative runs errored — draft pairing / tokenizer / memory.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/06_spec_m3_m5_qwen.png
-CAPTION: Qwen speculative on M3 vs M5 Max
+On M5 Max, Qwen still wins: 122 → 170 tok/s.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/06_spec_speedup_vs_accept.png
-CAPTION: Speedup vs acceptance — low α can erase the win
+Llama speculative was slightly slower: 113 → 110 tok/s at 59% acceptance.
 
-┌─────────────────────────────────────────────────────────────
-│ PULL QUOTE  (select text → Medium quote button)
-└─────────────────────────────────────────────────────────────
-Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure α. Don’t assume.
+IMAGE: docs/medium/images/06_spec_m3_m5_qwen.png
+Figure — Qwen speculative on M3 versus M5 Max.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Do this
+IMAGE: docs/medium/images/06_spec_speedup_vs_accept.png
+Figure — Speedup versus acceptance. Low acceptance can erase the win.
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• Same family + same tokenizer
+Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure acceptance rate. Don't assume.
+
+---
+
+Do This
+
+• Same family and same tokenizer
 • Tiny draft (0.5B–1B)
 • Long generations
 • Budget RAM for two models
 
-┌─────────────────────────────────────────────────────────────
-│ CODE BLOCK  (+ menu → Code block)
-└─────────────────────────────────────────────────────────────
+Reproduce:
+
 ./scripts/run_article.sh 6 "Mac M3"
 
-BODY:
-← Part 6  ·  Bonus → Context, RAG & Prefix Cache
+---
 
+Series Navigation
 
-┌─────────────────────────────────────────────────────────────
-│ END CTA
-└─────────────────────────────────────────────────────────────
+← Part 6: Full Stack
+Bonus → The RAG Wall: Context, Cache, and Latency
 
-BODY:
-If this was useful, clone the harness and run the same benches on your Mac:
+Local LLMs on Apple Silicon — Part 7 of 7
 
-BODY:
-https://github.com/Chirumamilla1522/LLM-Inference
-
-┌─────────────────────────────────────────────────────────────
-│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
-└─────────────────────────────────────────────────────────────
-Machine Learning, LLM, Optimization, Apple, Artificial Intelligence
+Tags: Machine Learning · LLM · Optimization · Apple · Artificial Intelligence

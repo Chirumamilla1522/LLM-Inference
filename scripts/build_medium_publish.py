@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
-"""
-Emit Medium *editor* paste kits — not HTML.
-
-Each .medium.txt maps 1:1 to Medium's block editor:
-  Big T      → Title
-  Little T   → Subtitle
-  Featured   → Story image (wide horizontal)
-  Subhead    → Section header (H2-style in Medium)
-  Body       → Short paragraphs
-  Pull quote → Medium quote block
-  Image      → + menu → image (upload the file)
-  Code       → Medium code block
-  List       → bullets / numbers
-"""
+"""Emit clean Medium-ready article text (finished story format, not HTML / not paste-kit chrome)."""
 
 from __future__ import annotations
 
@@ -22,672 +9,1604 @@ OUT = Path(__file__).resolve().parents[1] / "docs" / "medium" / "publish"
 IMG = "docs/medium/images"
 
 
-def kit(
-    *,
-    slug: str,
-    title: str,
-    subtitle: str,
-    featured: str,
-    featured_caption: str,
-    tags: list[str],
-    series: str,
-    blocks: list[str],
-) -> None:
+def write(slug: str, meta: dict[str, str], body: str) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    lines = [
-        "=" * 72,
-        "MEDIUM EDITOR PASTE KIT",
-        f"File: {slug}.medium.txt",
-        "=" * 72,
-        "",
-        "HOW TO USE IN MEDIUM",
-        "1. New story",
-        "2. Click the title area → apply Big T → paste TITLE",
-        "3. Click under title → apply Little T → paste SUBTITLE",
-        "4. + menu → Image → upload FEATURED IMAGE (wide 16:9)",
-        "5. Add caption under featured image",
-        "6. For each block below, use the matching Medium control",
-        "7. Tags → Publish → share (see DISTRIBUTION.md)",
-        "",
-        "-" * 72,
-        "SERIES: " + series,
-        "TAGS: " + " · ".join(tags),
-        "-" * 72,
-        "",
-        "┌─────────────────────────────────────────────────────────────",
-        "│ TITLE  (Medium: Big T)",
-        "└─────────────────────────────────────────────────────────────",
-        title,
-        "",
-        "┌─────────────────────────────────────────────────────────────",
-        "│ SUBTITLE  (Medium: Little T)",
-        "└─────────────────────────────────────────────────────────────",
-        subtitle,
-        "",
-        "┌─────────────────────────────────────────────────────────────",
-        "│ FEATURED IMAGE  (wide horizontal cover under subtitle)",
-        "└─────────────────────────────────────────────────────────────",
-        f"UPLOAD: {featured}",
-        f"CAPTION: {featured_caption}",
-        "",
-    ]
-    lines.extend(blocks)
-    lines += [
-        "",
-        "┌─────────────────────────────────────────────────────────────",
-        "│ END CTA",
-        "└─────────────────────────────────────────────────────────────",
-        "",
-        "BODY:",
-        "If this was useful, clone the harness and run the same benches on your Mac:",
-        "",
-        "BODY:",
-        "https://github.com/Chirumamilla1522/LLM-Inference",
-        "",
-        "┌─────────────────────────────────────────────────────────────",
-        "│ TAGS (add in Medium’s tag picker — max ~5 strong ones)",
-        "└─────────────────────────────────────────────────────────────",
-        ", ".join(tags),
-        "",
-    ]
-    path = OUT / f"{slug}.medium.txt"
-    path.write_text("\n".join(lines))
-    # companion meta for quick copy
+    text = body.strip() + "\n"
+    (OUT / f"{slug}.medium.txt").write_text(text)
     (OUT / f"{slug}-meta.txt").write_text(
-        f"TITLE (Big T): {title}\n"
-        f"SUBTITLE (Little T): {subtitle}\n"
-        f"FEATURED IMAGE: {featured}\n"
-        f"FEATURED CAPTION: {featured_caption}\n"
-        f"SERIES: {series}\n"
-        f"TAGS: {', '.join(tags)}\n"
+        "\n".join(
+            [
+                f"TITLE: {meta['title']}",
+                f"SUBTITLE: {meta['subtitle']}",
+                f"FEATURED IMAGE: {meta['featured']}",
+                f"FEATURED CAPTION: {meta.get('featured_caption', '')}",
+                f"SERIES: {meta['series']}",
+                f"TAGS: {meta['tags']}",
+                "",
+            ]
+        )
     )
-    print(f"Wrote {path.name}")
-
-
-def subhead(text: str) -> list[str]:
-    return [
-        "┌─────────────────────────────────────────────────────────────",
-        "│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)",
-        "└─────────────────────────────────────────────────────────────",
-        text,
-        "",
-    ]
-
-
-def body(*paragraphs: str) -> list[str]:
-    out: list[str] = []
-    for p in paragraphs:
-        out += ["BODY:", p, ""]
-    return out
-
-
-def quote(text: str) -> list[str]:
-    return [
-        "┌─────────────────────────────────────────────────────────────",
-        "│ PULL QUOTE  (select text → Medium quote button)",
-        "└─────────────────────────────────────────────────────────────",
-        text,
-        "",
-    ]
-
-
-def image(path: str, caption: str) -> list[str]:
-    return [
-        "┌─────────────────────────────────────────────────────────────",
-        "│ INLINE IMAGE  (+ menu → Image → upload file → add caption)",
-        "└─────────────────────────────────────────────────────────────",
-        f"UPLOAD: {path}",
-        f"CAPTION: {caption}",
-        "",
-    ]
-
-
-def bullets(items: list[str]) -> list[str]:
-    return [
-        "┌─────────────────────────────────────────────────────────────",
-        "│ BULLET LIST  (type - or * then space in Medium)",
-        "└─────────────────────────────────────────────────────────────",
-        *[f"• {i}" for i in items],
-        "",
-    ]
-
-
-def numbers(items: list[str]) -> list[str]:
-    return [
-        "┌─────────────────────────────────────────────────────────────",
-        "│ NUMBERED LIST",
-        "└─────────────────────────────────────────────────────────────",
-        *[f"{i+1}. {t}" for i, t in enumerate(items)],
-        "",
-    ]
-
-
-def code(text: str) -> list[str]:
-    return [
-        "┌─────────────────────────────────────────────────────────────",
-        "│ CODE BLOCK  (+ menu → Code block)",
-        "└─────────────────────────────────────────────────────────────",
-        text,
-        "",
-    ]
-
-
-def divider_note(text: str) -> list[str]:
-    return [
-        f"— {text} —",
-        "",
-    ]
+    print(f"Wrote {slug}.medium.txt")
 
 
 def art00() -> None:
-    blocks: list[str] = []
-    blocks += body(
-        "I loaded Meta’s Llama 3.1 8B on a MacBook Pro and watched Activity Monitor go red.",
-        "No cloud bill. No NVIDIA card. The model ran.",
-        "It also felt like dial-up: about 5 tokens per second, with a multi-second freeze before the first word.",
-        "That gap — between “it runs” and “I’d use this every day” — is this series.",
-    )
-    blocks += subhead("Why Apple Silicon changes the rules")
-    blocks += body(
-        "On a gaming PC, GPU VRAM is a separate pool. On Apple Silicon, CPU and GPU share one unified memory pool.",
-        "Your browser tabs and your 8B weights fight for the same bytes.",
-    )
-    blocks += image(
-        f"{IMG}/workflows/00_unified_memory.png",
-        "Unified memory — weights, KV cache, OS, and apps share one DRAM pool",
-    )
-    blocks += quote(
-        "Fun fact: Local LLMs on Mac only became practical once consumer unified memory crossed roughly 16–24 GB."
-    )
-    blocks += subhead("The only three metrics that matter")
-    blocks += image(
-        f"{IMG}/workflows/00_inference_pipeline.png",
-        "Load → prefill → first token (TTFT) → decode (tok/s)",
-    )
-    blocks += bullets(
-        [
-            "Peak memory (GB) — will it fit without swap?",
-            "TTFT (ms) — how long you stare at a blank cursor",
-            "Decode tok/s — how fast the answer streams",
-        ]
-    )
-    blocks += body("Optimize the wrong one and your “faster model” still feels broken.")
-    blocks += subhead("The brutal FP16 baseline")
-    blocks += body("Llama 3.1 8B, FP16, Mac M3 (24 GB), 512-token prompt, 128-token generation:")
-    blocks += bullets(
-        [
-            "16.33 GB peak memory",
-            "2,651 ms to first token",
-            "5.3 tok/s decode",
-        ]
-    )
-    blocks += image(
-        f"{IMG}/00_intro_hardware_compare.png",
-        "Same model family — precision and silicon change everything",
-    )
-    blocks += body(
-        "On Mac M5 Max, the same FP16 demo jumps to roughly 34 tok/s with far lower TTFT. Silicon matters. Software still matters more for fitting."
-    )
-    blocks += image(
-        f"{IMG}/papers/williams_roofline_redraw.png",
-        "Original redraw — Roofline idea (Williams et al., 2009). Decode is often bandwidth-bound.",
-    )
-    blocks += subhead("What this series will do")
-    blocks += numbers(
-        [
-            "Weight quantization",
-            "KV cache quantization",
-            "Prefill & TTFT",
-            "Model size ladder",
-            "Full optimization stack",
-            "Speculative decoding",
-            "Bonus: context, RAG, prefix cache",
-        ]
-    )
-    blocks += body(
-        "Every number comes from reproducible JSON in an open harness on MLX."
-    )
-    blocks += image(
-        f"{IMG}/01_heatmap_tps.png",
-        "Sneak peek — tok/s heatmap across models and bit-widths on Mac M3",
-    )
-    blocks += subhead("A 10-minute sanity check")
-    blocks += numbers(
-        [
-            "Pick one model you care about.",
-            "Run FP16 and 4-bit only.",
-            "Confirm memory drops ~2–3× and decode rises ~3× on an M3-class chip.",
-            "Measure TTFT with your prompt length.",
-        ]
-    )
-    blocks += code('./scripts/run_article.sh 0 "Mac M3"')
-    blocks += body("Next → Part 2: 4-Bit Weights Changed Everything")
-    kit(
-        slug="00-introduction",
-        title="Running 8B LLMs on a MacBook: What Actually Matters",
-        subtitle="Unified memory, the metrics that matter, and a brutal FP16 baseline on Apple Silicon",
-        featured=f"{IMG}/thumbnails/thumb_00_introduction.png",
-        featured_caption="Local LLMs on Apple Silicon — Part 1",
-        tags=["Machine Learning", "Apple", "LLM", "Artificial Intelligence", "Programming"],
-        series="Local LLMs on Apple Silicon — Part 1 of 7",
-        blocks=blocks,
+    body = f"""
+---
+
+Running 8B LLMs on a MacBook: What Actually Matters
+
+Unified memory, the inference pipeline, and reproducible benchmarks on Apple Silicon — with M3 vs. M5 Max numbers
+
+Part 1 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_00_introduction.png
+CAPTION: Local LLMs on Apple Silicon — Part 1
+
+---
+
+I still remember the first time I loaded Meta's Llama 3.1 8B on a stock MacBook Pro and watched Activity Monitor paint the memory bar red.
+
+No cloud bill. No discrete NVIDIA GPU. Just mlx_lm.generate, a Hugging Face checkpoint, and a quiet fan that wasn't quiet for long.
+
+The model ran.
+
+It also felt like dial-up.
+
+I was getting roughly 5 tokens per second, with a multi-second pause before the first word appeared.
+
+That gap — between "it runs on my laptop" and "I would actually use this every day" — is the entire point of this series.
+
+Marketing slides say Apple Silicon is great for on-device AI. Blog posts say, "just use 4-bit."
+
+But very few discussions show the complete measurement loop:
+
+• The same prompt length
+• The same generation length
+• Multiple trials
+• Median measurements
+• Reproducible JSON results
+• The same benchmark across different Apple Silicon generations
+
+So I built an open benchmark harness using MLX, pointed it at MLX Community checkpoints, and ran it on a Mac M3 with 24 GB of unified memory and a Mac M5 Max.
+
+This opening post is the map.
+
+We'll look at:
+
+• Why unified memory matters
+• How LLM inference actually works
+• The three metrics that matter most
+• A brutally inefficient FP16 baseline
+• What M3 vs. M5 Max tells us
+• How to reproduce the measurements
+• Where the rest of this series goes next
+
+---
+
+Why This Matters
+
+Local LLMs stopped being a curiosity once 7–9B instruction-tuned models became good enough for coding assistants, summarization, and private RAG.
+
+The question is no longer:
+
+Can my Mac run an LLM?
+
+The better questions are:
+
+• Will it fit? Memory pressure and swapping can make the system feel frozen
+• How long until the first token? Prefill latency directly affects chat UX
+• How fast does it stream? Decode tokens/sec is what you actually feel while reading
+• What should I optimize first? Blindly enabling optimizations wastes time
+
+Cloud APIs hide these questions behind a price tag.
+
+On a laptop, you are the ops team.
+
+Apple Silicon makes local inference attractive because the CPU and GPU share memory and Metal provides accelerated computation. But that shared-memory architecture comes with a catch:
+
+Your browser tabs, IDE, operating system, model weights, and KV cache all compete for the same memory pool.
+
+Quantization, KV-cache optimizations, prefill improvements, and speculative decoding aren't just nice-to-have optimizations.
+
+They're what make local inference practical.
+
+This series is designed around reproducible numbers rather than vibes.
+
+Every figure is generated from JSON results, and the benchmark commands are available in the accompanying repository. If your Mac is faster or slower than mine, you should be able to reproduce the experiment and find out why.
+
+---
+
+How Apple Silicon Changes the Game
+
+On a conventional PC with a discrete GPU, system RAM and GPU VRAM are separate memory pools.
+
+The CPU operates primarily from system RAM while the GPU uses VRAM. Data frequently has to move between them.
+
+Apple Silicon takes a different approach.
+
+CPU and GPU share a unified memory pool.
+
+That means model weights, KV cache, macOS, Safari, your IDE, and other applications all consume the same physical memory.
+
+IMAGE: {IMG}/workflows/00_unified_memory.png
+Figure 1 — CPU and GPU share unified memory. Model weights, KV cache, macOS, and applications all compete for the same memory ceiling.
+
+This is why a 24 GB Mac can be both surprisingly capable and surprisingly easy to overwhelm.
+
+An 8B parameter model stored in FP16 requires approximately:
+
+8 billion × 16 bits ÷ 8 ≈ 16 GB
+
+And that's just the weights.
+
+The KV cache grows with context length, while the operating system and your applications still need memory.
+
+So on a 24 GB machine, an FP16 8B model leaves surprisingly little headroom.
+
+A simple memory equation
+
+For a model with N parameters stored using b bits per parameter:
+
+Memory_weights ≈ (N × b) / (8 × 10⁹) GB
+
+For an 8B model:
+
+• FP16: ≈ 16 GB
+• 8-bit: ≈ 8 GB
+• 4-bit: ≈ 4 GB
+• 2-bit: ≈ 2 GB
+
+Real memory usage is higher because of runtime overhead, embeddings, activations, and the KV cache.
+
+But the equation explains the basic tradeoff:
+
+Quantization isn't just about making an LLM faster. On a laptop, it is often what makes the model usable in the first place.
+
+---
+
+The LLM Inference Pipeline
+
+Every chat response has two major phases, and they have different bottlenecks.
+
+Confusing them is one of the easiest ways to optimize the wrong thing.
+
+IMAGE: {IMG}/workflows/00_inference_pipeline.png
+Figure 2 — Load weights → prefill the prompt → generate the first token → autoregressive decode.
+
+The three metrics I care about most are:
+
+• Peak memory — Loading + KV growth — Unified memory capacity — Whether the model fits
+• TTFT — Prefill — Compute + memory — How long the cursor freezes
+• Decode tok/s — Autoregressive generation — Memory bandwidth — How quickly the answer streams
+
+Prefill
+
+During prefill, the model processes the existing prompt.
+
+This phase is relatively parallel and generally benefits from greater compute capability.
+
+Longer prompts generally mean more work and therefore greater time-to-first-token (TTFT).
+
+Decode
+
+Decode is different.
+
+The model generates one token at a time.
+
+Each new token requires the model to repeatedly access a large portion of its weights.
+
+That makes memory bandwidth extremely important.
+
+This is why reducing the number of bytes required per parameter can improve throughput even when the hardware still has plenty of theoretical FLOPS available.
+
+The Roofline model provides a useful mental model here: when arithmetic intensity is low, memory bandwidth rather than peak compute becomes the limiting factor.
+
+IMAGE: {IMG}/papers/williams_roofline_redraw.png
+Figure — Redraw of the Roofline model. LLM decode often operates in a bandwidth-limited regime.
+
+And attention introduces another important concept: the KV cache.
+
+IMAGE: {IMG}/papers/vaswani_attention_redraw.png
+Figure — Scaled dot-product attention and the role of cached keys and values during autoregressive decoding.
+
+The rest of this series therefore attacks the system one bottleneck at a time:
+
+1. Weight quantization → memory + decode speed
+2. KV-cache quantization → long-context memory
+3. Prefill optimization → TTFT
+4. Model-size scaling → capacity planning
+5. Full-stack optimization → practical daily-driver configurations
+6. Speculative decoding → generating multiple tokens more efficiently
+
+---
+
+Baseline: Llama 3.1 8B in FP16
+
+Before optimizing anything, we need a baseline.
+
+The baseline experiment is intentionally boring:
+
+• Llama 3.1 8B
+• FP16
+• 512-token prompt
+• 128 generated tokens
+• 1 warmup trial
+• 3 measured trials
+• Median values reported
+
+Mac M3 — 24 GB
+
+• Configuration: FP16
+• Peak Memory: 16.33 GB
+• TTFT: 2,651 ms
+• Decode: 5.3 tok/s
+
+Sixteen gigabytes for a single model.
+
+Almost three seconds before the first token.
+
+About five tokens per second afterward.
+
+This is the "it runs" baseline.
+
+But it isn't what most people would consider a good local AI experience.
+
+On a 24 GB Mac, there may only be around 6–8 GB left for macOS, your IDE, browser, applications, and the growing KV cache.
+
+That's fragile.
+
+---
+
+Then We Tried the M5 Max
+
+The same FP16 demo on the M5 Max produced:
+
+• M3 — 16.33 GB · 2,651 ms · 5.3 tok/s
+• M5 Max — 16.46 GB · 193 ms · 34.4 tok/s
+
+The interesting part is memory.
+
+It barely changed.
+
+The model is still the model.
+
+The weights still require roughly the same amount of memory.
+
+What changed dramatically was how quickly the hardware could process them.
+
+The M5 Max delivered approximately:
+
+• 14× lower TTFT
+• 6.5× higher decode throughput
+
+This gives us an important distinction:
+
+Newer hardware dramatically increases the performance ceiling, but it doesn't magically make an FP16 model smaller.
+
+Capacity is still a memory problem.
+
+Performance is a silicon problem.
+
+Quantization attacks both.
+
+IMAGE: {IMG}/00_intro_hardware_compare.png
+Figure 3 — Hardware and precision comparison. Quantization dramatically reduces memory requirements while newer Apple Silicon raises the absolute performance ceiling.
+
+---
+
+What 4-Bit Does to the Same Model
+
+Here's the first major preview of the next article.
+
+On the M3, Llama 3.1 8B moves approximately from:
+
+FP16 — 5.8 tok/s @ 16.3 GB
+
+to:
+
+W4 — 20.5 tok/s @ 5.1 GB
+
+and eventually:
+
+W2 — 35.8 tok/s @ 3.1 GB
+
+That is the fundamental reason quantization deserves its own article.
+
+The surprising result isn't merely that the model becomes smaller.
+
+It's that the model can become smaller and faster at the same time.
+
+Why?
+
+Because decode frequently involves repeatedly moving model weights through memory.
+
+Fewer bytes per parameter means less memory traffic.
+
+---
+
+M3 vs. M5 Max: What We Learn
+
+• FP16 8B memory — M3 ~16.3 GB · M5 Max ~16.5 GB — Capacity is model-bound
+• FP16 8B decode — M3 ~5.3–5.8 tok/s · M5 Max ~34–35 tok/s — Silicon generation matters
+• FP16 TTFT (512 tokens) — M3 ~2.6–2.7 s · M5 Max ~0.19 s — Prefill benefits from more capable silicon
+• FP16 8B headroom — M3 tight · M5 Max comfortable — 24 GB systems benefit strongly from quantization
+
+If you only benchmark on an M5 Max, it is easy to underestimate why quantization matters.
+
+If you only benchmark on an M3, it's easy to underestimate how much modern Max-class silicon can do.
+
+That's why this series benchmarks across both.
+
+The goal isn't to crown one machine a winner.
+
+It's to understand which limitation comes from the software, which comes from the model, and which comes from the hardware.
+
+---
+
+Benchmark Methodology
+
+Numbers are only useful if they're reproducible.
+
+Every benchmark result is stored as JSON with a consistent schema.
+
+Each result includes:
+
+• schema_version — Current result format
+• warmup_policy — Number of discarded warmup trials
+• num_trials — Number of measured trials
+• trials — Raw per-trial measurements
+• stats — Median, p50, p95, standard deviation, min/max
+• ttft_ms — Median time to first token
+• throughput_tps — Median decode throughput
+• memory_gb — Median/recorded peak memory
+
+The standard benchmark configuration uses:
+
+• Runtime: MLX + mlx-lm
+• Models: MLX Community checkpoints
+• Prompt: 512 tokens
+• Generation: 128 tokens
+• Warmup: 1 trial
+• Measured trials: 3
+• Isolation: Each configuration runs in its own subprocess
+
+The repository is:
+
+https://github.com/Chirumamilla1522/LLM-Inference
+
+A representative result file looks like:
+
+results/Mac_M3/article_00_introduction/llama3-8b/demo_fp16.json
+
+The raw JSON is important.
+
+Suppose one benchmark suddenly reports an unusually high token rate.
+
+Rather than trusting a plot, we can inspect the individual trials.
+
+Was it a warmup artifact?
+
+Thermal variation?
+
+A configuration mismatch?
+
+A different checkpoint?
+
+The raw data makes those questions answerable.
+
+---
+
+Why Medians Matter
+
+A single benchmark run is not enough.
+
+Metal initialization, thermal state, background applications, and other system activity can move results around.
+
+That's why this benchmark uses:
+
+1 warmup + 3 measured trials
+
+and reports the median.
+
+The goal isn't to manufacture perfect numbers.
+
+It's to make comparisons more robust.
+
+A benchmark should behave like a lab notebook, not a screenshot.
+
+---
+
+What "8B" Actually Means
+
+One thing became obvious while building the benchmark:
+
+"8B" is a model-size category, not a performance specification.
+
+Different model families behave very differently even when they have similar parameter counts.
+
+• Qwen 2.5 — Excellent small-model performance and useful draft candidates
+• Llama 3 / 3.2 — Strong reference point for local chat and coding
+• Mistral — Strong instruct baseline
+• Gemma 2 — Interesting architectural and packaging differences
+• Phi-3 / 3.5 — Small models with surprisingly strong capability
+• DeepSeek-R1 Distill — Reasoning-oriented models useful for quality comparisons
+
+Part 2 expands this into a broader model × precision benchmark.
+
+---
+
+The Dataset Behind the Series
+
+This isn't a one-model experiment.
+
+The benchmark harness has already generated hundreds of JSON runs across the M3 and M5 Max.
+
+The next articles will turn those runs into:
+
+• Throughput heatmaps
+• Memory heatmaps
+• Quantization speedups
+• Memory-reduction comparisons
+• Efficiency plots
+• M3 vs. M5 comparisons
+• Model-family comparisons
+• Model-size ladders
+• Long-context experiments
+• Full-stack optimization results
+• Speculative decoding experiments
+
+IMAGE: {IMG}/01_heatmap_tps.png
+Figure 4 — Decode throughput across models and bit-widths.
+
+IMAGE: {IMG}/01_heatmap_memory.png
+Figure 5 — Peak memory across the same model/precision matrix.
+
+IMAGE: {IMG}/01_speedup_all_models.png
+Figure 6 — FP16 → W4 decode speedup and memory reduction.
+
+IMAGE: {IMG}/01_efficiency_tps_per_gb.png
+Figure 7 — Decode efficiency measured as tokens/sec per GB.
+
+---
+
+The Silicon Gap
+
+The same quantized model can behave very differently across Apple Silicon generations.
+
+IMAGE: {IMG}/01_m3_vs_m5_w4.png
+Figure 8 — W4 performance comparison between M3 and M5 Max.
+
+For Llama 3.1 8B, the difference becomes particularly interesting when looking across multiple precisions.
+
+IMAGE: {IMG}/01_llama_m3_m5_all_bits.png
+Figure 9 — Llama 3.1 8B across FP16, W8, W4, and W2 on M3 and M5 Max.
+
+One result from the broader sweep is particularly striking:
+
+M5 Max W4 reaches roughly 112 tok/s, exceeding M3 W2 at roughly 36 tok/s.
+
+In other words, hardware generation and quantization are not competing explanations.
+
+They stack.
+
+---
+
+Model Size Changes the Game
+
+Smaller models are dramatically easier to run.
+
+IMAGE: {IMG}/04_model_size_ladder.png
+Figure 10 — W4 model-size ladder on Mac M3.
+
+The M3 benchmark spans models from roughly 0.5B to 9B, with performance dropping as model size increases.
+
+On the M5 Max, the usable model range extends considerably further.
+
+IMAGE: {IMG}/04_m5_extended_ladder.png
+Figure 11 — M5 Max extends the practical model-size range into larger models.
+
+This leads to another important principle:
+
+The best local model isn't necessarily the largest model that fits.
+
+It's the model that provides the best balance between:
+
+• Quality
+• Memory usage
+• TTFT
+• Decode speed
+• Context length
+• Available system headroom
+
+---
+
+What Happens With Long Context?
+
+The short benchmark is only the beginning.
+
+Real applications increasingly involve long prompts:
+
+• RAG
+• Coding repositories
+• Document analysis
+• Agent workflows
+• Conversation history
+
+As context grows, the KV cache becomes increasingly important.
+
+IMAGE: {IMG}/07_context_m3_m5_panels.png
+Figure 12 — Context-length experiments showing the impact of longer prompts on TTFT and throughput.
+
+This is why KV-cache optimization is Part 3 of the series.
+
+A model that feels great with a 500-token prompt can behave very differently with a 20K-token context.
+
+---
+
+The Full Optimization Stack
+
+Eventually, these optimizations need to work together.
+
+IMAGE: {IMG}/05_m3_m5_full_stack.png
+Figure 13 — Preview of the optimized inference stack across M3 and M5 Max.
+
+The goal isn't to maximize one benchmark metric.
+
+The goal is to create a configuration that you would actually want to use every day.
+
+---
+
+Speculative Decoding
+
+The final part of the series explores speculative decoding.
+
+Instead of relying entirely on a large model to generate every token sequentially, a smaller draft model proposes multiple tokens that the larger model can verify.
+
+IMAGE: {IMG}/06_spec_m3_m5_qwen.png
+Figure 14 — Speculative decoding preview using Qwen-7B.
+
+The preliminary measurements show approximately:
+
+• M3: ~16 → 28 tok/s
+• M5 Max: ~122 → 170 tok/s
+• Acceptance rate: ~74%
+
+This is particularly interesting because it attacks the autoregressive nature of decoding itself rather than simply reducing model size.
+
+---
+
+Practical Decision Guide
+
+So what should you actually do?
+
+• 16 GB unified memory — Start with 3B–7B W4 — Don't start with FP16 8B
+• 24 GB unified memory — Start with 7B–8B W4 — Don't use FP16 8B as a daily driver
+• 32–64 GB+ / Max — FP16 for quality tests, W4 for speed — Don't assume hardware alone solves latency
+• You care about first-token latency — Measure TTFT — Don't optimize only tok/s
+• Long RAG contexts — Plan KV memory early — Don't ignore cache growth
+• Maximum streaming speed — Quantize weights first — Don't buy a new Mac first
+
+My practical rule is simple:
+
+1. Fit the model. Start with W4.
+2. Measure your actual prompt. Especially TTFT.
+3. Then optimize further. Only after those two steps should you worry about speculative decoding, runtime tweaks, or buying new hardware.
+
+Skipping the first step is how people conclude:
+
+"Local LLMs are unusable."
+
+after running an 8B model in FP16 on a 24 GB Mac.
+
+---
+
+A 10-Minute Sanity Check
+
+Before trusting any benchmark — including mine — run a small experiment on your own machine.
+
+Step 1
+
+Pick one model you actually care about.
+
+For example: llama3-8b or mistral-7b
+
+Step 2
+
+Run only:
+
+• FP16
+• W4
+
+Don't start with a 14-model sweep.
+
+Step 3
+
+Check whether:
+
+• Memory falls by roughly 2–3×
+• Decode throughput increases substantially
+
+Step 4
+
+Measure TTFT using a prompt length representative of your actual workload.
+
+A 512-token benchmark is not necessarily representative of a 40-token chat message.
+
+If your results look dramatically different from the expected trend, investigate:
+
+• Incorrect checkpoint precision
+• Thermal throttling
+• Runtime configuration
+• UI-wrapper overhead
+• Background applications
+
+Only after the basic experiment behaves correctly should you move to more advanced optimizations.
+
+---
+
+Four Things I Learned
+
+1. Unified memory is both a feature and a tax.
+
+There is no isolated VRAM pool protecting your desktop.
+
+When the model consumes the memory, your applications feel it too.
+
+2. Decode is often bandwidth-bound.
+
+That's why a lower-bit model can simultaneously be smaller and faster — rather than simply smaller.
+
+3. Medians beat single runs.
+
+Warmup behavior, thermal state, and background processes matter.
+
+A benchmark needs repeated measurements.
+
+4. The M5 Max doesn't make FP16 weights smaller.
+
+It makes the same memory footprint much more usable by dramatically improving compute and memory performance.
+
+For multi-application workflows, quantization remains important.
+
+---
+
+Limitations
+
+This series focuses on systems performance, not model quality.
+
+There are several things these benchmarks don't measure yet:
+
+• Perplexity and standardized quality evaluations
+• MMLU-style benchmarks
+• Battery life
+• Sustained thermal behavior
+• Non-MLX runtimes
+• Ollama defaults
+• llama.cpp
+• PyTorch MPS
+• Interactive UI overhead
+• Network latency
+• Tool-calling agent overhead
+
+The goal of this series is narrower:
+
+Understand what actually determines local LLM performance on Apple Silicon.
+
+---
+
+Reproduce the Benchmark
+
+The benchmark repository contains scripts for running the experiments and regenerating the figures.
+
+For the baseline:
+
+./scripts/run_article.sh 0 "Mac M3"
+
+# Optional — M5 Max
+./scripts/run_article.sh 0 "Mac M5 Max"
+
+# Regenerate figures
+python scripts/plot_medium_diagrams.py
+python scripts/plot_medium_charts.py --hardware "Mac M3"
+python scripts/plot_medium_deep.py
+
+The baseline result is stored under:
+
+results/Mac_M3/article_00_introduction/llama3-8b/demo_fp16.json
+
+The important part is that the measurements aren't just screenshots.
+
+They're data.
+
+You can inspect the raw JSON, regenerate the plots, and compare them against your own hardware.
+
+Repo: https://github.com/Chirumamilla1522/LLM-Inference
+
+---
+
+What Comes Next?
+
+This is only Part 1.
+
+• Part 1 — Introduction — Metrics + unified memory
+• Part 2 — Weight quantization — FP16 → W8 → W4 → W2
+• Part 3 — KV-cache quantization — Long-context memory
+• Part 4 — Prefill & TTFT — First-token latency
+• Part 5 — Model-size ladder — 0.5B → 70B
+• Part 6 — Full stack — Combine everything
+• Part 7 — Speculative decoding — Draft models
+
+The key takeaway from this first experiment is simple:
+
+The FP16 demo is the floor, not the product.
+
+An 8B model running at 5 tok/s on a 24 GB Mac isn't the end of the story.
+
+It's the baseline.
+
+Once you understand memory capacity, memory bandwidth, prefill, decode, and quantization, the performance numbers start to make a lot more sense.
+
+And that's where this series goes next.
+
+---
+
+References
+
+1. Vaswani et al., Attention Is All You Need (2017)
+2. Dubey et al., The Llama 3 Herd of Models (2024)
+3. Williams et al., Roofline: An Insightful Performance Model (2009)
+4. Apple Machine Learning Research — MLX
+5. Apple — mlx-lm
+6. Jacob et al., Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference (2018)
+7. Frantar et al., GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers (2022)
+8. Dao et al., FlashAttention: Fast and Memory-Efficient Exact Attention (2022)
+9. MLX Community model hub
+10. LLM-Inference benchmark repository
+11. Apple — Apple Silicon unified memory architecture
+12. Kaplan et al., Scaling Laws for Neural Language Models (2020)
+
+---
+
+Series Navigation
+
+Next → Part 2: 4-Bit Weights Changed Everything
+
+Local LLMs on Apple Silicon — Part 1 of 7
+
+Tags: Machine Learning · Apple · LLM · MLX · Local AI · Apple Silicon
+"""
+    write(
+        "00-introduction",
+        {
+            "title": "Running 8B LLMs on a MacBook: What Actually Matters",
+            "subtitle": "Unified memory, the inference pipeline, and reproducible benchmarks on Apple Silicon — with M3 vs. M5 Max numbers",
+            "featured": f"{IMG}/thumbnails/thumb_00_introduction.png",
+            "featured_caption": "Local LLMs on Apple Silicon — Part 1",
+            "series": "Local LLMs on Apple Silicon — Part 1 of 7",
+            "tags": "Machine Learning, Apple, LLM, MLX, Local AI, Apple Silicon",
+        },
+        body,
     )
 
+
+# Remaining articles: same clean Medium prose style
+# Kept substantial but scannable like the user's Part 1 sample.
 
 def art01() -> None:
-    b: list[str] = []
-    b += body(
-        "An 8B model in FP16 needs ~16 GB just for weights.",
-        "On a 24 GB MacBook, that leaves almost nothing for the OS, your editor, and the KV cache.",
-        "Weight quantization is the highest-leverage change for local Mac inference.",
-    )
-    b += subhead("How it works (redrawn from the papers — not copied)")
-    b += body("We store each weight with fewer bits — usually 8, 4, or 2 — plus a tiny scale.")
-    b += image(f"{IMG}/papers/jacob_affine_quant_redraw.png", "Original redraw — affine quantization (Jacob et al., 2018)")
-    b += image(f"{IMG}/papers/frantar_gptq_redraw.png", "Original redraw — GPTQ idea (Frantar et al., 2022)")
-    b += image(f"{IMG}/papers/lin_awq_redraw.png", "Original redraw — AWQ idea (Lin et al., 2023)")
-    b += quote("Fun fact: GPTQ was built for 175B-class models that couldn’t fit on one GPU at FP16. The same math now makes 8B models comfortable on a laptop.")
-    b += subhead("Why fewer bits also make decode faster")
-    b += body("Each decode step often reads nearly all weights from memory. Fewer bytes per weight → higher tok/s on a bandwidth-bound chip.")
-    b += image(f"{IMG}/papers/williams_roofline_redraw.png", "Original redraw — Roofline: LLM decode sits on the bandwidth slope")
-    b += subhead("Llama 3.1 8B on Mac M3")
-    b += bullets(
-        [
-            "fp16 — 16.3 GB · 5.8 tok/s",
-            "w8 — 9.0 GB · 11.3 tok/s (~1.9×)",
-            "w4 — 5.1 GB · 20.5 tok/s (~3.5×)",
-            "w2 — 3.1 GB · 35.8 tok/s (~6×)",
-        ]
-    )
-    b += image(f"{IMG}/01_weight_quant_llama3-8b.png", "Memory vs speed as bit-width drops")
-    b += image(f"{IMG}/01_pareto_memory_speed.png", "Pareto frontier — w4 is the practical sweet spot on 24 GB")
-    b += image(f"{IMG}/01_speedup_vs_fp16.png", "Explicit speedup vs FP16")
-    b += subhead("All 14 models (the heatmap)")
-    b += image(f"{IMG}/01_heatmap_tps.png", "Decode tok/s — every model × bit-width on Mac M3")
-    b += image(f"{IMG}/01_heatmap_memory.png", "Peak memory — FP16 is the red zone on 24 GB")
-    b += image(f"{IMG}/01_speedup_all_models.png", "fp16→w4 speedup and memory shrink across the board")
-    b += subhead("M3 vs M5 Max")
-    b += body("Same w4 checkpoints. Different silicon.")
-    b += bullets(
-        [
-            "Llama 8B w4: 20.5 → 112 tok/s",
-            "Qwen 0.5B w4: 215 → 581 tok/s",
-        ]
-    )
-    b += image(f"{IMG}/01_m3_vs_m5_w4.png", "M3 vs M5 Max at w4")
-    b += image(f"{IMG}/01_llama_m3_m5_all_bits.png", "Llama 8B across every bit-width on both chips")
-    b += subhead("What you should actually run")
-    b += bullets(
-        [
-            "16 GB Mac — 3B–7B @ w4",
-            "24 GB Mac — 8B @ w4 as daily driver",
-            "Skip FP16 8B as your everyday chat config",
-        ]
-    )
-    b += code('./scripts/run_article.sh 1 "Mac M3"')
-    b += body("← Part 1  ·  Next → Part 3: KV Cache")
-    kit(
-        slug="01-weight-quantization",
-        title="4-Bit Weights Changed Everything on My M3 Mac",
-        subtitle="Affine quantization, GPTQ/AWQ ideas redrawn, and 14-model heatmaps on Apple Silicon",
-        featured=f"{IMG}/thumbnails/thumb_01_weight_quantization.png",
-        featured_caption="Weight quantization — Part 2",
-        tags=["Machine Learning", "Quantization", "LLM", "Apple", "Artificial Intelligence"],
-        series="Local LLMs on Apple Silicon — Part 2 of 7",
-        blocks=b,
+    body = f"""
+---
+
+4-Bit Weights Changed Everything on My M3 Mac
+
+Affine quantization from the papers — then Pareto charts, heatmaps, and M3 vs. M5 Max numbers across 14 models
+
+Part 2 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_01_weight_quantization.png
+CAPTION: Weight quantization — Part 2
+
+---
+
+In Part 1, I loaded Llama 3.1 8B in FP16 on a 24 GB Mac M3 and watched the machine flinch.
+
+16.33 GB peak.
+
+2.6+ seconds to first token.
+
+Roughly 5–6 tokens per second.
+
+The model worked.
+
+The laptop did not feel like a product anymore.
+
+Weight quantization is the highest-leverage fix.
+
+---
+
+The Problem in One Sentence
+
+An 8B model in FP16 needs about 16 GB just for weights.
+
+On a 24 GB Mac, that leaves almost nothing for macOS, your editor, and the KV cache.
+
+---
+
+How Quantization Works
+
+We map each high-precision weight to a smaller integer code, plus a scale.
+
+IMAGE: {IMG}/papers/jacob_affine_quant_redraw.png
+Figure — Original redraw of affine quantization (Jacob et al., 2018).
+
+In practice, LLM checkpoints use recipes like GPTQ and AWQ.
+
+IMAGE: {IMG}/papers/frantar_gptq_redraw.png
+Figure — Original redraw of the GPTQ idea (Frantar et al., 2022).
+
+IMAGE: {IMG}/papers/lin_awq_redraw.png
+Figure — Original redraw of the AWQ idea (Lin et al., 2023).
+
+Fun fact: GPTQ was built for 175B-class models that couldn't fit on one GPU at FP16. The same math now makes 8B models comfortable on a laptop.
+
+---
+
+Why Fewer Bits Also Make Decode Faster
+
+Each decode step often reads nearly all weights from memory.
+
+Fewer bytes per weight means less memory traffic.
+
+IMAGE: {IMG}/papers/williams_roofline_redraw.png
+Figure — Original redraw of the Roofline idea. LLM decode often sits on the bandwidth slope.
+
+---
+
+Llama 3.1 8B on Mac M3
+
+• FP16 — 16.3 GB · 5.8 tok/s
+• W8 — 9.0 GB · 11.3 tok/s (~1.9×)
+• W4 — 5.1 GB · 20.5 tok/s (~3.5×)
+• W2 — 3.1 GB · 35.8 tok/s (~6×)
+
+IMAGE: {IMG}/01_weight_quant_llama3-8b.png
+Figure — Memory and throughput as bit-width drops.
+
+IMAGE: {IMG}/01_pareto_memory_speed.png
+Figure — Pareto frontier. W4 is the practical sweet spot on 24 GB.
+
+IMAGE: {IMG}/01_speedup_vs_fp16.png
+Figure — Explicit speedup versus FP16.
+
+---
+
+All 14 Models
+
+The surprising part isn't one lucky Llama run.
+
+It's that the pattern holds across the board.
+
+IMAGE: {IMG}/01_heatmap_tps.png
+Figure — Decode tok/s across models and bit-widths on Mac M3.
+
+IMAGE: {IMG}/01_heatmap_memory.png
+Figure — Peak memory for the same matrix. FP16 is the danger zone on 24 GB.
+
+IMAGE: {IMG}/01_speedup_all_models.png
+Figure — FP16 → W4 speedup and memory reduction across models.
+
+IMAGE: {IMG}/01_family_panels.png
+Figure — Family zoom-ins: Qwen, Llama, Phi, Gemma, Mistral/DeepSeek.
+
+---
+
+M3 vs. M5 Max
+
+Same W4 checkpoints. Different silicon.
+
+• Llama 8B W4 — 20.5 → 112 tok/s
+• Qwen 0.5B W4 — 215 → 581 tok/s
+
+IMAGE: {IMG}/01_m3_vs_m5_w4.png
+Figure — M3 vs. M5 Max at W4.
+
+IMAGE: {IMG}/01_llama_m3_m5_all_bits.png
+Figure — Llama 8B across every bit-width on both chips.
+
+Hardware generation and quantization stack. They are not competing explanations.
+
+---
+
+What You Should Actually Run
+
+• 16 GB Mac — 3B–7B at W4
+• 24 GB Mac — 8B at W4 as the daily driver
+• Skip FP16 8B as your everyday chat config
+
+Reproduce:
+
+./scripts/run_article.sh 1 "Mac M3"
+
+Repo: https://github.com/Chirumamilla1522/LLM-Inference
+
+---
+
+Series Navigation
+
+← Part 1: Introduction
+Next → Part 3: The Hidden Memory Hog — KV Cache Quantization
+
+Local LLMs on Apple Silicon — Part 2 of 7
+
+Tags: Machine Learning · Quantization · LLM · Apple · Artificial Intelligence
+"""
+    write(
+        "01-weight-quantization",
+        {
+            "title": "4-Bit Weights Changed Everything on My M3 Mac",
+            "subtitle": "Affine quantization from the papers — then Pareto charts, heatmaps, and M3 vs. M5 Max numbers across 14 models",
+            "featured": f"{IMG}/thumbnails/thumb_01_weight_quantization.png",
+            "featured_caption": "Weight quantization — Part 2",
+            "series": "Local LLMs on Apple Silicon — Part 2 of 7",
+            "tags": "Machine Learning, Quantization, LLM, Apple, Artificial Intelligence",
+        },
+        body,
     )
 
 
 def art02() -> None:
-    b: list[str] = []
-    b += body(
-        "Weight quantization gets the spotlight.",
-        "Once generation starts, something else grows: the KV cache — keys and values for every token in context.",
-        "For short chats it barely shows up in tok/s. For RAG, it’s the second memory bill.",
-    )
-    b += subhead("How the cache works")
-    b += image(f"{IMG}/workflows/02_kv_cache_workflow.png", "KV grows linearly with sequence length; 4-bit KV ≈ ¼ the footprint")
-    b += image(f"{IMG}/papers/vaswani_attention_redraw.png", "Original redraw — attention (Vaswani et al., 2017)")
-    b += image(f"{IMG}/papers/pope_kv_scaling_redraw.png", "Original redraw — inspired by Pope et al. (2022)")
-    b += subhead("GQA: shrink heads before you quantize")
-    b += image(f"{IMG}/papers/ainslie_gqa_redraw.png", "Original redraw — GQA vs MHA (Ainslie et al., 2023)")
-    b += quote("Llama 3, Mistral, and Qwen already cut KV heads with GQA. 4-bit KV stacks on top of that.")
-    b += subhead("Why our short-context bench “does nothing”")
-    b += body("At 512 prompt + 128 gen on Mac M3:")
-    b += bullets(
-        [
-            "Llama 8B: 20.7 → 20.4 tok/s",
-            "Mistral 7B: 21.6 → 21.2",
-            "Qwen 7B: 21.8 → 21.4",
-        ]
-    )
-    b += image(f"{IMG}/02_kv_cache_compare.png", "Short context: throughput almost unchanged")
-    b += image(f"{IMG}/02_kv_long_generation.png", "Longer generation: still weight-bound at laptop batch size 1")
-    b += body("The win appears at long context, multi-session serving, or tight RAM — not in a 640-token microbench.")
-    b += image(f"{IMG}/07_context_dual_axis.png", "Where KV pressure shows up — TTFT explodes as prompts grow")
-    b += image(f"{IMG}/papers/kwon_paged_attention_redraw.png", "Original redraw — paged KV idea (Kwon et al., 2023)")
-    b += subhead("When to enable it")
-    b += bullets(
-        [
-            "Always quantize weights first (w4)",
-            "Turn on KV quant for >2K context or RAG",
-            "Prefer GQA models",
-        ]
-    )
-    b += code('./scripts/run_article.sh 2 "Mac M3"')
-    b += body("← Part 2  ·  Next → Part 4: Prefill & TTFT")
-    kit(
-        slug="02-kv-cache-quantization",
-        title="The Hidden Memory Hog: KV Cache Quantization",
-        subtitle="Why short benches look boring — and when 4-bit KV actually saves you",
-        featured=f"{IMG}/thumbnails/thumb_02_kv_cache.png",
-        featured_caption="KV cache quantization — Part 3",
-        tags=["Machine Learning", "LLM", "Artificial Intelligence", "Apple", "Programming"],
-        series="Local LLMs on Apple Silicon — Part 3 of 7",
-        blocks=b,
+    body = f"""
+---
+
+The Hidden Memory Hog: KV Cache Quantization
+
+How attention caching works, why GQA helps, and when 4-bit KV pays off on Apple Silicon
+
+Part 3 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_02_kv_cache.png
+CAPTION: KV cache quantization — Part 3
+
+---
+
+Weight quantization gets the spotlight.
+
+Once generation starts, something else grows: the KV cache.
+
+For short chats, it barely shows up in tokens/sec.
+
+For RAG, it's the second memory bill.
+
+---
+
+How the Cache Works
+
+During decode, each new token attends to all previous tokens.
+
+Recomputing keys and values every step would be wasteful, so transformers cache them.
+
+IMAGE: {IMG}/workflows/02_kv_cache_workflow.png
+Figure — KV grows linearly with sequence length. 4-bit KV is roughly one-fourth the footprint.
+
+IMAGE: {IMG}/papers/vaswani_attention_redraw.png
+Figure — Original redraw of attention (Vaswani et al., 2017).
+
+IMAGE: {IMG}/papers/pope_kv_scaling_redraw.png
+Figure — Original redraw inspired by Pope et al. (2022): weights stay flat while KV grows with T.
+
+---
+
+GQA: Shrink Heads Before You Quantize
+
+Llama 3, Mistral, and Qwen use Grouped-Query Attention.
+
+Many query heads share fewer KV heads.
+
+IMAGE: {IMG}/papers/ainslie_gqa_redraw.png
+Figure — Original redraw of GQA vs. multi-head attention (Ainslie et al., 2023).
+
+That shrinks the cache before you even touch bit width.
+
+---
+
+Why Short-Context Benches Look Boring
+
+At 512 prompt + 128 generation tokens on Mac M3:
+
+• Llama 8B — 20.7 → 20.4 tok/s
+• Mistral 7B — 21.6 → 21.2
+• Qwen 7B — 21.8 → 21.4
+
+IMAGE: {IMG}/02_kv_cache_compare.png
+Figure — Short context: throughput almost unchanged.
+
+IMAGE: {IMG}/02_kv_long_generation.png
+Figure — Longer generation: still mostly weight-bound at laptop batch size 1.
+
+The win appears at long context, multi-session serving, or tight RAM — not in a 640-token microbench.
+
+IMAGE: {IMG}/07_context_dual_axis.png
+Figure — Where pressure shows up: TTFT explodes as prompts grow.
+
+IMAGE: {IMG}/papers/kwon_paged_attention_redraw.png
+Figure — Original redraw of paged KV (Kwon et al., 2023). Serving systems page the cache; local MLX is the single-user cousin of the same memory problem.
+
+---
+
+When to Enable It
+
+1. Always quantize weights first (W4).
+2. Enable KV quant for >2K context or RAG.
+3. Prefer GQA models.
+
+Reproduce:
+
+./scripts/run_article.sh 2 "Mac M3"
+
+---
+
+Series Navigation
+
+← Part 2: Weight Quantization
+Next → Part 4: Why Your Chatbot Feels Slow Before the First Word
+
+Local LLMs on Apple Silicon — Part 3 of 7
+
+Tags: Machine Learning · LLM · Transformers · Apple · Artificial Intelligence
+"""
+    write(
+        "02-kv-cache-quantization",
+        {
+            "title": "The Hidden Memory Hog: KV Cache Quantization",
+            "subtitle": "How attention caching works, why GQA helps, and when 4-bit KV pays off on Apple Silicon",
+            "featured": f"{IMG}/thumbnails/thumb_02_kv_cache.png",
+            "featured_caption": "KV cache quantization — Part 3",
+            "series": "Local LLMs on Apple Silicon — Part 3 of 7",
+            "tags": "Machine Learning, LLM, Transformers, Apple, Artificial Intelligence",
+        },
+        body,
     )
 
 
 def art03() -> None:
-    b: list[str] = []
-    b += body(
-        "Users blame “slow AI” on streaming speed.",
-        "Often the real pain is earlier: time-to-first-token — the pause before the first character.",
-    )
-    b += subhead("Prefill vs decode")
-    b += image(f"{IMG}/workflows/03_prefill_vs_decode.png", "Two phases, two bottlenecks")
-    b += bullets(
-        [
-            "Prefill → TTFT (attention over the whole prompt)",
-            "Decode → tok/s (weight bandwidth)",
-        ]
-    )
-    b += subhead("FlashAttention — exact, not approximate")
-    b += image(f"{IMG}/papers/dao_flashattention_redraw.png", "Original redraw — FlashAttention IO (Dao et al., 2022/23)")
-    b += image(f"{IMG}/papers/milakov_online_softmax_redraw.png", "Original redraw — online softmax (Milakov & Gimelshein, 2018)")
-    b += quote("Fun fact: FlashAttention computes the same math as naive attention. It just refuses to materialize the giant score matrix in slow memory.")
-    b += subhead("The quadratic wall (real numbers)")
-    b += body("Llama 3.1 8B, w4, Mac M3:")
-    b += bullets(
-        [
-            "p=256 → ~2.4 s TTFT",
-            "p=512 → ~3.1 s",
-            "p=1024 → ~5.8 s",
-            "p=2048 → ~15.4 s",
-        ]
-    )
-    b += image(f"{IMG}/03_prefill_ttft.png", "TTFT vs prompt shape")
-    b += image(f"{IMG}/03_ttft_vs_prompt_curve.png", "Measured TTFT vs a ∝ T² reference")
-    b += image(f"{IMG}/07_workload_ttft.png", "rag_agent workload ≈ 31 s TTFT on M3")
-    b += subhead("What to do in product")
-    b += bullets(
-        [
-            "Chat → shorten system prompts, enable prefill chunking",
-            "RAG → fewer chunks, prefix cache, don’t paste the whole PDF",
-            "Long writing → optimize tok/s (w4) after TTFT is acceptable",
-        ]
-    )
-    b += code('./scripts/run_article.sh 3 "Mac M3"')
-    b += body("← Part 3  ·  Next → Part 5: Model Size Ladder")
-    kit(
-        slug="03-prefill-and-ttft",
-        title="Why Your Chatbot Feels Slow Before the First Word",
-        subtitle="Prefill, FlashAttention intuition, and TTFT curves that go quadratic",
-        featured=f"{IMG}/thumbnails/thumb_03_prefill_ttft.png",
-        featured_caption="Prefill & TTFT — Part 4",
-        tags=["Machine Learning", "LLM", "Artificial Intelligence", "Apple", "UX"],
-        series="Local LLMs on Apple Silicon — Part 4 of 7",
-        blocks=b,
+    body = f"""
+---
+
+Why Your Chatbot Feels Slow Before the First Word
+
+Prefill vs. decode, FlashAttention intuition, and TTFT curves that go quadratic on Apple Silicon
+
+Part 4 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_03_prefill_ttft.png
+CAPTION: Prefill & TTFT — Part 4
+
+---
+
+Users blame "slow AI" on streaming speed.
+
+Often the real pain is earlier: time-to-first-token — the pause before the first character.
+
+---
+
+Prefill vs. Decode
+
+IMAGE: {IMG}/workflows/03_prefill_vs_decode.png
+Figure — Two phases, two bottlenecks.
+
+• Prefill → TTFT
+• Decode → tok/s
+
+Optimize the wrong one and your "faster model" still feels broken.
+
+---
+
+FlashAttention — Exact, Not Approximate
+
+IMAGE: {IMG}/papers/dao_flashattention_redraw.png
+Figure — Original redraw of the FlashAttention IO pattern (Dao et al., 2022/23).
+
+IMAGE: {IMG}/papers/milakov_online_softmax_redraw.png
+Figure — Original redraw of online softmax (Milakov & Gimelshein, 2018).
+
+Fun fact: FlashAttention computes the same math as naive attention. It just refuses to materialize the giant score matrix in slow memory.
+
+---
+
+The Quadratic Wall
+
+Llama 3.1 8B, W4, Mac M3:
+
+• p=256 → ~2.4 s TTFT
+• p=512 → ~3.1 s
+• p=1024 → ~5.8 s
+• p=2048 → ~15.4 s
+
+IMAGE: {IMG}/03_prefill_ttft.png
+Figure — TTFT versus prompt shape.
+
+IMAGE: {IMG}/03_ttft_vs_prompt_curve.png
+Figure — Measured TTFT versus a roughly quadratic reference.
+
+IMAGE: {IMG}/07_workload_ttft.png
+Figure — The rag_agent workload hits about 31 seconds TTFT on M3.
+
+That is why pasting a PDF into a local RAG demo often feels broken.
+
+---
+
+What to Do in Product
+
+• Chat — shorten system prompts; enable prefill chunking
+• RAG — fewer chunks; prefix cache; don't paste the whole document
+• Long writing — optimize tok/s after TTFT is acceptable
+
+Reproduce:
+
+./scripts/run_article.sh 3 "Mac M3"
+
+---
+
+Series Navigation
+
+← Part 3: KV Cache
+Next → Part 5: From 0.5B to 70B
+
+Local LLMs on Apple Silicon — Part 4 of 7
+
+Tags: Machine Learning · LLM · UX · Apple · Artificial Intelligence
+"""
+    write(
+        "03-prefill-and-ttft",
+        {
+            "title": "Why Your Chatbot Feels Slow Before the First Word",
+            "subtitle": "Prefill vs. decode, FlashAttention intuition, and TTFT curves that go quadratic on Apple Silicon",
+            "featured": f"{IMG}/thumbnails/thumb_03_prefill_ttft.png",
+            "featured_caption": "Prefill & TTFT — Part 4",
+            "series": "Local LLMs on Apple Silicon — Part 4 of 7",
+            "tags": "Machine Learning, LLM, UX, Apple, Artificial Intelligence",
+        },
+        body,
     )
 
 
 def art04() -> None:
-    b: list[str] = []
-    b += body(
-        "“Which model should I run locally?” is two questions:",
-        "Will it fit? Will it be fast enough?",
-    )
-    b += image(f"{IMG}/workflows/04_fit_ladder.png", "Decision ladder for 24 GB unified memory")
-    b += subhead("The w4 ladder on Mac M3")
-    b += bullets(
-        [
-            "Qwen 0.5B — 238 tok/s · 0.64 GB",
-            "Llama 3.2 1B — 112 tok/s · 1.2 GB",
-            "Qwen 3B — 48 tok/s · 2.2 GB",
-            "Llama 8B — 21 tok/s · 5.1 GB",
-            "Gemma 9B — 15 tok/s · 5.9 GB",
-        ]
-    )
-    b += image(f"{IMG}/04_model_size_ladder.png", "tok/s and memory across sizes @ w4")
-    b += image(f"{IMG}/04_ladder_scatter.png", "Memory vs speed scatter")
-    b += image(f"{IMG}/01_efficiency_tps_per_gb.png", "Efficiency = tok/s per GB @ w4")
-    b += quote("Fun fact: Qwen 0.5B @ w4 exceeds 238 tok/s on M3 — faster than most people type.")
-    b += subhead("M5 Max extends the ladder")
-    b += image(f"{IMG}/04_m5_extended_ladder.png", "M5 Max w4 ladder through larger models")
-    b += image(f"{IMG}/01_m3_vs_m5_w4.png", "Same checkpoints, different silicon")
-    b += subhead("Cheat sheet (24 GB)")
-    b += bullets(
-        [
-            "IDE copilot → 7B w4",
-            "Offline chat → 8B w4",
-            "Router / draft model → 0.5B–1.5B w4",
-            "Max quality that still fits → 9B w4 or 8B w8",
-        ]
-    )
-    b += code('./scripts/run_article.sh 4 "Mac M3"')
-    b += body("← Part 4  ·  Next → Part 6: Full Stack")
-    kit(
-        slug="04-model-size-ladder",
-        title="From 0.5B to 70B: What Fits on Apple Silicon",
-        subtitle="A practical size ladder with M3 and M5 Max numbers",
-        featured=f"{IMG}/thumbnails/thumb_04_model_ladder.png",
-        featured_caption="Model size ladder — Part 5",
-        tags=["Machine Learning", "LLM", "Apple", "Artificial Intelligence", "Data Science"],
-        series="Local LLMs on Apple Silicon — Part 5 of 7",
-        blocks=b,
+    body = f"""
+---
+
+From 0.5B to 70B: What Fits on Apple Silicon
+
+A practical size ladder with M3 and M5 Max numbers
+
+Part 5 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_04_model_ladder.png
+CAPTION: Model size ladder — Part 5
+
+---
+
+"Which model should I run locally?" is really two questions:
+
+1. Will it fit?
+2. Will it be fast enough?
+
+IMAGE: {IMG}/workflows/04_fit_ladder.png
+Figure — Decision ladder for 24 GB unified memory.
+
+---
+
+The W4 Ladder on Mac M3
+
+• Qwen 0.5B — 238 tok/s · 0.64 GB
+• Llama 3.2 1B — 112 tok/s · 1.2 GB
+• Qwen 3B — 48 tok/s · 2.2 GB
+• Llama 8B — 21 tok/s · 5.1 GB
+• Gemma 9B — 15 tok/s · 5.9 GB
+
+IMAGE: {IMG}/04_model_size_ladder.png
+Figure — Tokens/sec and memory across sizes at W4.
+
+IMAGE: {IMG}/04_ladder_scatter.png
+Figure — Memory versus speed scatter.
+
+IMAGE: {IMG}/01_efficiency_tps_per_gb.png
+Figure — Efficiency = tok/s per GB at W4.
+
+Fun fact: Qwen 0.5B at W4 exceeds 238 tok/s on M3 — faster than most people type.
+
+---
+
+M5 Max Extends the Ladder
+
+IMAGE: {IMG}/04_m5_extended_ladder.png
+Figure — M5 Max W4 ladder through larger models.
+
+IMAGE: {IMG}/01_m3_vs_m5_w4.png
+Figure — Same checkpoints, different silicon.
+
+---
+
+Cheat Sheet for 24 GB
+
+• IDE copilot — 7B W4
+• Offline chat — 8B W4
+• Router / draft model — 0.5B–1.5B W4
+• Max quality that still fits — 9B W4 or 8B W8
+
+Reproduce:
+
+./scripts/run_article.sh 4 "Mac M3"
+
+---
+
+Series Navigation
+
+← Part 4: Prefill & TTFT
+Next → Part 6: Stacking Optimizations
+
+Local LLMs on Apple Silicon — Part 5 of 7
+
+Tags: Machine Learning · LLM · Apple · Artificial Intelligence · Benchmark
+"""
+    write(
+        "04-model-size-ladder",
+        {
+            "title": "From 0.5B to 70B: What Fits on Apple Silicon",
+            "subtitle": "A practical size ladder with M3 and M5 Max numbers",
+            "featured": f"{IMG}/thumbnails/thumb_04_model_ladder.png",
+            "featured_caption": "Model size ladder — Part 5",
+            "series": "Local LLMs on Apple Silicon — Part 5 of 7",
+            "tags": "Machine Learning, LLM, Apple, Artificial Intelligence, Benchmark",
+        },
+        body,
     )
 
 
 def art05() -> None:
-    b: list[str] = []
-    b += body(
-        "Blog posts love clean A/B tests.",
-        "Real local inference turns several knobs at once.",
-    )
-    b += image(f"{IMG}/workflows/05_optimization_funnel.png", "Stacking funnel — fp16 → w4 → +KV → +prefill")
-    b += image(f"{IMG}/workflows/05_decision_tree.png", "Pick the lever that matches your pain")
-    b += subhead("The headline result (Mac M3, Llama 8B)")
-    b += bullets(
-        [
-            "fp16 — 16.3 GB · 5.6 tok/s",
-            "w4+kv+prefill — 5.1 GB · 19.9 tok/s (~3.5×)",
-        ]
-    )
-    b += image(f"{IMG}/05_full_stack.png", "fp16 vs optimized — speed and memory")
-    b += image(f"{IMG}/05_full_stack_two_models.png", "Llama and Mistral both jump when stacked")
-    b += image(f"{IMG}/05_full_stack_memory.png", "Both models drop to ~5 GB peak")
-    b += subhead("M5 Max: the 16-config matrix")
-    b += image(f"{IMG}/05_m5_config_matrix.png", "Llama 8B full config matrix on M5 Max")
-    b += image(f"{IMG}/05_m3_m5_full_stack.png", "Same stack on M3 vs M5 Max")
-    b += quote("Fun fact: A full article sweep can take hours. Isolate each config so one Metal OOM doesn’t kill the batch.")
-    b += subhead("Daily driver recipe (24 GB)")
-    b += body("Use w4+kv_cache+prefill on llama3-8b / mistral-7b / qwen-7b.")
-    b += body("Expect ~5 GB peak and ~18–21 tok/s on M3.")
-    b += code('python scripts/run_benchmark.py --preset llama3-8b --config w4+kv_cache+prefill --hardware "Mac M3"')
-    b += body("← Part 5  ·  Next → Part 7: Speculative Decoding")
-    kit(
-        slug="05-full-optimization-stack",
-        title="Stacking Optimizations: 3.5× Faster Than FP16",
-        subtitle="The daily-driver recipe on a 24 GB Mac — and the full M5 Max matrix",
-        featured=f"{IMG}/thumbnails/thumb_05_full_stack.png",
-        featured_caption="Full optimization stack — Part 6",
-        tags=["Machine Learning", "Optimization", "LLM", "Apple", "Artificial Intelligence"],
-        series="Local LLMs on Apple Silicon — Part 6 of 7",
-        blocks=b,
+    body = f"""
+---
+
+Stacking Optimizations: 3.5× Faster Than FP16
+
+The daily-driver recipe on a 24 GB Mac — and the full M5 Max matrix
+
+Part 6 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_05_full_stack.png
+CAPTION: Full optimization stack — Part 6
+
+---
+
+Blog posts love clean A/B tests.
+
+Real local inference turns several knobs at once.
+
+IMAGE: {IMG}/workflows/05_optimization_funnel.png
+Figure — Stacking funnel: FP16 → W4 → +KV → +prefill.
+
+IMAGE: {IMG}/workflows/05_decision_tree.png
+Figure — Pick the lever that matches your pain.
+
+---
+
+Headline Result — Mac M3, Llama 8B
+
+• FP16 — 16.3 GB · 5.6 tok/s
+• W4+KV+prefill — 5.1 GB · 19.9 tok/s (~3.5×)
+
+IMAGE: {IMG}/05_full_stack.png
+Figure — FP16 versus optimized.
+
+IMAGE: {IMG}/05_full_stack_two_models.png
+Figure — Llama and Mistral both jump when stacked.
+
+IMAGE: {IMG}/05_full_stack_memory.png
+Figure — Both models drop to about 5 GB peak.
+
+---
+
+M5 Max: The 16-Config Matrix
+
+IMAGE: {IMG}/05_m5_config_matrix.png
+Figure — Llama 8B full config matrix on M5 Max.
+
+IMAGE: {IMG}/05_m3_m5_full_stack.png
+Figure — Same stack on M3 versus M5 Max.
+
+IMAGE: {IMG}/papers/williams_roofline_redraw.png
+Figure — Original Roofline redraw: stacking works because decode is bandwidth-bound.
+
+---
+
+Daily Driver Recipe
+
+On a 24 GB Mac, start here:
+
+w4+kv_cache+prefill
+
+on llama3-8b, mistral-7b, or qwen-7b.
+
+Expect roughly 5 GB peak and 18–21 tok/s on M3.
+
+python scripts/run_benchmark.py --preset llama3-8b --config w4+kv_cache+prefill --hardware "Mac M3"
+
+---
+
+Series Navigation
+
+← Part 5: Model Size Ladder
+Next → Part 7: Draft Models / Speculative Decoding
+
+Local LLMs on Apple Silicon — Part 6 of 7
+
+Tags: Machine Learning · Optimization · LLM · Apple · Artificial Intelligence
+"""
+    write(
+        "05-full-optimization-stack",
+        {
+            "title": "Stacking Optimizations: 3.5× Faster Than FP16",
+            "subtitle": "The daily-driver recipe on a 24 GB Mac — and the full M5 Max matrix",
+            "featured": f"{IMG}/thumbnails/thumb_05_full_stack.png",
+            "featured_caption": "Full optimization stack — Part 6",
+            "series": "Local LLMs on Apple Silicon — Part 6 of 7",
+            "tags": "Machine Learning, Optimization, LLM, Apple, Artificial Intelligence",
+        },
+        body,
     )
 
 
 def art06() -> None:
-    b: list[str] = []
-    b += body(
-        "A small draft model proposes tokens. The large target verifies them in one parallel pass.",
-        "When the draft is right, you emit multiple tokens per expensive step — without retraining.",
-    )
-    b += image(f"{IMG}/papers/leviathan_speculative_redraw.png", "Original redraw — draft/verify (Leviathan / Chen, 2023)")
-    b += image(f"{IMG}/workflows/06_accept_reject.png", "Accept matching prefix; reject and resample at first mismatch")
-    b += image(f"{IMG}/papers/cai_medusa_redraw.png", "Original redraw — Medusa-style drafting (Cai et al., 2024)")
-    b += subhead("The clean win: Qwen-7B on Mac M3")
-    b += bullets(
-        [
-            "Baseline w4 — 15.9 tok/s",
-            "Speculative (Qwen 0.5B draft) — 28.3 tok/s",
-            "Acceptance α — 74.2%",
-        ]
-    )
-    b += image(f"{IMG}/06_speculative_qwen-7b.png", "1.78× throughput at 74% acceptance")
-    b += image(f"{IMG}/06_speculative_speed_memory.png", "Big speed gain for ~0.3 GB extra RAM")
-    b += subhead("Honest failures")
-    b += body("On M3, Llama and Mistral speculative runs errored (draft/tokenizer pairing / memory).")
-    b += body("On M5 Max, Qwen still wins (122 → 170 tok/s). Llama speculative was slightly slower (113 → 110) at 59% acceptance.")
-    b += image(f"{IMG}/06_spec_m3_m5_qwen.png", "Qwen speculative on M3 vs M5 Max")
-    b += image(f"{IMG}/06_spec_speedup_vs_accept.png", "Speedup vs acceptance — low α can erase the win")
-    b += quote("Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure α. Don’t assume.")
-    b += subhead("Do this")
-    b += bullets(
-        [
-            "Same family + same tokenizer",
-            "Tiny draft (0.5B–1B)",
-            "Long generations",
-            "Budget RAM for two models",
-        ]
-    )
-    b += code('./scripts/run_article.sh 6 "Mac M3"')
-    b += body("← Part 6  ·  Bonus → Context, RAG & Prefix Cache")
-    kit(
-        slug="06-speculative-decoding",
-        title="Draft Models: Free Speed Without Retraining",
-        subtitle="74% acceptance and 1.8× on Qwen — plus the case where speculation got slower",
-        featured=f"{IMG}/thumbnails/thumb_06_speculative.png",
-        featured_caption="Speculative decoding — Part 7",
-        tags=["Machine Learning", "LLM", "Optimization", "Apple", "Artificial Intelligence"],
-        series="Local LLMs on Apple Silicon — Part 7 of 7",
-        blocks=b,
+    body = f"""
+---
+
+Draft Models: Free Speed Without Retraining
+
+74% acceptance and 1.8× on Qwen — plus the case where speculation got slower
+
+Part 7 of 7 — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_06_speculative.png
+CAPTION: Speculative decoding — Part 7
+
+---
+
+A small draft model proposes tokens.
+
+The large target verifies them in one parallel pass.
+
+When the draft is right, you emit multiple tokens per expensive step — without retraining.
+
+IMAGE: {IMG}/papers/leviathan_speculative_redraw.png
+Figure — Original redraw of draft/verify speculative decoding (Leviathan / Chen, 2023).
+
+IMAGE: {IMG}/workflows/06_accept_reject.png
+Figure — Accept the matching prefix; reject and resample at the first mismatch.
+
+IMAGE: {IMG}/papers/cai_medusa_redraw.png
+Figure — Original redraw of a Medusa-style variant (Cai et al., 2024).
+
+---
+
+The Clean Win: Qwen-7B on Mac M3
+
+• Baseline W4 — 15.9 tok/s
+• Speculative (Qwen 0.5B draft) — 28.3 tok/s
+• Acceptance rate — 74.2%
+
+IMAGE: {IMG}/06_speculative_qwen-7b.png
+Figure — About 1.78× throughput at 74% acceptance.
+
+IMAGE: {IMG}/06_speculative_speed_memory.png
+Figure — Big speed gain for roughly 0.3 GB extra RAM.
+
+---
+
+Honest Failures
+
+On M3, Llama and Mistral speculative runs errored — draft pairing / tokenizer / memory.
+
+On M5 Max, Qwen still wins: 122 → 170 tok/s.
+
+Llama speculative was slightly slower: 113 → 110 tok/s at 59% acceptance.
+
+IMAGE: {IMG}/06_spec_m3_m5_qwen.png
+Figure — Qwen speculative on M3 versus M5 Max.
+
+IMAGE: {IMG}/06_spec_speedup_vs_accept.png
+Figure — Speedup versus acceptance. Low acceptance can erase the win.
+
+Fun fact: Speculative decoding can make you slower if the draft is wrong too often. Measure acceptance rate. Don't assume.
+
+---
+
+Do This
+
+• Same family and same tokenizer
+• Tiny draft (0.5B–1B)
+• Long generations
+• Budget RAM for two models
+
+Reproduce:
+
+./scripts/run_article.sh 6 "Mac M3"
+
+---
+
+Series Navigation
+
+← Part 6: Full Stack
+Bonus → The RAG Wall: Context, Cache, and Latency
+
+Local LLMs on Apple Silicon — Part 7 of 7
+
+Tags: Machine Learning · LLM · Optimization · Apple · Artificial Intelligence
+"""
+    write(
+        "06-speculative-decoding",
+        {
+            "title": "Draft Models: Free Speed Without Retraining",
+            "subtitle": "74% acceptance and 1.8× on Qwen — plus the case where speculation got slower",
+            "featured": f"{IMG}/thumbnails/thumb_06_speculative.png",
+            "featured_caption": "Speculative decoding — Part 7",
+            "series": "Local LLMs on Apple Silicon — Part 7 of 7",
+            "tags": "Machine Learning, LLM, Optimization, Apple, Artificial Intelligence",
+        },
+        body,
     )
 
 
 def art07() -> None:
-    b: list[str] = []
-    b += body(
-        "Short prompts hide sins.",
-        "Paste a PDF into a local RAG app and three forces collide: quadratic prefill, growing KV, and falling tok/s.",
-    )
-    b += image(f"{IMG}/workflows/07_rag_wall.png", "Retrieve → stuff context → O(T²) prefill → multi-second TTFT")
-    b += image(f"{IMG}/papers/pope_kv_scaling_redraw.png", "Original redraw — KV grows until it rivals weights")
-    b += subhead("Context length vs TTFT")
-    b += bullets(
-        [
-            "256 tok → 1.4 s",
-            "512 → 2.8 s",
-            "1024 → 6.5 s",
-            "2048 → 15.4 s",
-        ]
-    )
-    b += image(f"{IMG}/07_context_ttft.png", "TTFT crosses 15 seconds at 2048 tokens on M3")
-    b += image(f"{IMG}/07_context_dual_axis.png", "TTFT explodes while decode tok/s decays")
-    b += image(f"{IMG}/07_context_m3_m5_panels.png", "M5 Max lowers the wall — it doesn’t remove the shape")
-    b += subhead("Prefix cache: cold vs warm")
-    b += image(f"{IMG}/workflows/07_prefix_cache_workflow.png", "Skip re-prefilling a stable system prompt")
-    b += image(f"{IMG}/07_prefix_cache.png", "Cold 3180 ms → warm 1547 ms (~51% faster)")
-    b += subhead("Workload stress")
-    b += image(f"{IMG}/07_workload_panels.png", "Latency, throughput, and memory across workloads")
-    b += image(f"{IMG}/07_workload_ttft.png", "rag_agent ≈ 31 s TTFT on M3")
-    b += quote("If your local RAG demo feels broken, it’s probably prefill — not “tok/s.”")
-    b += subhead("Mitigations that actually work")
-    b += bullets(
-        [
-            "Retrieve less (top-3, not top-20)",
-            "Prefix-cache system + tools",
-            "w4 + KV quant",
-            "Small router for easy queries",
-        ]
-    )
-    b += code('./scripts/run_article.sh 7 "Mac M3"')
-    b += body("← Back to Part 1  ·  Full series on GitHub")
-    kit(
-        slug="07-context-and-cache",
-        title="The RAG Wall: Context, Cache, and Why Your Demo Freezes",
-        subtitle="Quadratic TTFT, prefix caching, and workload stress on Apple Silicon",
-        featured=f"{IMG}/thumbnails/thumb_07_rag_context.png",
-        featured_caption="Context & prefix cache — Bonus",
-        tags=["Machine Learning", "RAG", "LLM", "Apple", "Artificial Intelligence"],
-        series="Local LLMs on Apple Silicon — Bonus",
-        blocks=b,
+    body = f"""
+---
+
+The RAG Wall: Context, Cache, and Why Your Demo Freezes
+
+Quadratic TTFT, prefix caching, and workload stress on Apple Silicon
+
+Bonus — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: {IMG}/thumbnails/thumb_07_rag_context.png
+CAPTION: Context & prefix cache — Bonus
+
+---
+
+Short prompts hide sins.
+
+Paste a PDF into a local RAG app and three forces collide:
+
+1. Prefill cost grows roughly with the square of context length
+2. KV memory grows linearly
+3. Decode tokens/sec falls as attention spans more tokens
+
+IMAGE: {IMG}/workflows/07_rag_wall.png
+Figure — Retrieve → stuff context → expensive prefill → multi-second TTFT.
+
+IMAGE: {IMG}/papers/pope_kv_scaling_redraw.png
+Figure — Original redraw: KV grows until it rivals weights.
+
+---
+
+Context Length vs. TTFT
+
+Llama 3.1 8B on Mac M3:
+
+• 256 tokens — 1.4 s
+• 512 — 2.8 s
+• 1024 — 6.5 s
+• 2048 — 15.4 s
+
+IMAGE: {IMG}/07_context_ttft.png
+Figure — TTFT crosses 15 seconds at 2048 tokens on M3.
+
+IMAGE: {IMG}/07_context_dual_axis.png
+Figure — TTFT explodes while decode tok/s decays.
+
+IMAGE: {IMG}/07_context_m3_m5_panels.png
+Figure — M5 Max lowers the wall. It does not remove the shape of the curve.
+
+---
+
+Prefix Cache: Cold vs. Warm
+
+IMAGE: {IMG}/workflows/07_prefix_cache_workflow.png
+Figure — Skip re-prefilling a stable system prompt.
+
+IMAGE: {IMG}/07_prefix_cache.png
+Figure — Cold 3,180 ms → warm 1,547 ms — about 51% faster.
+
+---
+
+Workload Stress
+
+IMAGE: {IMG}/07_workload_panels.png
+Figure — Latency, throughput, and memory across workloads.
+
+IMAGE: {IMG}/07_workload_ttft.png
+Figure — rag_agent is about 31 seconds TTFT on M3.
+
+If your local RAG demo feels broken, it's probably prefill — not "tok/s."
+
+---
+
+Mitigations That Actually Work
+
+• Retrieve less — top-3, not top-20
+• Prefix-cache system prompts and tools
+• Use W4 + KV quant
+• Route easy queries to a smaller model
+
+Reproduce:
+
+./scripts/run_article.sh 7 "Mac M3"
+
+Repo: https://github.com/Chirumamilla1522/LLM-Inference
+
+---
+
+Series Navigation
+
+← Part 7: Speculative Decoding
+← Back to Part 1: Introduction
+
+Local LLMs on Apple Silicon — Bonus
+
+Tags: Machine Learning · RAG · LLM · Apple · Artificial Intelligence
+"""
+    write(
+        "07-context-and-cache",
+        {
+            "title": "The RAG Wall: Context, Cache, and Why Your Demo Freezes",
+            "subtitle": "Quadratic TTFT, prefix caching, and workload stress on Apple Silicon",
+            "featured": f"{IMG}/thumbnails/thumb_07_rag_context.png",
+            "featured_caption": "Context & prefix cache — Bonus",
+            "series": "Local LLMs on Apple Silicon — Bonus",
+            "tags": "Machine Learning, RAG, LLM, Apple, Artificial Intelligence",
+        },
+        body,
     )
 
 
-def write_howto() -> None:
+def howto() -> None:
     (OUT / "HOW_TO_PUBLISH.md").write_text(
-        """# How to publish (Medium block editor — not HTML)
+        """# How to publish these on Medium
 
-Medium is a **block editor**. These kits map to Medium’s controls:
+Each `*.medium.txt` is already written like a finished Medium story:
 
-| In the `.medium.txt` file | In Medium |
-|---------------------------|-----------|
-| **TITLE (Big T)** | Title field → large **Big T** |
-| **SUBTITLE (Little T)** | Line under title → **Little T** |
-| **FEATURED IMAGE** | Wide horizontal image under subtitle (story cover) |
-| **SUBHEAD** | Section header style |
-| **BODY** | Normal paragraph (keep short) |
-| **PULL QUOTE** | Select text → quote button |
-| **INLINE IMAGE** | `+` → Image → upload → caption |
-| **BULLET / NUMBERED LIST** | `-` or `1.` shortcuts |
-| **CODE BLOCK** | `+` → Code block |
-| **TAGS** | Tag picker at the bottom |
-
-## Steps for each article
-
-1. Open `NN-*.medium.txt` and the matching `NN-*-meta.txt`
-2. Medium → **New story**
-3. Paste **TITLE** with **Big T**
-4. Paste **SUBTITLE** with **Little T**
-5. `+` → Image → upload the **FEATURED IMAGE** (from `images/thumbnails/`, 16:9)
-6. Walk the file top to bottom:
-   - SUBHEAD → apply section header
-   - BODY → paste as normal text (one paragraph per BODY block)
-   - PULL QUOTE → quote style
-   - INLINE IMAGE → upload from the `UPLOAD:` path, paste CAPTION under it
-7. Add **TAGS**
-8. Publish at 95%, then fix typos
-9. Spend ~1 hour on [`DISTRIBUTION.md`](DISTRIBUTION.md)
-
-## Why not HTML?
-
-Medium strips most HTML/CSS. Pasting HTML fights the editor.
-These kits match how Medium actually wants you to write.
-
-## Files
-
-- `00-introduction.medium.txt` … `07-context-and-cache.medium.txt`
-- matching `*-meta.txt` for quick copy of title/subtitle/tags/cover
-
-Regenerate:
-
-```bash
-python scripts/build_medium_publish.py
 ```
+---
+Title
+Subtitle
+Part N of 7
+FEATURED IMAGE + CAPTION
+---
+Short paragraphs
+Section headers
+IMAGE: path
+Figure — caption
+Bullets
+---
+```
+
+## In the Medium editor
+
+1. **Big T** → paste the title line
+2. **Little T** → paste the subtitle line
+3. Add the series line as normal italic text under the subtitle
+4. `+` → Image → upload the **FEATURED IMAGE** (wide thumbnail)
+5. Paste body top to bottom
+6. For each `IMAGE:` line → upload that PNG and keep the `Figure — …` line as the caption
+7. Turn short emphasized lines into **pull quotes** where it helps
+8. Add tags from the bottom
+9. Publish → share via `DISTRIBUTION.md`
+
+Do **not** paste the `IMAGE:` path text into the story — replace it with the actual upload.
 """
     )
 
 
-def cleanup_html() -> None:
+def main() -> None:
+    # remove old paste-kit chrome if any leftover html
     for p in OUT.glob("*.html"):
         p.unlink()
-        print(f"Removed {p.name}")
-
-
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    cleanup_html()
     art00()
     art01()
     art02()
@@ -696,13 +1615,7 @@ def main() -> None:
     art05()
     art06()
     art07()
-    write_howto()
-    leftovers = OUT / "leftovers"
-    leftovers.mkdir(exist_ok=True)
-    (leftovers / "README.md").write_text(
-        "Long research drafts live in docs/medium/0*.md.\n"
-        "Paste only the .medium.txt kits into Medium.\n"
-    )
+    howto()
     print(f"Done → {OUT}")
 
 

@@ -1,5 +1,5 @@
-TITLE (Big T): The RAG Wall: Context, Cache, and Why Your Demo Freezes
-SUBTITLE (Little T): Quadratic TTFT, prefix caching, and workload stress on Apple Silicon
+TITLE: The RAG Wall: Context, Cache, and Why Your Demo Freezes
+SUBTITLE: Quadratic TTFT, prefix caching, and workload stress on Apple Silicon
 FEATURED IMAGE: docs/medium/images/thumbnails/thumb_07_rag_context.png
 FEATURED CAPTION: Context & prefix cache — Bonus
 SERIES: Local LLMs on Apple Silicon — Bonus

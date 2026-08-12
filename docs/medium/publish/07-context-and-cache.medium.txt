@@ -1,159 +1,94 @@
-========================================================================
-MEDIUM EDITOR PASTE KIT
-File: 07-context-and-cache.medium.txt
-========================================================================
+---
 
-HOW TO USE IN MEDIUM
-1. New story
-2. Click the title area → apply Big T → paste TITLE
-3. Click under title → apply Little T → paste SUBTITLE
-4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
-5. Add caption under featured image
-6. For each block below, use the matching Medium control
-7. Tags → Publish → share (see DISTRIBUTION.md)
-
-------------------------------------------------------------------------
-SERIES: Local LLMs on Apple Silicon — Bonus
-TAGS: Machine Learning · RAG · LLM · Apple · Artificial Intelligence
-------------------------------------------------------------------------
-
-┌─────────────────────────────────────────────────────────────
-│ TITLE  (Medium: Big T)
-└─────────────────────────────────────────────────────────────
 The RAG Wall: Context, Cache, and Why Your Demo Freezes
 
-┌─────────────────────────────────────────────────────────────
-│ SUBTITLE  (Medium: Little T)
-└─────────────────────────────────────────────────────────────
 Quadratic TTFT, prefix caching, and workload stress on Apple Silicon
 
-┌─────────────────────────────────────────────────────────────
-│ FEATURED IMAGE  (wide horizontal cover under subtitle)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/thumbnails/thumb_07_rag_context.png
+Bonus — Local LLMs on Apple Silicon
+
+FEATURED IMAGE: docs/medium/images/thumbnails/thumb_07_rag_context.png
 CAPTION: Context & prefix cache — Bonus
 
-BODY:
+---
+
 Short prompts hide sins.
 
-BODY:
-Paste a PDF into a local RAG app and three forces collide: quadratic prefill, growing KV, and falling tok/s.
+Paste a PDF into a local RAG app and three forces collide:
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/workflows/07_rag_wall.png
-CAPTION: Retrieve → stuff context → O(T²) prefill → multi-second TTFT
+1. Prefill cost grows roughly with the square of context length
+2. KV memory grows linearly
+3. Decode tokens/sec falls as attention spans more tokens
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/papers/pope_kv_scaling_redraw.png
-CAPTION: Original redraw — KV grows until it rivals weights
+IMAGE: docs/medium/images/workflows/07_rag_wall.png
+Figure — Retrieve → stuff context → expensive prefill → multi-second TTFT.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Context length vs TTFT
+IMAGE: docs/medium/images/papers/pope_kv_scaling_redraw.png
+Figure — Original redraw: KV grows until it rivals weights.
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• 256 tok → 1.4 s
-• 512 → 2.8 s
-• 1024 → 6.5 s
-• 2048 → 15.4 s
+---
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_context_ttft.png
-CAPTION: TTFT crosses 15 seconds at 2048 tokens on M3
+Context Length vs. TTFT
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_context_dual_axis.png
-CAPTION: TTFT explodes while decode tok/s decays
+Llama 3.1 8B on Mac M3:
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_context_m3_m5_panels.png
-CAPTION: M5 Max lowers the wall — it doesn’t remove the shape
+• 256 tokens — 1.4 s
+• 512 — 2.8 s
+• 1024 — 6.5 s
+• 2048 — 15.4 s
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Prefix cache: cold vs warm
+IMAGE: docs/medium/images/07_context_ttft.png
+Figure — TTFT crosses 15 seconds at 2048 tokens on M3.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/workflows/07_prefix_cache_workflow.png
-CAPTION: Skip re-prefilling a stable system prompt
+IMAGE: docs/medium/images/07_context_dual_axis.png
+Figure — TTFT explodes while decode tok/s decays.
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_prefix_cache.png
-CAPTION: Cold 3180 ms → warm 1547 ms (~51% faster)
+IMAGE: docs/medium/images/07_context_m3_m5_panels.png
+Figure — M5 Max lowers the wall. It does not remove the shape of the curve.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Workload stress
+---
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_workload_panels.png
-CAPTION: Latency, throughput, and memory across workloads
+Prefix Cache: Cold vs. Warm
 
-┌─────────────────────────────────────────────────────────────
-│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
-└─────────────────────────────────────────────────────────────
-UPLOAD: docs/medium/images/07_workload_ttft.png
-CAPTION: rag_agent ≈ 31 s TTFT on M3
+IMAGE: docs/medium/images/workflows/07_prefix_cache_workflow.png
+Figure — Skip re-prefilling a stable system prompt.
 
-┌─────────────────────────────────────────────────────────────
-│ PULL QUOTE  (select text → Medium quote button)
-└─────────────────────────────────────────────────────────────
-If your local RAG demo feels broken, it’s probably prefill — not “tok/s.”
+IMAGE: docs/medium/images/07_prefix_cache.png
+Figure — Cold 3,180 ms → warm 1,547 ms — about 51% faster.
 
-┌─────────────────────────────────────────────────────────────
-│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
-└─────────────────────────────────────────────────────────────
-Mitigations that actually work
+---
 
-┌─────────────────────────────────────────────────────────────
-│ BULLET LIST  (type - or * then space in Medium)
-└─────────────────────────────────────────────────────────────
-• Retrieve less (top-3, not top-20)
-• Prefix-cache system + tools
-• w4 + KV quant
-• Small router for easy queries
+Workload Stress
 
-┌─────────────────────────────────────────────────────────────
-│ CODE BLOCK  (+ menu → Code block)
-└─────────────────────────────────────────────────────────────
+IMAGE: docs/medium/images/07_workload_panels.png
+Figure — Latency, throughput, and memory across workloads.
+
+IMAGE: docs/medium/images/07_workload_ttft.png
+Figure — rag_agent is about 31 seconds TTFT on M3.
+
+If your local RAG demo feels broken, it's probably prefill — not "tok/s."
+
+---
+
+Mitigations That Actually Work
+
+• Retrieve less — top-3, not top-20
+• Prefix-cache system prompts and tools
+• Use W4 + KV quant
+• Route easy queries to a smaller model
+
+Reproduce:
+
 ./scripts/run_article.sh 7 "Mac M3"
 
-BODY:
-← Back to Part 1  ·  Full series on GitHub
+Repo: https://github.com/Chirumamilla1522/LLM-Inference
 
+---
 
-┌─────────────────────────────────────────────────────────────
-│ END CTA
-└─────────────────────────────────────────────────────────────
+Series Navigation
 
-BODY:
-If this was useful, clone the harness and run the same benches on your Mac:
+← Part 7: Speculative Decoding
+← Back to Part 1: Introduction
 
-BODY:
-https://github.com/Chirumamilla1522/LLM-Inference
+Local LLMs on Apple Silicon — Bonus
 
-┌─────────────────────────────────────────────────────────────
-│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
-└─────────────────────────────────────────────────────────────
-Machine Learning, RAG, LLM, Apple, Artificial Intelligence
+Tags: Machine Learning · RAG · LLM · Apple · Artificial Intelligence

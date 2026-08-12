@@ -1,5 +1,5 @@
-TITLE (Big T): 4-Bit Weights Changed Everything on My M3 Mac
-SUBTITLE (Little T): Affine quantization, GPTQ/AWQ ideas redrawn, and 14-model heatmaps on Apple Silicon
+TITLE: 4-Bit Weights Changed Everything on My M3 Mac
+SUBTITLE: Affine quantization from the papers — then Pareto charts, heatmaps, and M3 vs. M5 Max numbers across 14 models
 FEATURED IMAGE: docs/medium/images/thumbnails/thumb_01_weight_quantization.png
 FEATURED CAPTION: Weight quantization — Part 2
 SERIES: Local LLMs on Apple Silicon — Part 2 of 7

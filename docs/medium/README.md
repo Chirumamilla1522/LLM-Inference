@@ -1,34 +1,30 @@
 # Medium publishing package
 
-## Publish on Medium (start here)
+## Publish files (finished Medium story format)
 
-**Do not use HTML.** Medium is a block editor (Big T / Little T / featured image / subheads).
+Use **`docs/medium/publish/*.medium.txt`**
 
-Use these files:
+These read like a finished Medium article:
 
-| File | What it is |
-|------|------------|
-| [`publish/*.medium.txt`](publish/) | Paste kit mapped to Medium controls |
-| [`publish/*-meta.txt`](publish/) | Title, subtitle, cover, tags |
-| [`publish/HOW_TO_PUBLISH.md`](publish/HOW_TO_PUBLISH.md) | Step-by-step in the Medium UI |
-| [`publish/DISTRIBUTION.md`](publish/DISTRIBUTION.md) | Share checklist after publish |
+- Title  
+- Subtitle  
+- Series line  
+- Featured image path + caption  
+- Short paragraphs  
+- Section headers  
+- `IMAGE:` + figure captions  
+- Lists, references, series nav  
+
+**Not** HTML. **Not** Big-T instruction chrome.
+
+Part 1 matches the long-form Medium tone you drafted. Parts 2–7 follow the same layout.
 
 ```bash
 python scripts/build_medium_publish.py
 open docs/medium/publish/00-introduction.medium.txt
 ```
 
-### Medium structure these kits follow
-
-1. **Big T** — large title at the top  
-2. **Little T** — subtitle under the title  
-3. **Featured image** — wide horizontal cover under the subtitle  
-4. **Subheads** — section headers  
-5. **Short body paragraphs**  
-6. **Pull quotes**, lists, code blocks  
-7. **Inline images** via `+` → Image  
-
-Long research drafts (`0*.md`) stay as source material — don’t paste them whole.
+See [`publish/HOW_TO_PUBLISH.md`](publish/HOW_TO_PUBLISH.md).
 
 ## Cover thumbnails (Medium story images)
 
