@@ -1,7 +1,6 @@
-TITLE: The Hidden Memory Hog: KV Cache Quantization
-SUBTITLE: Why short benches look boring — and when 4-bit KV actually saves you
+TITLE (Big T): The Hidden Memory Hog: KV Cache Quantization
+SUBTITLE (Little T): Why short benches look boring — and when 4-bit KV actually saves you
+FEATURED IMAGE: docs/medium/images/thumbnails/thumb_02_kv_cache.png
+FEATURED CAPTION: KV cache quantization — Part 3
 SERIES: Local LLMs on Apple Silicon — Part 3 of 7
-COVER: ../images/thumbnails/thumb_02_kv_cache.png
 TAGS: Machine Learning, LLM, Artificial Intelligence, Apple, Programming
-READ_TIME_TARGET: 8–12 min
-NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).

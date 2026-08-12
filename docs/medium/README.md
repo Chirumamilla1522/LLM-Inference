@@ -1,33 +1,34 @@
-# Medium publishing package (long-form research + Medium-ready publish)
+# Medium publishing package
 
 ## Publish on Medium (start here)
 
-**Use the Medium-format files** (not the long `.md` research drafts):
+**Do not use HTML.** Medium is a block editor (Big T / Little T / featured image / subheads).
 
-→ **[`publish/HOW_TO_PUBLISH.md`](publish/HOW_TO_PUBLISH.md)**  
-→ **[`publish/*.html`](publish/)** — open in browser → copy → paste into Medium  
-→ **[`publish/*-meta.txt`](publish/)** — title, subtitle, tags, cover path  
-→ **[`publish/DISTRIBUTION.md`](publish/DISTRIBUTION.md)** — where to share after publish
+Use these files:
 
-These HTML posts follow Medium best practices:
-
-1. Wide 16:9 cover thumbnails  
-2. Short paragraphs + H2 breaks  
-3. Images every few screens  
-4. Pull quotes for fun facts  
-5. Mercilessly cut (~8–12 min reads)  
-6. CTA + tags at the end  
-7. Leftovers kept out of the paste  
-
-Regenerate publish HTML:
+| File | What it is |
+|------|------------|
+| [`publish/*.medium.txt`](publish/) | Paste kit mapped to Medium controls |
+| [`publish/*-meta.txt`](publish/) | Title, subtitle, cover, tags |
+| [`publish/HOW_TO_PUBLISH.md`](publish/HOW_TO_PUBLISH.md) | Step-by-step in the Medium UI |
+| [`publish/DISTRIBUTION.md`](publish/DISTRIBUTION.md) | Share checklist after publish |
 
 ```bash
 python scripts/build_medium_publish.py
+open docs/medium/publish/00-introduction.medium.txt
 ```
 
-## Research drafts (long)
+### Medium structure these kits follow
 
-The `0*.md` files are full research notebooks (~3k words). Use them as source material — **don’t paste them whole into Medium**.
+1. **Big T** — large title at the top  
+2. **Little T** — subtitle under the title  
+3. **Featured image** — wide horizontal cover under the subtitle  
+4. **Subheads** — section headers  
+5. **Short body paragraphs**  
+6. **Pull quotes**, lists, code blocks  
+7. **Inline images** via `+` → Image  
+
+Long research drafts (`0*.md`) stay as source material — don’t paste them whole.
 
 ## Cover thumbnails (Medium story images)
 

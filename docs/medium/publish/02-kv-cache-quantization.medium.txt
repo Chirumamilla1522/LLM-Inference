@@ -1,0 +1,160 @@
+========================================================================
+MEDIUM EDITOR PASTE KIT
+File: 02-kv-cache-quantization.medium.txt
+========================================================================
+
+HOW TO USE IN MEDIUM
+1. New story
+2. Click the title area → apply Big T → paste TITLE
+3. Click under title → apply Little T → paste SUBTITLE
+4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
+5. Add caption under featured image
+6. For each block below, use the matching Medium control
+7. Tags → Publish → share (see DISTRIBUTION.md)
+
+------------------------------------------------------------------------
+SERIES: Local LLMs on Apple Silicon — Part 3 of 7
+TAGS: Machine Learning · LLM · Artificial Intelligence · Apple · Programming
+------------------------------------------------------------------------
+
+┌─────────────────────────────────────────────────────────────
+│ TITLE  (Medium: Big T)
+└─────────────────────────────────────────────────────────────
+The Hidden Memory Hog: KV Cache Quantization
+
+┌─────────────────────────────────────────────────────────────
+│ SUBTITLE  (Medium: Little T)
+└─────────────────────────────────────────────────────────────
+Why short benches look boring — and when 4-bit KV actually saves you
+
+┌─────────────────────────────────────────────────────────────
+│ FEATURED IMAGE  (wide horizontal cover under subtitle)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/thumbnails/thumb_02_kv_cache.png
+CAPTION: KV cache quantization — Part 3
+
+BODY:
+Weight quantization gets the spotlight.
+
+BODY:
+Once generation starts, something else grows: the KV cache — keys and values for every token in context.
+
+BODY:
+For short chats it barely shows up in tok/s. For RAG, it’s the second memory bill.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+How the cache works
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/workflows/02_kv_cache_workflow.png
+CAPTION: KV grows linearly with sequence length; 4-bit KV ≈ ¼ the footprint
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/papers/vaswani_attention_redraw.png
+CAPTION: Original redraw — attention (Vaswani et al., 2017)
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/papers/pope_kv_scaling_redraw.png
+CAPTION: Original redraw — inspired by Pope et al. (2022)
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+GQA: shrink heads before you quantize
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/papers/ainslie_gqa_redraw.png
+CAPTION: Original redraw — GQA vs MHA (Ainslie et al., 2023)
+
+┌─────────────────────────────────────────────────────────────
+│ PULL QUOTE  (select text → Medium quote button)
+└─────────────────────────────────────────────────────────────
+Llama 3, Mistral, and Qwen already cut KV heads with GQA. 4-bit KV stacks on top of that.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+Why our short-context bench “does nothing”
+
+BODY:
+At 512 prompt + 128 gen on Mac M3:
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• Llama 8B: 20.7 → 20.4 tok/s
+• Mistral 7B: 21.6 → 21.2
+• Qwen 7B: 21.8 → 21.4
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/02_kv_cache_compare.png
+CAPTION: Short context: throughput almost unchanged
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/02_kv_long_generation.png
+CAPTION: Longer generation: still weight-bound at laptop batch size 1
+
+BODY:
+The win appears at long context, multi-session serving, or tight RAM — not in a 640-token microbench.
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/07_context_dual_axis.png
+CAPTION: Where KV pressure shows up — TTFT explodes as prompts grow
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/papers/kwon_paged_attention_redraw.png
+CAPTION: Original redraw — paged KV idea (Kwon et al., 2023)
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+When to enable it
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• Always quantize weights first (w4)
+• Turn on KV quant for >2K context or RAG
+• Prefer GQA models
+
+┌─────────────────────────────────────────────────────────────
+│ CODE BLOCK  (+ menu → Code block)
+└─────────────────────────────────────────────────────────────
+./scripts/run_article.sh 2 "Mac M3"
+
+BODY:
+← Part 2  ·  Next → Part 4: Prefill & TTFT
+
+
+┌─────────────────────────────────────────────────────────────
+│ END CTA
+└─────────────────────────────────────────────────────────────
+
+BODY:
+If this was useful, clone the harness and run the same benches on your Mac:
+
+BODY:
+https://github.com/Chirumamilla1522/LLM-Inference
+
+┌─────────────────────────────────────────────────────────────
+│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
+└─────────────────────────────────────────────────────────────
+Machine Learning, LLM, Artificial Intelligence, Apple, Programming

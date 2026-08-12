@@ -1,0 +1,181 @@
+========================================================================
+MEDIUM EDITOR PASTE KIT
+File: 00-introduction.medium.txt
+========================================================================
+
+HOW TO USE IN MEDIUM
+1. New story
+2. Click the title area → apply Big T → paste TITLE
+3. Click under title → apply Little T → paste SUBTITLE
+4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
+5. Add caption under featured image
+6. For each block below, use the matching Medium control
+7. Tags → Publish → share (see DISTRIBUTION.md)
+
+------------------------------------------------------------------------
+SERIES: Local LLMs on Apple Silicon — Part 1 of 7
+TAGS: Machine Learning · Apple · LLM · Artificial Intelligence · Programming
+------------------------------------------------------------------------
+
+┌─────────────────────────────────────────────────────────────
+│ TITLE  (Medium: Big T)
+└─────────────────────────────────────────────────────────────
+Running 8B LLMs on a MacBook: What Actually Matters
+
+┌─────────────────────────────────────────────────────────────
+│ SUBTITLE  (Medium: Little T)
+└─────────────────────────────────────────────────────────────
+Unified memory, the metrics that matter, and a brutal FP16 baseline on Apple Silicon
+
+┌─────────────────────────────────────────────────────────────
+│ FEATURED IMAGE  (wide horizontal cover under subtitle)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/thumbnails/thumb_00_introduction.png
+CAPTION: Local LLMs on Apple Silicon — Part 1
+
+BODY:
+I loaded Meta’s Llama 3.1 8B on a MacBook Pro and watched Activity Monitor go red.
+
+BODY:
+No cloud bill. No NVIDIA card. The model ran.
+
+BODY:
+It also felt like dial-up: about 5 tokens per second, with a multi-second freeze before the first word.
+
+BODY:
+That gap — between “it runs” and “I’d use this every day” — is this series.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+Why Apple Silicon changes the rules
+
+BODY:
+On a gaming PC, GPU VRAM is a separate pool. On Apple Silicon, CPU and GPU share one unified memory pool.
+
+BODY:
+Your browser tabs and your 8B weights fight for the same bytes.
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/workflows/00_unified_memory.png
+CAPTION: Unified memory — weights, KV cache, OS, and apps share one DRAM pool
+
+┌─────────────────────────────────────────────────────────────
+│ PULL QUOTE  (select text → Medium quote button)
+└─────────────────────────────────────────────────────────────
+Fun fact: Local LLMs on Mac only became practical once consumer unified memory crossed roughly 16–24 GB.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+The only three metrics that matter
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/workflows/00_inference_pipeline.png
+CAPTION: Load → prefill → first token (TTFT) → decode (tok/s)
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• Peak memory (GB) — will it fit without swap?
+• TTFT (ms) — how long you stare at a blank cursor
+• Decode tok/s — how fast the answer streams
+
+BODY:
+Optimize the wrong one and your “faster model” still feels broken.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+The brutal FP16 baseline
+
+BODY:
+Llama 3.1 8B, FP16, Mac M3 (24 GB), 512-token prompt, 128-token generation:
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• 16.33 GB peak memory
+• 2,651 ms to first token
+• 5.3 tok/s decode
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/00_intro_hardware_compare.png
+CAPTION: Same model family — precision and silicon change everything
+
+BODY:
+On Mac M5 Max, the same FP16 demo jumps to roughly 34 tok/s with far lower TTFT. Silicon matters. Software still matters more for fitting.
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/papers/williams_roofline_redraw.png
+CAPTION: Original redraw — Roofline idea (Williams et al., 2009). Decode is often bandwidth-bound.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+What this series will do
+
+┌─────────────────────────────────────────────────────────────
+│ NUMBERED LIST
+└─────────────────────────────────────────────────────────────
+1. Weight quantization
+2. KV cache quantization
+3. Prefill & TTFT
+4. Model size ladder
+5. Full optimization stack
+6. Speculative decoding
+7. Bonus: context, RAG, prefix cache
+
+BODY:
+Every number comes from reproducible JSON in an open harness on MLX.
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/01_heatmap_tps.png
+CAPTION: Sneak peek — tok/s heatmap across models and bit-widths on Mac M3
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+A 10-minute sanity check
+
+┌─────────────────────────────────────────────────────────────
+│ NUMBERED LIST
+└─────────────────────────────────────────────────────────────
+1. Pick one model you care about.
+2. Run FP16 and 4-bit only.
+3. Confirm memory drops ~2–3× and decode rises ~3× on an M3-class chip.
+4. Measure TTFT with your prompt length.
+
+┌─────────────────────────────────────────────────────────────
+│ CODE BLOCK  (+ menu → Code block)
+└─────────────────────────────────────────────────────────────
+./scripts/run_article.sh 0 "Mac M3"
+
+BODY:
+Next → Part 2: 4-Bit Weights Changed Everything
+
+
+┌─────────────────────────────────────────────────────────────
+│ END CTA
+└─────────────────────────────────────────────────────────────
+
+BODY:
+If this was useful, clone the harness and run the same benches on your Mac:
+
+BODY:
+https://github.com/Chirumamilla1522/LLM-Inference
+
+┌─────────────────────────────────────────────────────────────
+│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
+└─────────────────────────────────────────────────────────────
+Machine Learning, Apple, LLM, Artificial Intelligence, Programming

@@ -1,0 +1,137 @@
+========================================================================
+MEDIUM EDITOR PASTE KIT
+File: 04-model-size-ladder.medium.txt
+========================================================================
+
+HOW TO USE IN MEDIUM
+1. New story
+2. Click the title area → apply Big T → paste TITLE
+3. Click under title → apply Little T → paste SUBTITLE
+4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
+5. Add caption under featured image
+6. For each block below, use the matching Medium control
+7. Tags → Publish → share (see DISTRIBUTION.md)
+
+------------------------------------------------------------------------
+SERIES: Local LLMs on Apple Silicon — Part 5 of 7
+TAGS: Machine Learning · LLM · Apple · Artificial Intelligence · Data Science
+------------------------------------------------------------------------
+
+┌─────────────────────────────────────────────────────────────
+│ TITLE  (Medium: Big T)
+└─────────────────────────────────────────────────────────────
+From 0.5B to 70B: What Fits on Apple Silicon
+
+┌─────────────────────────────────────────────────────────────
+│ SUBTITLE  (Medium: Little T)
+└─────────────────────────────────────────────────────────────
+A practical size ladder with M3 and M5 Max numbers
+
+┌─────────────────────────────────────────────────────────────
+│ FEATURED IMAGE  (wide horizontal cover under subtitle)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/thumbnails/thumb_04_model_ladder.png
+CAPTION: Model size ladder — Part 5
+
+BODY:
+“Which model should I run locally?” is two questions:
+
+BODY:
+Will it fit? Will it be fast enough?
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/workflows/04_fit_ladder.png
+CAPTION: Decision ladder for 24 GB unified memory
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+The w4 ladder on Mac M3
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• Qwen 0.5B — 238 tok/s · 0.64 GB
+• Llama 3.2 1B — 112 tok/s · 1.2 GB
+• Qwen 3B — 48 tok/s · 2.2 GB
+• Llama 8B — 21 tok/s · 5.1 GB
+• Gemma 9B — 15 tok/s · 5.9 GB
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/04_model_size_ladder.png
+CAPTION: tok/s and memory across sizes @ w4
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/04_ladder_scatter.png
+CAPTION: Memory vs speed scatter
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/01_efficiency_tps_per_gb.png
+CAPTION: Efficiency = tok/s per GB @ w4
+
+┌─────────────────────────────────────────────────────────────
+│ PULL QUOTE  (select text → Medium quote button)
+└─────────────────────────────────────────────────────────────
+Fun fact: Qwen 0.5B @ w4 exceeds 238 tok/s on M3 — faster than most people type.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+M5 Max extends the ladder
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/04_m5_extended_ladder.png
+CAPTION: M5 Max w4 ladder through larger models
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/01_m3_vs_m5_w4.png
+CAPTION: Same checkpoints, different silicon
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+Cheat sheet (24 GB)
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• IDE copilot → 7B w4
+• Offline chat → 8B w4
+• Router / draft model → 0.5B–1.5B w4
+• Max quality that still fits → 9B w4 or 8B w8
+
+┌─────────────────────────────────────────────────────────────
+│ CODE BLOCK  (+ menu → Code block)
+└─────────────────────────────────────────────────────────────
+./scripts/run_article.sh 4 "Mac M3"
+
+BODY:
+← Part 4  ·  Next → Part 6: Full Stack
+
+
+┌─────────────────────────────────────────────────────────────
+│ END CTA
+└─────────────────────────────────────────────────────────────
+
+BODY:
+If this was useful, clone the harness and run the same benches on your Mac:
+
+BODY:
+https://github.com/Chirumamilla1522/LLM-Inference
+
+┌─────────────────────────────────────────────────────────────
+│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
+└─────────────────────────────────────────────────────────────
+Machine Learning, LLM, Apple, Artificial Intelligence, Data Science

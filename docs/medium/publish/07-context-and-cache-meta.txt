@@ -1,7 +1,6 @@
-TITLE: The RAG Wall: Context, Cache, and Why Your Demo Freezes
-SUBTITLE: Quadratic TTFT, prefix caching, and workload stress on Apple Silicon
+TITLE (Big T): The RAG Wall: Context, Cache, and Why Your Demo Freezes
+SUBTITLE (Little T): Quadratic TTFT, prefix caching, and workload stress on Apple Silicon
+FEATURED IMAGE: docs/medium/images/thumbnails/thumb_07_rag_context.png
+FEATURED CAPTION: Context & prefix cache — Bonus
 SERIES: Local LLMs on Apple Silicon — Bonus
-COVER: ../images/thumbnails/thumb_07_rag_context.png
 TAGS: Machine Learning, RAG, LLM, Apple, Artificial Intelligence
-READ_TIME_TARGET: 8–12 min
-NOTE: Paste the matching .html body into Medium. Upload COVER as story image (wide 16:9).

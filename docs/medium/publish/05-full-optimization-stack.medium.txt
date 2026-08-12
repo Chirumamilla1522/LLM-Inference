@@ -1,0 +1,138 @@
+========================================================================
+MEDIUM EDITOR PASTE KIT
+File: 05-full-optimization-stack.medium.txt
+========================================================================
+
+HOW TO USE IN MEDIUM
+1. New story
+2. Click the title area → apply Big T → paste TITLE
+3. Click under title → apply Little T → paste SUBTITLE
+4. + menu → Image → upload FEATURED IMAGE (wide 16:9)
+5. Add caption under featured image
+6. For each block below, use the matching Medium control
+7. Tags → Publish → share (see DISTRIBUTION.md)
+
+------------------------------------------------------------------------
+SERIES: Local LLMs on Apple Silicon — Part 6 of 7
+TAGS: Machine Learning · Optimization · LLM · Apple · Artificial Intelligence
+------------------------------------------------------------------------
+
+┌─────────────────────────────────────────────────────────────
+│ TITLE  (Medium: Big T)
+└─────────────────────────────────────────────────────────────
+Stacking Optimizations: 3.5× Faster Than FP16
+
+┌─────────────────────────────────────────────────────────────
+│ SUBTITLE  (Medium: Little T)
+└─────────────────────────────────────────────────────────────
+The daily-driver recipe on a 24 GB Mac — and the full M5 Max matrix
+
+┌─────────────────────────────────────────────────────────────
+│ FEATURED IMAGE  (wide horizontal cover under subtitle)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/thumbnails/thumb_05_full_stack.png
+CAPTION: Full optimization stack — Part 6
+
+BODY:
+Blog posts love clean A/B tests.
+
+BODY:
+Real local inference turns several knobs at once.
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/workflows/05_optimization_funnel.png
+CAPTION: Stacking funnel — fp16 → w4 → +KV → +prefill
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/workflows/05_decision_tree.png
+CAPTION: Pick the lever that matches your pain
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+The headline result (Mac M3, Llama 8B)
+
+┌─────────────────────────────────────────────────────────────
+│ BULLET LIST  (type - or * then space in Medium)
+└─────────────────────────────────────────────────────────────
+• fp16 — 16.3 GB · 5.6 tok/s
+• w4+kv+prefill — 5.1 GB · 19.9 tok/s (~3.5×)
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/05_full_stack.png
+CAPTION: fp16 vs optimized — speed and memory
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/05_full_stack_two_models.png
+CAPTION: Llama and Mistral both jump when stacked
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/05_full_stack_memory.png
+CAPTION: Both models drop to ~5 GB peak
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+M5 Max: the 16-config matrix
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/05_m5_config_matrix.png
+CAPTION: Llama 8B full config matrix on M5 Max
+
+┌─────────────────────────────────────────────────────────────
+│ INLINE IMAGE  (+ menu → Image → upload file → add caption)
+└─────────────────────────────────────────────────────────────
+UPLOAD: docs/medium/images/05_m3_m5_full_stack.png
+CAPTION: Same stack on M3 vs M5 Max
+
+┌─────────────────────────────────────────────────────────────
+│ PULL QUOTE  (select text → Medium quote button)
+└─────────────────────────────────────────────────────────────
+Fun fact: A full article sweep can take hours. Isolate each config so one Metal OOM doesn’t kill the batch.
+
+┌─────────────────────────────────────────────────────────────
+│ SUBHEAD  (Medium: smaller section header / Subtitle style for sections)
+└─────────────────────────────────────────────────────────────
+Daily driver recipe (24 GB)
+
+BODY:
+Use w4+kv_cache+prefill on llama3-8b / mistral-7b / qwen-7b.
+
+BODY:
+Expect ~5 GB peak and ~18–21 tok/s on M3.
+
+┌─────────────────────────────────────────────────────────────
+│ CODE BLOCK  (+ menu → Code block)
+└─────────────────────────────────────────────────────────────
+python scripts/run_benchmark.py --preset llama3-8b --config w4+kv_cache+prefill --hardware "Mac M3"
+
+BODY:
+← Part 5  ·  Next → Part 7: Speculative Decoding
+
+
+┌─────────────────────────────────────────────────────────────
+│ END CTA
+└─────────────────────────────────────────────────────────────
+
+BODY:
+If this was useful, clone the harness and run the same benches on your Mac:
+
+BODY:
+https://github.com/Chirumamilla1522/LLM-Inference
+
+┌─────────────────────────────────────────────────────────────
+│ TAGS (add in Medium’s tag picker — max ~5 strong ones)
+└─────────────────────────────────────────────────────────────
+Machine Learning, Optimization, LLM, Apple, Artificial Intelligence

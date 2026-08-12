@@ -1,101 +1,48 @@
-# How to publish these on Medium
+# How to publish (Medium block editor — not HTML)
 
-Based on proven Medium formatting tips (wide covers, short paragraphs, image breaks, cut fat, publish at 95%).
+Medium is a **block editor**. These kits map to Medium’s controls:
 
-## What’s in this folder
+| In the `.medium.txt` file | In Medium |
+|---------------------------|-----------|
+| **TITLE (Big T)** | Title field → large **Big T** |
+| **SUBTITLE (Little T)** | Line under title → **Little T** |
+| **FEATURED IMAGE** | Wide horizontal image under subtitle (story cover) |
+| **SUBHEAD** | Section header style |
+| **BODY** | Normal paragraph (keep short) |
+| **PULL QUOTE** | Select text → quote button |
+| **INLINE IMAGE** | `+` → Image → upload → caption |
+| **BULLET / NUMBERED LIST** | `-` or `1.` shortcuts |
+| **CODE BLOCK** | `+` → Code block |
+| **TAGS** | Tag picker at the bottom |
 
-| File | Purpose |
-|------|---------|
-| `00`–`07` `.html` | **Paste-ready Medium body** (open → Select All → Copy → Paste into Medium) |
-| `*-meta.txt` | Title, subtitle, tags, cover image path |
-| `leftovers/` | Cut material (kept for later posts / appendices) |
-| `DISTRIBUTION.md` | Where to share after publish |
+## Steps for each article
 
-## Medium editor checklist (do this every post)
+1. Open `NN-*.medium.txt` and the matching `NN-*-meta.txt`
+2. Medium → **New story**
+3. Paste **TITLE** with **Big T**
+4. Paste **SUBTITLE** with **Little T**
+5. `+` → Image → upload the **FEATURED IMAGE** (from `images/thumbnails/`, 16:9)
+6. Walk the file top to bottom:
+   - SUBHEAD → apply section header
+   - BODY → paste as normal text (one paragraph per BODY block)
+   - PULL QUOTE → quote style
+   - INLINE IMAGE → upload from the `UPLOAD:` path, paste CAPTION under it
+7. Add **TAGS**
+8. Publish at 95%, then fix typos
+9. Spend ~1 hour on [`DISTRIBUTION.md`](DISTRIBUTION.md)
 
-### 1. Formatting (looks like a real Medium post)
+## Why not HTML?
 
-1. New story → paste the **HTML body** (or paste from browser preview)
-2. Set **Title** from `*-meta.txt` (Medium’s big title field — not an H1 in the body)
-3. Set **Subtitle** in Medium’s subtitle field
-4. Use Medium’s **H2** for section heads (already in the HTML as `<h2>`)
-5. Turn fun facts into Medium **pull quotes** (select text → `"` quote button)
-6. Prefer short paragraphs (already written that way)
-7. Avoid giant markdown tables in the editor — the HTML uses compact lists / small tables
+Medium strips most HTML/CSS. Pasting HTML fights the editor.
+These kits match how Medium actually wants you to write.
 
-### 2. Wide header image
+## Files
 
-Upload the thumbnail from `../images/thumbnails/` as the **story cover**:
+- `00-introduction.medium.txt` … `07-context-and-cache.medium.txt`
+- matching `*-meta.txt` for quick copy of title/subtitle/tags/cover
 
-| Post | Cover file |
-|------|------------|
-| 00 | `thumb_00_introduction.png` |
-| 01 | `thumb_01_weight_quantization.png` |
-| 02 | `thumb_02_kv_cache.png` |
-| 03 | `thumb_03_prefill_ttft.png` |
-| 04 | `thumb_04_model_ladder.png` |
-| 05 | `thumb_05_full_stack.png` |
-| 06 | `thumb_06_speculative.png` |
-| 07 | `thumb_07_rag_context.png` |
-
-These are **16:9** so they look wide in the Medium feed — not a tiny square crop.
-
-### 3. Break up the text with images
-
-After paste, **re-upload** each figure from `../images/` where you see:
-
-```text
-[IMAGE: path/to/file.png]
-Caption text
-```
-
-In Medium: drag the PNG in, then add the caption under it (italic).
-
-Rule of thumb: a visual every **2–4 screens** of scrolling.
-
-### 4. Cut mercilessly
-
-These publish files are already tightened (~8–12 min reads).
-
-Research-length drafts stay in `docs/medium/0*.md`.  
-Cut paragraphs live in `leftovers/` — do **not** paste leftovers into Medium.
-
-### 5. Publish at 95%
-
-Ship, then fix typos in the first hour. Don’t polish the draft forever.
-
-### 6. Create value + CTA
-
-Every post ends with:
-
-- Link to the GitHub repo (actionable)
-- “Part N of series” prev/next links (update URLs after publish)
-- Optional: your newsletter / X / LinkedIn
-
-### 7. Tags (5 max that Medium suggests well)
-
-Use the tags from `*-meta.txt`. Prefer tags with active readers: `Machine Learning`, `Artificial Intelligence`, `Apple`, `LLM`, `Programming`.
-
-### 8. After publish — distribute (1 hour)
-
-See `DISTRIBUTION.md`. This is often the difference between 1K and 10K reads.
-
-### 9. Series
-
-Create a Medium **Series** named e.g. `Local LLMs on Apple Silicon` and add posts 00→07 in order.
-
----
-
-## Fast paste workflow
+Regenerate:
 
 ```bash
-# Preview in browser (optional)
-open docs/medium/publish/00-introduction.html
+python scripts/build_medium_publish.py
 ```
-
-1. Open the `.html` in Chrome  
-2. Cmd+A → Cmd+C  
-3. Medium → New story → Cmd+V  
-4. Fix title/subtitle fields  
-5. Upload cover + inline images  
-6. Add tags → Publish → share per `DISTRIBUTION.md`
