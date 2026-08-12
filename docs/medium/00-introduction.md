@@ -79,6 +79,14 @@ Every chat reply has two phases with different bottlenecks. Confusing them is th
 
 The [Roofline model](https://people.csail.mit.edu/stajich/publications/cacm09.pdf) (Williams et al., 2009) is the right mental picture: when arithmetic intensity is low, **memory bandwidth caps throughput**, not peak FLOPS. LLM decode on a laptop is textbook low intensity — giant weight read, tiny compute per token.
 
+![Roofline original redraw](images/papers/williams_roofline_redraw.png)
+
+*Figure — **Original redraw** of the Roofline idea (Williams et al., 2009). LLM decode sits on the bandwidth slope — which is why fewer weight bytes (w4) can raise tok/s.*
+
+![Attention original redraw](images/papers/vaswani_attention_redraw.png)
+
+*Figure — **Original redraw** of scaled dot-product attention (Vaswani et al., 2017). Decode caches K/V so each new token mainly builds a new Q.*
+
 This series optimizes each phase separately, then stacks them:
 
 1. Weight quantization → memory + decode  

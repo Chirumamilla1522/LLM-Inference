@@ -64,6 +64,16 @@ The decision tree below is the practical companion to the funnel — start from 
 
 ![Decision tree](images/workflows/05_decision_tree.png)
 
+*Figure 2 — Workflow: pick the lever that matches your pain (RAM / TTFT / long generation).*
+
+![Roofline redraw](images/papers/williams_roofline_redraw.png)
+
+*Figure — **Original redraw** of Roofline (Williams et al., 2009): stacking works because decode is bandwidth-bound — cut bytes (w4), then insure KV, then tame prefill.*
+
+![PagedAttention for serving context](images/papers/kwon_paged_attention_redraw.png)
+
+*Figure — **Original redraw** of paged KV (Kwon et al., 2023): multi-user serving pages the cache; your laptop stack is the single-user cousin of the same memory problem.*
+
 *Figure 2 — Workflow: match the lever to the pain — RAM pressure → weight bits; long-context growth → KV quant; slow first token → prefill / chunking; long replies with spare RAM → speculative decoding.*
 
 | Pain you feel | First lever | Why |

@@ -44,13 +44,21 @@ Part 6 freed ~11 GB by leaving fp16. That headroom is exactly what makes draft+t
 
 ![Speculative workflow](images/workflows/06_speculative_workflow.png)
 
-*Figure 1 — Workflow: baseline decoding runs one target forward per token; speculative decoding lets a cheap draft propose k tokens, then the target verifies the block in one parallel pass.*
+*Figure 1 — Workflow: baseline = 1 target forward per token; speculative = draft proposes \(k\), target verifies once.*
 
-### The accept / reject round
+![Leviathan speculative redraw](images/papers/leviathan_speculative_redraw.png)
+
+*Figure — **Original redraw** of draft/verify speculative decoding (Leviathan et al., 2023; Chen et al., 2023). Not a copy of their paper figures.*
 
 ![Accept / reject](images/workflows/06_accept_reject.png)
 
-*Figure 2 — Workflow: walk draft tokens left-to-right; accept the matching prefix; at the first mismatch, reject the remainder and resample from the target distribution (preserving exact sampling semantics).*
+*Figure 2 — Workflow: accept matching prefixes; reject at first mismatch and resample from the target (exact sampling semantics under the paper’s rule).*
+
+![Medusa idea redraw](images/papers/cai_medusa_redraw.png)
+
+*Figure — **Original redraw** of a Medusa-style variant (Cai et al., 2024): extra heads draft future tokens; still verify with the base model.*
+
+### The accept / reject round
 
 Speedup is roughly governed by three knobs:
 

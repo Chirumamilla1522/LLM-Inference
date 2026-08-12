@@ -40,6 +40,16 @@ Local RAG on laptops is where this mismatch becomes existential. Retrievers chee
 
 ![RAG wall](images/workflows/07_rag_wall.png)
 
+*Figure 1 — Workflow: retrieve → stuff 2K+ tokens → O(T²) prefill → multi-second TTFT.*
+
+![Pope KV scaling](images/papers/pope_kv_scaling_redraw.png)
+
+*Figure — **Original redraw** inspired by Pope et al. (2022): fixed weight footprint vs KV that grows with context — the RAG memory story.*
+
+![FlashAttention for long prompts](images/papers/dao_flashattention_redraw.png)
+
+*Figure — **Original redraw** of FlashAttention IO (Dao et al.): long RAG prompts are exactly when tiled attention matters.*
+
 *Figure 1 — Workflow: retrieve → stuff 2K+ tokens into the prompt → pay O(T²)-ish prefill → watch TTFT climb into the tens of seconds on M3-class hardware.*
 
 What “the wall” means operationally:

@@ -118,6 +118,18 @@ Classic **Multi-Head Attention (MHA)** uses one KV head per query head. Llama 3,
 
 *Figure 3 — Workflow: MHA keeps a 1:1 Q/KV head ratio; GQA maps many Q heads onto fewer KV heads, cutting cache size before quantization.*
 
+![GQA paper redraw](images/papers/ainslie_gqa_redraw.png)
+
+*Figure — **Original redraw** of GQA vs MHA (idea from Ainslie et al., 2023). Llama 3 / Mistral / Qwen ship with fewer KV heads by design.*
+
+![Pope KV scaling redraw](images/papers/pope_kv_scaling_redraw.png)
+
+*Figure — **Original redraw** inspired by KV-scaling discussion in Pope et al. (2022): weights stay flat; KV grows with \(T\) until it matters.*
+
+![PagedAttention redraw](images/papers/kwon_paged_attention_redraw.png)
+
+*Figure — **Original redraw** of the paged-KV idea (Kwon et al., 2023). Serving systems page KV into blocks; local MLX is simpler, but the fragmentation problem is the same math.*
+
 Rough intuition for Llama-style 32 query heads → 8 KV heads: **~4× smaller KV** than full MHA at the same \(T\) and \(D\), *before* 4-bit KV. Stack GQA + 4-bit KV and you are looking at roughly an order-of-magnitude reduction vs naive FP16 MHA caches of older 7B models.
 
 > **Fun fact #2:** GQA was motivated as a deployability feature as much as a quality feature. Training a model that is “almost as good as MHA” but ships with a thinner cache is how labs made long-context serving affordable — the same pressure local Mac users feel when Chrome and an 8B model share 24 GB.

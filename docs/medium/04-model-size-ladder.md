@@ -43,6 +43,16 @@ If you pick models by Twitter vibes alone, you will either (a) run a 70B that sw
 
 ![Fit ladder](images/workflows/04_fit_ladder.png)
 
+*Figure 1 — Workflow: Tier A (instant) → Tier B (daily driver) → Tier C (pushing it) → skip fp16 8B as daily.*
+
+![Roofline for size choice](images/papers/williams_roofline_redraw.png)
+
+*Figure — **Original redraw** of Roofline (Williams et al., 2009): smaller models move less weight per token — that is why 0.5B @ w4 can hit 200+ tok/s on the same chip where 8B @ fp16 crawls.*
+
+![Attention reminder](images/papers/vaswani_attention_redraw.png)
+
+*Figure — **Original redraw** of attention (Vaswani et al., 2017): every size still pays the same algorithmic tax — capacity and bandwidth decide who feels interactive.*
+
 *Figure 1 — Workflow: Tier A (instant / router-class) → Tier B (daily driver 3B–8B) → Tier C (pushing a 24 GB box) → skip FP16 8B as a daily driver on 24 GB. Move tiers when RAM or latency budgets change.*
 
 | Tier | Params (w4) | Feel on M3 24 GB | Typical jobs |

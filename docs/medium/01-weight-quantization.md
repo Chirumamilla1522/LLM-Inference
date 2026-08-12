@@ -55,6 +55,18 @@ Group-wise scales keep dynamic range honest when a tensor has outliers. At infer
 
 *Figure 1 — Workflow: FP16/BF16 matrix → group-wise \((s, z)\) → packed INT\(b\) codes → dequantized matmul (Jacob et al.; GPTQ / AWQ family practice).*
 
+![Affine quant paper redraw](images/papers/jacob_affine_quant_redraw.png)
+
+*Figure — **Original redraw** of affine quantization (Jacob et al., 2018): continuous weights → discrete levels via scale \(s\) and zero-point \(z\).*
+
+![GPTQ idea redraw](images/papers/frantar_gptq_redraw.png)
+
+*Figure — **Original redraw** of the GPTQ idea (Frantar et al., 2022): quantize a column, compensate remaining weights (Hessian-aware). Not a copy of their paper figure.*
+
+![AWQ idea redraw](images/papers/lin_awq_redraw.png)
+
+*Figure — **Original redraw** of the AWQ idea (Lin et al., 2023): protect activation-salient channels; quantize the rest more aggressively.*
+
 ### Paper map (what practitioners actually cite)
 
 | Method | Paper | Core idea | Why Mac users care |

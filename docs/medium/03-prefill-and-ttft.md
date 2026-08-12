@@ -106,6 +106,14 @@ Naive attention materializes an \(N \times N\) score matrix in high-bandwidth-bu
 
 *Figure 2 — Workflow: naive attention materializes huge \(N\times N\) intermediates; FlashAttention-style tiling streams blocks through fast memory and keeps exact softmax semantics.*
 
+![FlashAttention paper redraw](images/papers/dao_flashattention_redraw.png)
+
+*Figure — **Original redraw** of the FlashAttention IO pattern (Dao et al., 2022/23): keep tiles in fast SRAM; avoid writing the full score matrix to slow HBM. Exact attention, better IO.*
+
+![Online softmax redraw](images/papers/milakov_online_softmax_redraw.png)
+
+*Figure — **Original redraw** of streaming / online softmax (Milakov & Gimelshein, 2018) — the numerics trick FlashAttention relies on.*
+
 On NVIDIA this is a famous CUDA kernel story. On Apple Silicon / MLX, you typically do **not** flip a consumer “enable FlashAttention” checkbox the way some PyTorch stacks do — IO-aware Metal kernels and framework fusion absorb much of the idea. What you *can* control in our harness is **`prefill_step_size`**: chunk long prompts so peak activation memory stays bounded even when \(T\) is large.
 
 Chunking trades a bit of scheduling overhead for **not OOMing** mid-prefill. At 512 tokens on M3, turning “prefill config” on barely changes TTFT (3,103 → 3,185 ms). At 1024+, the *length* dominates; chunking is about survival and stability more than shaving milliseconds.

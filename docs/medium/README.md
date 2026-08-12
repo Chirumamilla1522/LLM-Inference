@@ -19,6 +19,27 @@ All 16:9 covers live in [`images/thumbnails/`](images/thumbnails/):
 
 On Medium: set each file as the **story cover / preview image** when publishing.
 
+## Paper-idea redraws (preferred over copying paper figures)
+
+Original diagrams in [`images/papers/`](images/papers/) — **not** copied from PDFs. Each image credits the paper whose *idea* it teaches:
+
+| File | Inspired by |
+|------|-------------|
+| `vaswani_attention_redraw.png` | Vaswani et al. 2017 |
+| `williams_roofline_redraw.png` | Williams et al. 2009 |
+| `jacob_affine_quant_redraw.png` | Jacob et al. 2018 |
+| `frantar_gptq_redraw.png` | Frantar et al. 2022 (GPTQ) |
+| `lin_awq_redraw.png` | Lin et al. 2023 (AWQ) |
+| `dao_flashattention_redraw.png` | Dao et al. 2022/23 |
+| `milakov_online_softmax_redraw.png` | Milakov & Gimelshein 2018 |
+| `leviathan_speculative_redraw.png` | Leviathan / Chen 2023 |
+| `cai_medusa_redraw.png` | Cai et al. 2024 (Medusa) |
+| `ainslie_gqa_redraw.png` | Ainslie et al. 2023 |
+| `kwon_paged_attention_redraw.png` | Kwon et al. 2023 |
+| `pope_kv_scaling_redraw.png` | Pope et al. 2022 |
+
+Regenerate: `python scripts/plot_paper_redraws.py`
+
 ## Stats (current)
 
 | Article | ~Words | Figures |
