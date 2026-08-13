@@ -21,3 +21,4 @@ Each technique has its **own document**. The **combined** guide explains interac
 ## Article
 
 - [notes.md](../notes.md) — M3 vs M5 Max draft and target numbers
+- [Survey paper (NeurIPS / arXiv)](../paper/README.md) — `paper/main.tex`
