@@ -9,3 +9,6 @@ results/sweep_*.json
 .cursor/hooks/logs/
 .cursor/hooks/.push.lock
 plots/
+paper/main.log
+paper/main.blg
+paper/*.aux
