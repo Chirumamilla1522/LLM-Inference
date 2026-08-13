@@ -1,0 +1,54 @@
+\section{Recipes and a decision procedure}
+\label{sec:decision}
+
+\subsection{Steal these presets}
+
+\paragraph{Daily driver --- 24\,GB laptop (M3-class).}
+Config \texttt{w4+kv\_cache+prefill}; models Llama~8B / Mistral~7B / Qwen~7B; expect \(\approx 4.6\)--\(5.1\)\,GB peak and \(\approx 16\)--\(21\) tokens/s. Do not use FP16 8B as the always-on default.
+
+\paragraph{16\,GB laptop or large phone.}
+Stay at 1B--3B @ 4-bit as the assistant (Phi-3-class, Llama~3.2~3B, Qwen~2.5~3B); 7--8B @ 4-bit only with discipline and KV quant on. Skip FP16 7B+ entirely.
+
+\paragraph{Quality / eval night, same 24\,GB machine.}
+W8, or FP16 with other apps closed. Better fidelity, half or full memory pain. Not the always-on assistant.
+
+\paragraph{M5 Max / 64\,GB+ desk.}
+Chat default still \texttt{w4+kv\_cache+prefill} (\(\approx 107\) tok/s Llama~8B). Short-chat peak: plain w4 (\(\approx 112\)). FP16 8B is now an interactive eval mode (\(\approx 35\) tok/s). 27B @ 4-bit is usable. 70B still wants quantization and a sober look at \(T\).
+
+\paragraph{Phone / NPU.}
+Ship a 1--3B 4-bit (or vendor foundation model~\citep{gunter2024apple,abdin2024phi3}); treat 7B as optional on flagship RAM only; prefer Medusa-style heads over a second draft graph if memory is the wall.
+
+\subsection{Symptom \(\rightarrow\) first lever}
+
+Table~\ref{tab:decision} maps the failure the user actually feels. Capacity before kernels, kernels before speculation, single-stream before multi-tenant.
+
+\begin{table}[t]
+  \centering
+  \small
+  \caption{Symptom \(\rightarrow\) first optimization on an everyday device. Later rows assume earlier ones are already sane.}
+  \label{tab:decision}
+  \begin{tabular}{@{}p{3.3cm}p{4.3cm}@{}}
+    \toprule
+    Symptom & First lever \\
+    \midrule
+    OOM / swap / hung UI & Smaller \(N\), then \(b_w \rightarrow 4\) \\
+    Fits but slow stream & \(b_w\), then faster SoC / DRAM \\
+    Fine on chat, dies on PDF/RAG & Shorter \(T_p\), KV quant, prefix cache \\
+    Spinner before first token & Reduce \(T_p\); prefill kernels / chunks \\
+    Slow stream, RAM left over & Speculative decoding if \(\alpha\) is high \\
+    Fan / battery / thermals & Smaller \(N\) or \(b_w\); cap threads \\
+    Many concurrent users & Paged KV + continuous batching \\
+    Model larger than one device & Offload, TP/PP, or do not run it locally \\
+    Need a specialist & One LoRA on a frozen 4-bit base \\
+    Same bits, disappointing speed & Runtime / kernel / compile \\
+    Quality regression after 4-bit & W8 or better quant; do not silent-W2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.98\linewidth]{figures/full_stack_llama.png}
+  \caption{Mac M3, Llama~3.1~8B: FP16 versus the stacked 4-bit + KV + prefill recipe. Memory falls to \(\approx 31\%\) of baseline; decode rises \(\approx 3.55\times\)---enough that the machine remains a daily-use computer.}
+  \label{fig:fullstack}
+\end{figure}

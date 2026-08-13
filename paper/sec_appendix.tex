@@ -1,0 +1,59 @@
+\section{Catalog checklist}
+\label{app:catalog}
+
+Table~\ref{tab:checklist} lists techniques covered in the body. Status tags refer to the companion Apple Silicon harness: \emph{measured} means a sweep exists; \emph{systems} means the method is standard in datacenter or local engines; \emph{architecture} means it is baked into the checkpoint; \emph{reference} means surveyed from the literature.
+
+\begin{table*}[t]
+  \centering
+  \small
+  \caption{Technique checklist (survey coverage).}
+  \label{tab:checklist}
+  \begin{tabular}{@{}llc@{}}
+    \toprule
+    Technique & Section & Typical status \\
+    \midrule
+    FP16 / BF16 baseline & \ref{sec:weights} & measured \\
+    INT8 / 4-bit / 2-bit, GPTQ, AWQ, SmoothQuant & \ref{sec:weights} & measured / systems \\
+    OmniQuant, QuaRot, SpinQuant, QuIP\#, AQLM, SpQR & \ref{sec:weights} & systems \\
+    Activation quantization, QServe W4A8KV4 & \ref{sec:weights} & systems \\
+    Pruning, distillation & \ref{sec:weights} & reference \\
+    KV cache quantization, KIVI, KVQuant & \ref{sec:kv} & measured / systems \\
+    GQA / MQA & \ref{sec:kv} & architecture \\
+    PagedAttention & \ref{sec:kv}, \ref{sec:serving} & systems \\
+    Prefix / prompt KV cache & \ref{sec:kv} & measured \\
+    H2O, StreamingLLM, SnapKV, Quest, DuoAttention & \ref{sec:kv} & systems \\
+    FlashAttention / tiled attention & \ref{sec:prefill} & measured (proxy) \\
+    Prefill chunking, MInference & \ref{sec:prefill} & measured / systems \\
+    Sparse attention, RoPE, YaRN, Mamba & \ref{sec:prefill} & architecture \\
+    Speculative decoding, Medusa, EAGLE, SpecInfer & \ref{sec:decode} & measured / systems \\
+    CUDA graphs / Metal capture, Deja Vu & \ref{sec:decode} & systems \\
+    Continuous / static batching, Sarathi, DistServe, Splitwise & \ref{sec:serving} & systems \\
+    Tensor / pipeline / expert parallel, EdgeMoE & \ref{sec:parallel} & systems \\
+    Model-size ladder, Phi/TinyLlama/OpenELM/MobileLLM, MoE & \ref{sec:arch} & measured / reference \\
+    LoRA / QLoRA / multi-LoRA & \ref{sec:lora} & systems \\
+    Graph compile, offload, mmap, FlexGen, LLM-in-a-flash & \ref{sec:runtime} & systems \\
+    MLX, llama.cpp, MLC, ExecuTorch, Ollama, PowerInfer & \ref{sec:runtime} & measured / systems \\
+    RAG sizing, constrained decoding, early exit, tools & \ref{sec:app} & reference \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\section{Reproducing the empirical slice}
+\label{app:repro}
+
+On Apple Silicon, with Python 3.10+ and Hugging Face access:
+\begin{verbatim}
+git clone <repo> LLM-Inference && cd LLM-Inference
+./scripts/setup_env.sh && source .venv/bin/activate
+./scripts/hf_login.sh
+./scripts/run_article.sh 1 "Mac M3"   # weight quantization
+./scripts/run_article.sh 5 "Mac M3"   # full stack
+./scripts/run_article.sh 6 "Mac M3"   # speculative decoding
+./scripts/run_article.sh 7 "Mac M3"   # context / RAG / prefix cache
+\end{verbatim}
+Each run writes schema-versioned JSON (median TTFT, tokens/s, peak GB). Tables in Section~\ref{sec:empirical} are medians from that schema. Large-model rows require a 64\,GB+ machine and \texttt{--include-large}.
+
+\section{arXiv and NeurIPS usage notes}
+\label{app:arxiv}
+
+This source uses the official NeurIPS 2025 style with the \texttt{preprint} option. Authors are visible and the NeurIPS checklist is omitted. A broad on-device survey is a natural \textbf{arXiv} paper (\texttt{cs.LG}, cross-list \texttt{cs.CL}, \texttt{cs.DC}). NeurIPS main track is a poor fit unless the empirical protocol is framed as Datasets \& Benchmarks and cut to the page limit. A workshop on efficient or on-device ML is the more realistic conference path.

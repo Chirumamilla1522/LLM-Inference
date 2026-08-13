@@ -1,0 +1,42 @@
+\section{Everyday devices as the inference platform}
+\label{sec:devices}
+
+\subsection{What we mean by ``everyday''}
+
+We mean machines that are already someone's computer, not a rented A100:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Thin laptops} (16--24\,GB unified or shared memory): MacBook Air/Pro M-series, Windows ARM/x86 notebooks, Chromebooks with Linux containers.
+  \item \textbf{Workstations that are still desks} (32--128\,GB): Mac Studio / M-series Max/Ultra, a single consumer NVIDIA GPU (8--24\,GB VRAM) plus host DRAM.
+  \item \textbf{Phones and tablets} (6--16\,GB): NPUs (Apple Neural Engine, Qualcomm Hexagon, Google Tensor), where a 1--3B 4-bit model is the product~\citep{abdin2024phi3,gunter2024apple,liu2024mobilellm}.
+\end{itemize}
+
+Raspberry Pi-class boards and microcontrollers sit below this band; datacenter racks sit above it. The interesting engineering is the middle: models that people \emph{want} (7--9B instruct, sometimes 27--32B) on memory that people \emph{have}.
+
+\subsection{Why local inference is the product}
+
+Four reasons dominate, and none of them is ``benchmarks look nice.''
+
+\paragraph{Privacy and data gravity.}
+Source code, mail, medical notes, and unpublished documents should not have to leave the machine for a coding assistant to work~\citep{bommasani2021foundation,chen2024personal}. On-device inference is the only architecture that makes ``the model never sees the network'' a default rather than a contractual clause.
+
+\paragraph{Latency without a WAN.}
+TTFT includes the round trip to an API. On a train, a plane, a hospital basement, or a flaky guest Wi-Fi, that round trip is the product. Local prefill is slower in FLOPS but has no tail from congestion.
+
+\paragraph{Cost at daily volume.}
+A power user generating millions of tokens per month against a frontier API pays a metered bill. A 4-bit 8B model on a laptop they already bought has near-zero marginal token cost. Energy is not free~\citep{luccioni2024power,patterson2021carbon}, but it is amortized into a device they recharge nightly.
+
+\paragraph{Agency and reproducibility.}
+Local checkpoints pin the model. Prompts, adapters, and RAG corpora stay inspectable. That matters for science, for regulated workflows, and for people who do not want a silent prompt-library change on Tuesday.
+
+\subsection{The constraint that is not in the GPU papers}
+
+On a discrete GPU, you fill VRAM first; host DRAM is a different pool; the OS is someone else's problem. On unified-memory SoCs~\citep{apple2020silicon} (Figure~\ref{fig:um}), \textbf{there is one ceiling}. An 8B FP16 checkpoint ($\approx 16$\,GB of weights, Eq.~\eqref{eq:weights}) on a 24\,GB Mac leaves roughly a browser tab's worth of slack before swap. Swap on a laptop is not ``slow inference.'' It is a hung UI.
+
+Consumer NVIDIA laptops with 8\,GB VRAM hit a dual-pool version of the same wall: the model must fit in VRAM \emph{or} pay PCIe for every layer (FlexGen-style offload~\citep{sheng2023flexgen}, PowerInfer-style hot/cold split~\citep{song2024powerinfer}, LLM-in-a-flash~\citep{alizadeh2024llm}). Phones are stricter: a 3B 4-bit model plus OS plus camera pipeline is the budget~\citep{abdin2024phi3,gunter2024apple}.
+
+The optimization agenda follows: shrink the \emph{floor} (weights), insure the \emph{slope} (KV as $T$ grows), keep TTFT interactive (prefill and prompt hygiene), then spend leftover RAM on speculation or a second model. Datacenter knobs---page the KV of \emph{hundreds} of sequences, shard a 70B across eight GPUs---are the other end of the same catalog.
+
+\subsection{Metrics that match daily use}
+
+We track peak resident memory (will Activity Monitor go red?), TTFT (did the app freeze after Enter?), and decode tokens/s (does the stream feel like typing?). Serving papers add p99 under load and goodput~\citep{agrawal2024sarathi}; those matter the day the laptop becomes a home server. Quality is a constraint: 2-bit that wins a tokens/s chart and fails a code-review is not a daily driver. Energy and skin temperature are first-class on phones and fanless laptops; they are still under-reported (Section~\ref{sec:open}).

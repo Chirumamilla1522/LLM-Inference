@@ -1,0 +1,26 @@
+\section{Open problems}
+\label{sec:open}
+
+\paragraph{Quality under compression on real tasks.}
+Systems papers still under-report tool use, coding, and long-context reasoning at 4- and 2-bit. A cheap eval suite that travels with every GGUF/MLX quant would change local practice more than another 5\% kernel win.
+
+\paragraph{Contended unified memory as a first-class model.}
+Roofline assumes a GPU with private HBM. Unified DRAM, OS interference, and background apps make \(B_{\mathrm{mem}}\) a random variable. We need protocols that treat the laptop as a busy device, not an idle accelerator---including tests with a browser and IDE open.
+
+\paragraph{When speculation fails.}
+Acceptance \(\alpha\) is a property of the draft--target pair, temperature, and domain. Adaptive \(k\), draft routing, and ``disable speculation when \(\alpha\) drops'' should be default runtime features, especially when RAM is barely enough for two models.
+
+\paragraph{Prefill as a product SLO.}
+Industry dashboards over-index on decode tokens/s. RAG and agents die on TTFT. Chunked prefill, prefix caches, retrieve-less application design, and MInference-style sparse prefill need the same status as weight bits.
+
+\paragraph{Cross-runtime equivalence.}
+``4-bit'' in MLX, GPTQ, AWQ, and GGUF Q4\_K\_M are not the same random variable. A quant-tier ontology with shared perplexity probes would make runtime bake-offs honest.
+
+\paragraph{Energy, thermals, and carbon of \emph{local} tokens.}
+Tokens/s on a MacBook is eventually a skin-temperature problem; on a phone it is a battery problem~\citep{luccioni2024power}. Joules per token belong in local inference reports. Local serving also shifts carbon from datacenter to wall wart~\citep{patterson2021carbon}; that accounting is almost absent.
+
+\paragraph{Phones, NPUs, and Windows ARM.}
+Our measurements are Apple Silicon laptops. ExecuTorch / Hexagon / Neural Engine paths, thermal throttling, and 6--12\,GB phone budgets are the next empirical slice. Vendor on-device models~\citep{gunter2024apple} are closed enough that independent stacking studies are hard.
+
+\paragraph{Heterogeneous local clusters.}
+A household Mac mini plus a phone plus a spare PC is not DistServe, but disaggregated prefill/decode ideas~\citep{patel2024splitwise} might still apply. Almost no open harness studies that topology.

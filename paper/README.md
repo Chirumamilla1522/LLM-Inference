@@ -1,8 +1,8 @@
 # Survey paper (NeurIPS 2025 style, arXiv preprint)
 
-NeurIPS-formatted survey of LLM inference optimizations, with the empirical Apple Silicon slice from this repo.
+NeurIPS-formatted survey of LLM inference optimizations for **everyday devices** (laptops, phones, shared DRAM), plus the empirical Apple Silicon slice from this repo.
 
-**Title:** *A Survey of Optimizations for Large Language Model Inference*
+**Title:** *Running Large Language Models on Everyday Devices: A Survey of Inference Optimizations*
 
 ## Before you compile or upload
 
@@ -20,7 +20,7 @@ make          # uses tectonic
 
 Or: `make -C paper`.
 
-You need a TeX distribution with `pdflatex` and `bibtex` (MacTeX or TeX Live). Style file `neurips_2025.sty` is the official NeurIPS 2025 package (`preprint` option).
+The thesis is on-device / daily-driver inference (laptops, phones, shared DRAM), not datacenter serving as the default.
 
 ## Upload to arXiv
 
@@ -30,7 +30,7 @@ You need a TeX distribution with `pdflatex` and `bibtex` (MacTeX or TeX Live). S
 ```bash
 cd paper
 zip -r llm-inference-survey-arxiv.zip \
-  main.tex references.bib neurips_2025.sty figures/
+  main.tex sec_*.tex references.bib neurips_2025.sty figures/
 ```
 
 3. At [arxiv.org/submit](https://arxiv.org/submit):
@@ -54,4 +54,4 @@ A broad survey is a natural **arXiv** paper. The NeurIPS *main* track rarely acc
 
 ## What the paper covers
 
-Ten optimization families (weights, KV/context, prefill/attention, speculative decode, serving, parallelism, architecture, LoRA, runtimes, application-level), governing memory/throughput equations, and M3 / M5 Max measurements from this repository.
+Related work (datacenter serving surveys, on-device/SLM surveys, compression, KV, kernels, speculative decoding, local runtimes) plus ten optimization families ranked for daily-driver machines, recipes for 16/24/64+ GB, and M3 / M5 Max measurements.

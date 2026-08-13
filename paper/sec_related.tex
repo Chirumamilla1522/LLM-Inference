@@ -1,0 +1,57 @@
+\section{Related work}
+\label{sec:related}
+
+A survey of inference optimizations has to say what is already surveyed, what is missing, and where this paper sits. We group prior work into five clusters.
+
+\subsection{Surveys of efficient and serving-oriented inference}
+
+\citet{miao2023survey} review generative LLM serving from algorithms to systems, with emphasis on batching, parallelism, and datacenter engines (Orca, vLLM, FasterTransformer, DeepSpeed-Inference). \citet{lin2024qwq} catalog efficient inference algorithms---quantization, pruning, distillation, speculative decoding, sparse attention---at a breadth that this paper inherits. Both are essential. Both treat the \emph{device} as an accelerator with private high-bandwidth memory and the \emph{workload} as many concurrent requests. Everyday machines invert both assumptions: memory is unified and contended, and concurrency is usually one human. Techniques that dominate those surveys (continuous batching, PagedAttention under load, tensor parallel across NVLink) are real, and we cover them, but they are not the first lever on a 24\,GB MacBook.
+
+\subsection{On-device, edge, and small language models}
+
+A second wave of surveys takes the device seriously. \citet{xu2024ondevice} review on-device language models, covering compression, collaborative edge--cloud deployment, and vendor case studies. \citet{qu2025edge} survey edge LLMs from design through execution and applications. \citet{lu2024slm} and \citet{van2024surveyslm} survey \emph{small} language models (roughly $10^8$--$5\times 10^9$ parameters), including on-device latency and memory measurements. Personal LLM agents~\citep{chen2024personal} discuss capability, efficiency, and security of assistants that live next to user data. TinyML surveys~\citep{xu2024ondevice} address microcontrollers; that regime is below the 0.5B--9B models this paper measures, but the motivation---latency, privacy, no WAN---is the same.
+
+What those reviews still under-emphasize is \emph{stacking} of serving-style knobs on a daily-driver laptop: weight bits $\times$ KV bits $\times$ prefill chunking $\times$ speculation $\times$ prompt length, with a harness that isolates OOMs, and with an explicit contrast to cloud serving. That is the empirical gap we fill.
+
+\subsection{Model families designed to fit a pocket or a laptop}
+
+Architecture work has moved the Pareto frontier of quality versus size. Phi-3~\citep{abdin2024phi3} targets ``highly capable locally on your phone.'' TinyLlama~\citep{zhang2024tinyllama}, OpenELM~\citep{mehta2024openelm}, and MobileLLM~\citep{liu2024mobilellm} optimize sub-billion to few-billion transformers for edge NPUs. Llama~3.2 1B/3B, Gemma~2 2B~\citep{team2024gemma2}, and Qwen~2.5 0.5B--3B~\citep{qwen2024qwen25,yang2024qwen2} made ``a useful model in 1\,GB'' a default Hugging Face download. Mixtral~\citep{jiang2024mixtral} and DeepSeek-style MoE~\citep{liu2024deepseek,deepseek2024v3} change the \emph{active} FLOP budget. Apple's foundation models~\citep{gunter2024apple} show that a $\sim$3B on-device model plus a larger server model is a shipping product, not a research sketch. Scaling laws~\citep{kaplan2020scaling,hoffmann2022chinchilla,wei2022emergent} still argue that bigger is better in the limit; everyday devices force a \emph{local} optimum: the largest model that remains interactive \emph{and} leaves RAM for the OS.
+
+\subsection{Compression, caches, kernels, and decoding (primary papers)}
+
+Weight quantization for neural nets is classical~\citep{jacob2018quantization,han2015deep}. LLM-scale post-training methods include GPTQ~\citep{frantar2022gptq}, AWQ~\citep{lin2023awq}, LLM.int8()~\citep{dettmers2022llmint8}, SmoothQuant~\citep{xiao2023smoothquant}, OmniQuant~\citep{shao2024omniquant}, SpQR~\citep{frantar2023spqr}, SqueezeLLM~\citep{kim2023squeezellm}, QuIP\#~\citep{tseng2024quip}, AQLM~\citep{egiazarian2024aqlm}, QuaRot~\citep{ashkboos2024quarot}, and SpinQuant~\citep{che2024spinquant}. QServe~\citep{lin2024qserve} co-designs W4A8KV4 with a serving stack. Pruning~\citep{frantar2023sparsegpt,ma2023llmpruner} and distillation~\citep{hinton2015distilling,sanh2019distilbert} produce different checkpoints rather than runtime flags.
+
+KV-cache work includes GQA/MQA~\citep{shazeer2019mqa,ainslie2023gqa}, PagedAttention~\citep{kwon2023vllm}, KIVI~\citep{liu2024kivi}, KVQuant~\citep{hooper2024kvquant}, H$_2$O~\citep{zhang2023h2o}, StreamingLLM~\citep{xiao2024streamingllm}, SnapKV~\citep{li2024snapkv}, Quest~\citep{tang2024quest}, and DuoAttention~\citep{xiao2024duoattention}. Attention kernels are FlashAttention 1/2/3~\citep{dao2022flashattention,dao2023flashattention2,dao2024flashattention3} and online softmax~\citep{milakov2018online}; long-prefill acceleration includes MInference~\citep{jiang2024minference} and chunked prefill~\citep{agrawal2023sarathipreprint}. Linear-time sequence models~\citep{gu2023mamba} are an architectural alternative.
+
+Speculative and parallel decoding include Leviathan et al.~\citep{leviathan2023speculative}, Chen et al.~\citep{chen2023speculative}, Medusa~\citep{cai2024medusa}, EAGLE~\citep{li2024eagle}, Lookahead~\citep{chen2021lookahead}, blockwise parallel decoding~\citep{stern2018blockwise}, Jacobi-style methods~\citep{santilli2023jacobidecoding}, staged speculation~\citep{spector2023rest}, and SpecInfer~\citep{miao2024specinfer}. Contextual sparsity at decode~\citep{liu2024dejavu} is a related skip-compute idea.
+
+Serving systems: Orca~\citep{yu2022orca}, vLLM~\citep{kwon2023vllm}, Sarathi-Serve~\citep{agrawal2024sarathi}, Splitwise~\citep{patel2024splitwise}, DistServe~\citep{aminabadi2024distserve}, SGLang~\citep{zheng2024sglang}, DeepSpeed-Inference~\citep{aminabadi2022deepspeed}, TensorRT-LLM~\citep{nvidia2024trtllm}, TGI~\citep{huggingface_tgi}. Parallelism: Megatron~\citep{shoeybi2019megatron,narayanan2021efficient}, GPipe~\citep{huang2019gpipe}, GShard / Switch / Mixtral~\citep{lepikhin2021gshard,fedus2022switch,jiang2024mixtral}, EdgeMoE~\citep{yi2023edgemoe}. Offload: FlexGen~\citep{sheng2023flexgen}, LLM in a flash~\citep{alizadeh2024llm}.
+
+\subsection{Local runtimes and consumer-GPU systems}
+
+llama.cpp and GGUF~\citep{llamacpp,gguf} made CPU/Metal/CUDA inference a weekend project. MLX~\citep{mlx2023,mlxlm2023} is Apple's array framework with Metal kernels and a first-class \texttt{mlx-lm} generate path. MLC LLM~\citep{mlcllm} compiles models via TVM for many backends. ExecuTorch~\citep{executorch} targets mobile. Ollama~\citep{ollama} wraps llama.cpp-class engines for distribution. PowerInfer~\citep{song2024powerinfer} exploits activation locality to run large models on a \emph{consumer} GPU plus CPU. These systems are the reason the rest of this paper is not hypothetical: the optimizations are already flags in software people install.
+
+\subsection{Where we differ}
+
+Table~\ref{tab:surveys} summarizes positioning. We keep the algorithm catalog of~\citet{lin2024qwq} and the serving map of~\citet{miao2023survey}, adopt the on-device motivation of~\citet{xu2024ondevice,lu2024slm}, and add (i)~a single stacked memory/throughput model, (ii)~an explicit re-ranking of techniques for \emph{one user, shared DRAM, background apps}, and (iii)~end-to-end measurements on a 24\,GB daily-driver Mac and a workstation-class M-series chip.
+
+\begin{table*}[t]
+  \centering
+  \small
+  \caption{How this survey relates to representative prior reviews. ``Device-first'' means the default reader is a single-user laptop/phone, not a GPU cluster.}
+  \label{tab:surveys}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}ccX@{}}
+    \toprule
+    Work & Device-first & Measurements on daily laptops & Emphasis \\
+    \midrule
+    \citet{miao2023survey} & No & No & Serving systems, batching, parallelism \\
+    \citet{lin2024qwq} & Partial & No & Broad algorithm catalog \\
+    \citet{xu2024ondevice} & Yes & Mixed / review & On-device LMs, compression, edge--cloud \\
+    \citet{qu2025edge} & Yes & Review & Edge design, execution, applications \\
+    \citet{lu2024slm} & Yes & Phone/IoT-scale SLMs & Small models, capability vs.\ cost \\
+    \citet{van2024surveyslm} & Yes & Review & SLM architectures and training \\
+    \citet{chen2024personal} & Yes & No & Personal agents, security \\
+    This paper & Yes & Yes (M3 24\,GB, M5 Max) & Full optimization stack + stacking math \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}

@@ -1,0 +1,25 @@
+\section{Introduction}
+\label{sec:intro}
+
+Transformer language models~\citep{vaswani2017attention,brown2020gpt3} generate text one token at a time. Datacenter serving systems have spent three years making that loop fast for \emph{many concurrent users} on HBM-rich GPUs~\citep{kwon2023vllm,yu2022orca,agrawal2024sarathi}. A different, larger population of users has a different problem: they want a capable open-weight model to run on the computer they already own---a 16--32\,GB laptop, a phone, a tablet---without sending every keystroke to an API, without a discrete GPU, and without closing the rest of their life (browser, IDE, mail, notes).
+
+That setting is not a scaled-down datacenter. On everyday devices the CPU, GPU, and often an NPU share one DRAM pool~\citep{apple2020silicon,mlx2023}. Weights, the KV cache, activations, the operating system, and Chrome compete for the same gigabytes. Decode is typically memory-bandwidth bound~\citep{williams2009roofline,pope2022efficiently}: every generated token re-reads almost the entire model. Prefill of a RAG prompt can stall the UI for tens of seconds even when streaming tokens/s looks fine. There is usually \emph{one} interactive user, so continuous batching and tensor parallelism are the wrong first knobs. Thermals and battery replace rack power~\citep{luccioni2024power}. Privacy and offline availability are product requirements, not afterthoughts~\citep{bommasani2021foundation,chen2024personal,gunter2024apple}.
+
+The selling point of this survey is therefore operational: \textbf{which inference optimizations make 7--9B (and smaller) models daily drivers on small, already-busy machines}---and which famous serving techniques can wait until the user actually has a cluster. We do not ignore the datacenter literature. We re-rank it.
+
+\paragraph{Why now.}
+Open weights in the 0.5B--9B band~\citep{dubey2024llama3,jiang2024mixtral,mistral2023,yang2024qwen2,team2024gemma2,abdin2024phi3,zhang2024tinyllama} crossed a quality threshold for coding assistants, summarization, and private RAG. Local runtimes---llama.cpp~\citep{llamacpp}, MLX~\citep{mlx2023,mlxlm2023}, MLC LLM~\citep{mlcllm}, ExecuTorch~\citep{executorch}, Ollama~\citep{ollama}---made those checkpoints one command away. Apple Intelligence ships a $\sim$3B on-device model as a consumer feature~\citep{gunter2024apple}. The remaining question is no longer ``can it run?'' It is ``can it run \emph{while the machine is still a computer}?''
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+  \item A bottleneck-first taxonomy of \emph{all} major inference optimization families, written so that stacking is an equation (memory floor from weights, slope from KV, TTFT from prefill, decode from bandwidth and speculation) rather than a list of papers.
+  \item A device-centric reading of the same literature: what matters on a contended 24\,GB laptop or a phone versus a multi-GPU server, including related work on on-device LMs~\citep{xu2024ondevice,qu2025edge}, small LMs~\citep{lu2024slm,van2024surveyslm}, and cloud serving~\citep{miao2023survey,lin2024qwq}.
+  \item A reproducible empirical slice on Apple Silicon (Mac M3 24\,GB and Mac M5 Max): weight bits, KV quantization, prefill chunking, speculative decoding, context/RAG, model ladder, and two local runtimes.
+  \item Recipes and a symptom-to-lever map aimed at practitioners who \emph{are} the ops team.
+\end{enumerate}
+
+\paragraph{Scope.}
+Inference-time methods: post-training compression, caches, kernels, decoding algorithms, serving schedules, parallelism, runtimes, and prompt-side controls. Training-time pretraining recipes are out of scope except where the same primitive (tensor/pipeline/expert parallel, distillation, LoRA) is reused at serve time. We mention phones, NPUs, and PCs; the measurements in Section~\ref{sec:empirical} are Apple Silicon laptops, which we treat as the highest-volume ``serious local LLM'' platform today, not as the only one.
+
+\paragraph{Organization.}
+Section~\ref{sec:related} is related work. Section~\ref{sec:devices} states the everyday-device constraint. Section~\ref{sec:background} reviews the pipeline and memory budget. Section~\ref{sec:taxonomy} gives the taxonomy. Sections~\ref{sec:weights}--\ref{sec:app} treat each family. Section~\ref{sec:empirical} reports measurements. Sections~\ref{sec:decision}--\ref{sec:conclusion} give recipes, open problems, and conclusions.
