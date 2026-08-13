@@ -14,10 +14,8 @@ NeurIPS-formatted survey of LLM inference optimizations, with the empirical Appl
 
 ```bash
 cd paper
-pdflatex -interaction=nonstopmode main
-bibtex main
-pdflatex -interaction=nonstopmode main
-pdflatex -interaction=nonstopmode main
+make          # uses tectonic
+# or: tectonic -X compile main.tex
 ```
 
 Or: `make -C paper`.

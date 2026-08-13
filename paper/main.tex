@@ -18,6 +18,7 @@
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{tabularx}
+\usepackage{array}
 \usepackage{enumitem}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -129,7 +130,7 @@ Table~\ref{tab:taxonomy} organizes techniques by the bottleneck they attack. Fam
   \small
   \caption{Taxonomy of LLM inference optimizations. Primary metric is what a practitioner should look at first.}
   \label{tab:taxonomy}
-  \begin{tabular}{@{}llp{4.4cm}l@{}}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.35cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{2.35cm}@{}}
     \toprule
     Family & Representative methods & Bottleneck & Primary metric \\
     \midrule
@@ -139,12 +140,12 @@ Table~\ref{tab:taxonomy} organizes techniques by the bottleneck they attack. Fam
     Decode algorithms & Speculative decoding, Medusa, EAGLE, Jacobi, graphs & Sequential decode & tok/s, accept rate \\
     Batching \& scheduling & Continuous batching, SLOs, disaggregated PD & Multi-request utilization & Throughput, p99 \\
     Parallelism & Tensor, pipeline, expert, data parallel & Multi-device fit/latency & Tokens/s at scale \\
-    Architecture \& size & Dense size ladder, MoE, long-context variants & Quality vs. fit & Pareto (quality, GB, tok/s) \\
+    Architecture \& size & Dense size ladder, MoE, long-context variants & Quality vs.\ fit & Pareto (quality, GB, tok/s) \\
     Adapters & LoRA / QLoRA, multi-LoRA & Extra matmuls + RAM & Latency vs.\ specialization \\
     Compilation \& runtimes & \texttt{compile}, quantized GEMM, MLX, llama.cpp, offload & Kernel efficiency & tok/s at matched bits \\
     Application-level & RAG sizing, prompt cache, constrained decoding, early exit & Tokens billed / prefilled & End-to-end latency \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table*}
 
 A useful stacking order for \emph{single-stream} local inference is: (1)~choose a model that can fit; (2)~quantize weights until there is OS headroom; (3)~quantize or page KV if context grows; (4)~tune prefill if TTFT hurts; (5)~add speculation if decode still lags and RAM remains; (6)~only then change runtime or hardware. Multi-tenant serving inverts the last steps: paging and continuous batching become mandatory before exotic decode algorithms. Figure~\ref{fig:funnel} sketches the local funnel.
